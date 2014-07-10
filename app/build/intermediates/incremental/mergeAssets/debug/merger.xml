@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="2" >
+
+    <dataSet config="21.0.0-rc1" >
+        <source path="C:\Users\dimitris\AndroidstudioProjects\FileSync\build\intermediates\exploded-aar\com.android.support\support-v4\21.0.0-rc1\assets" />
+    </dataSet>
+    <dataSet config="21.0.0-rc1" >
+        <source path="C:\Users\dimitris\AndroidstudioProjects\FileSync\build\intermediates\exploded-aar\com.android.support\appcompat-v7\21.0.0-rc1\assets" />
+    </dataSet>
+    <dataSet config="main" >
+        <source path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets" >
+            <file
+                name="icons/dropbox.png"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox.png" />
+            <file
+                name="icons/gdrive.png"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive.png" />
+            <file
+                name="service_types.xml"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\service_types.xml" />
+        </source>
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\debug\assets" />
+    </dataSet>
+
+</merger>
