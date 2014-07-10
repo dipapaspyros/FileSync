@@ -11,25 +11,31 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.IntentSender;
 import android.content.res.AssetManager;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.api.*;
 import com.google.android.gms.drive.Drive;
 
-class NewServiceClickListener implements OnClickListener {
+/*Listener class to handle connection and callbacks*/
+class NewServiceClickListener implements OnClickListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     private Context context;
+    private Activity activity;
 	private ServiceType serviceType;
 	
-	public NewServiceClickListener(Context context, ServiceType serviceType) {
-        this.context = context;
+	public NewServiceClickListener(Activity activity, ServiceType serviceType) {
+        this.context = activity.getApplicationContext();
+        this.activity = activity;
 		this.serviceType = serviceType;
 	}
 
@@ -42,10 +48,34 @@ class NewServiceClickListener implements OnClickListener {
             .addConnectionCallbacks(this)
             .addOnConnectionFailedListener(this)
             .build();
+
+            mGoogleApiClient.connect();
 		}
 	}
 
-};
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        if (connectionResult.hasResolution()) {
+            try {
+                connectionResult.startResolutionForResult(activity, /*RESOLVE_CONNECTION_REQUEST_CODE*/0);
+            } catch (IntentSender.SendIntentException e) {
+                // Unable to resolve, message user appropriately
+            }
+        } else {
+            GooglePlayServicesUtil.getErrorDialog(connectionResult.getErrorCode(), this.activity, 0).show();
+        }
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Toast.makeText(context, "Connected!", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Toast.makeText(context, "Suspended... :/", Toast.LENGTH_LONG).show();
+    }
+}
 
 public class ServiceTypeManager {
 	private ArrayList<ServiceType> service_types;
@@ -111,8 +141,9 @@ public class ServiceTypeManager {
 					//invalid icon name - do nothing
 				}
 	        }
-	        
-	        b.setOnClickListener(new NewServiceClickListener(activity.getApplicationContext(), service_type));
+
+            NewServiceClickListener cl = new NewServiceClickListener(activity, service_type);
+	        b.setOnClickListener(cl);
 	        
 	        l.addView(b);
 		}

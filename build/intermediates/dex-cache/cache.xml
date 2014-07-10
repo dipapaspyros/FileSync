@@ -25,5 +25,11 @@
         jumboMode="false"
         revision="20.0.0"
         sha1="f21927d22fe31889ecce94dd697a2e75b137e0ef"/>
+    <item
+        dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\classes-7e06c5b82bbce17113d7caeaaf2db5e517298485.jar"
+        jar="C:\Users\dimitris\AndroidstudioProjects\FileSync\build\intermediates\exploded-aar\com.google.android.gms\play-services\5.0.77\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="b6a82434c1eca686607867cd906bcc80ed987837"/>
 
 </pre-dex-items>
