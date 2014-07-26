@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <service_types>
-    <service_type title="Google Drive" icon="icons/gdrive.png" auth_type="gplay" list_uri="" />
-    <service_type title="Dropbox" icon="icons/dropbox.png" auth_type="o_auth2" list_uri="" />
+
+    <service_type>
+        <id>gdrive</id>
+        <title>Google Drive</title>
+        <icon>icons/gdrive.png</icon>
+        <auth_type>gplay</auth_type>
+        <list_uri></list_uri>
+    </service_type>
+
+    <service_type>
+        <id>dropbox</id>
+        <title>Dropbox</title>
+        <icon>icons/dropbox.png</icon>
+        <auth_type>oauth2</auth_type>
+        <list_uri></list_uri>
+    </service_type>
+
 </service_types>
