@@ -18,33 +18,46 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="381cdfbf-f6b2-4ad4-b532-e7a9faba93f9" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/google_api_client_1_17_0_rc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/google_api_client_android_1_17_0_rc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/google_api_services_drive_v2_rev105_1_17_0_rc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/google_api_services_tasks_v1_rev19_1_17_0_rc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/google_http_client_1_17_0_rc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/google_http_client_android_1_17_0_rc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/google_http_client_gson_1_17_0_rc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/google_http_client_jackson2_1_11_0_beta.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/google_oauth_client_1_17_0_rc.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/gson_2_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/guava_14_0_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/jackson_core_2_0_5.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/jsr305_1_3_9.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_4_0_30.xml" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\play_services_5_0_77.xml" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\commons-logging-1.1.1.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-api-client-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-api-client-android-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-api-client-appengine-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-api-client-gson-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-api-client-jackson2-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-api-client-java6-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-api-client-protobuf-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-api-client-servlet-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-api-client-xml-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-api-services-drive-v2-rev65-1.13.2-beta.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-http-client-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-http-client-android-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-http-client-appengine-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-http-client-gson-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-http-client-jackson-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-http-client-jackson2-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-http-client-jdo-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-http-client-protobuf-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-http-client-xml-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-oauth-client-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-oauth-client-appengine-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-oauth-client-java6-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-oauth-client-jetty-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\google-oauth-client-servlet-1.18.0-rc.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\gson-2.1.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\httpclient-4.0.1.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\httpcore-4.0.1.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\jackson-core-2.1.3.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\jackson-core-asl-1.9.11.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\jdo2-api-2.3-eb.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\jetty-6.1.26.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\jetty-util-6.1.26.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\jsr305-1.3.9.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\protobuf-java-2.4.1.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\transaction-api-1.1.jar" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\libs\xpp3-1.1.4c.jar" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/model_data.bin" afterPath="$PROJECT_DIR$/build/intermediates/model_data.bin" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/android/support/v7/appcompat/R.java" afterPath="$PROJECT_DIR$/app/build/generated/source/r/debug/android/support/v7/appcompat/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/google/android/gms/R.java" afterPath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/google/android/gms/R.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/itp13113/filesync/R.java" afterPath="$PROJECT_DIR$/app/build/generated/source/r/debug/com/itp13113/filesync/R.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/accounts/ServiceTypeManager.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/accounts/ServiceTypeManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_20_0_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_20_0_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/service_types.xml" afterPath="$PROJECT_DIR$/app/src/main/assets/service_types.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_v4_20_0_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_20_0_0.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="FileSync.iws" />
@@ -68,15 +81,24 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ServiceTypeManager.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="ServiceTypeManager.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/accounts/ServiceTypeManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="511" max-vertical-offset="4216">
-              <caret line="32" column="59" selection-start-line="32" selection-start-column="59" selection-end-line="32" selection-end-column="59" />
+            <state vertical-scroll-proportion="-0.6050847" vertical-offset="1632" max-vertical-offset="4862">
+              <caret line="82" column="0" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
               <folding>
-                <element signature="e#2007#2461#0" expanded="true" />
-                <element signature="e#2446#2447#0" expanded="true" />
+                <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Drive.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.apis/google-api-services-drive/v2-rev105-1.17.0-rc/fac6f6f6a87c02eed504ec3b74eb690ed7ae75b0/google-api-services-drive-v2-rev105-1.17.0-rc-sources.jar!/com/google/api/services/drive/Drive.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="60248" max-vertical-offset="157267">
+              <caret line="3544" column="16" selection-start-line="3544" selection-start-column="16" selection-end-line="3544" selection-end-column="16" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -114,18 +136,18 @@
       <file leaf-file-name="AndroidManifest.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="731">
-              <caret line="11" column="69" selection-start-line="11" selection-start-column="69" selection-end-line="11" selection-end-column="69" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="748">
+              <caret line="10" column="65" selection-start-line="10" selection-start-column="65" selection-end-line="10" selection-end-column="65" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="build.gradle" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="build.gradle" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.4559322" vertical-offset="241" max-vertical-offset="850">
-              <caret line="30" column="57" selection-start-line="30" selection-start-column="57" selection-end-line="30" selection-end-column="57" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="442" max-vertical-offset="850">
+              <caret line="26" column="51" selection-start-line="26" selection-start-column="51" selection-end-line="26" selection-end-column="51" />
               <folding />
             </state>
           </provider>
@@ -134,7 +156,7 @@
       <file leaf-file-name="build.gradle" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="357">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="357">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -144,7 +166,7 @@
       <file leaf-file-name="settings.gradle" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/settings.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-0.0" vertical-offset="0" max-vertical-offset="119">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="119">
               <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
@@ -894,9 +916,9 @@
         <option value="$PROJECT_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0-rc1/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/build/intermediates/manifests/debug/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/assets/service_types.xml" />
+        <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/accounts/ServiceTypeManager.java" />
-        <option value="$PROJECT_DIR$/app/build.gradle" />
       </list>
     </option>
   </component>
@@ -1236,7 +1258,7 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19010417" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329718" sideWeight="0.25729167" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329718" sideWeight="0.72239584" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -1294,17 +1316,18 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.0-rc1/AndroidManifest.xml">
+    <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="425" max-vertical-offset="527">
-          <caret line="25" column="11" selection-start-line="25" selection-start-column="11" selection-end-line="25" selection-end-column="11" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="357">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+    <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="102" max-vertical-offset="510">
-          <caret line="6" column="19" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="119">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
@@ -1336,8 +1359,7 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="612" max-vertical-offset="2091">
           <caret line="36" column="30" selection-start-line="36" selection-start-column="30" selection-end-line="36" selection-end-column="30" />
           <folding>
-            <element signature="e#2007#2461#0" expanded="true" />
-            <element signature="e#2446#2447#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1413,8 +1435,7 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2091">
           <caret line="36" column="30" selection-start-line="36" selection-start-column="30" selection-end-line="36" selection-end-column="30" />
           <folding>
-            <element signature="e#2007#2461#0" expanded="true" />
-            <element signature="e#2446#2447#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1621,32 +1642,26 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/app/libs/google-api-services-drive-v2-rev65-1.13.2-beta.jar!/com/google/api/services/drive/DriveRequestInitializer.class">
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.apis/google-api-services-drive/v2-rev105-1.17.0-rc/fac6f6f6a87c02eed504ec3b74eb690ed7ae75b0/google-api-services-drive-v2-rev105-1.17.0-rc-sources.jar!/com/google/api/services/drive/Drive.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.18053098" vertical-offset="0" max-vertical-offset="565">
-          <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$PROJECT_DIR$/app/libs/google-api-services-drive-v2-rev65-1.13.2-beta.jar!/com/google/api/services/drive/Drive.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.86050725" vertical-offset="38200" max-vertical-offset="38777">
-          <caret line="2276" column="0" selection-start-line="2276" selection-start-column="0" selection-end-line="2276" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="187" max-vertical-offset="731">
-          <caret line="11" column="69" selection-start-line="11" selection-start-column="69" selection-end-line="11" selection-end-column="69" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="54612" max-vertical-offset="143327">
+          <caret line="3544" column="16" selection-start-line="3544" selection-start-column="16" selection-end-line="3544" selection-end-column="16" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.api-client/google-api-client/1.17.0-rc/fbe0a64417bb400582f828f0b32d8d872f36ad02/google-api-client-1.17.0-rc-sources.jar!/com/google/api/client/googleapis/services/AbstractGoogleClientRequest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="609">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.3322034" vertical-offset="6451" max-vertical-offset="9112">
+          <caret line="458" column="11" selection-start-line="458" selection-start-column="11" selection-end-line="458" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="850">
+          <caret line="26" column="51" selection-start-line="26" selection-start-column="51" selection-end-line="26" selection-end-column="51" />
           <folding />
         </state>
       </provider>
@@ -1659,22 +1674,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/accounts/ServiceTypeManager.java">
+    <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="511" max-vertical-offset="4216">
-          <caret line="32" column="59" selection-start-line="32" selection-start-column="59" selection-end-line="32" selection-end-column="59" />
-          <folding>
-            <element signature="e#2007#2461#0" expanded="true" />
-            <element signature="e#2446#2447#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="609">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4559322" vertical-offset="241" max-vertical-offset="850">
-          <caret line="30" column="57" selection-start-line="30" selection-start-column="57" selection-end-line="30" selection-end-column="57" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="748">
+          <caret line="10" column="65" selection-start-line="10" selection-start-column="65" selection-end-line="10" selection-end-column="65" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/accounts/ServiceTypeManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.6050847" vertical-offset="1632" max-vertical-offset="4862">
+          <caret line="82" column="0" selection-start-line="82" selection-start-column="0" selection-end-line="82" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

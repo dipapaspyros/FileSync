@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -14,6 +16,7 @@ import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +24,7 @@ import android.content.IntentSender;
 import android.content.res.AssetManager;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,10 +36,13 @@ import com.google.api.client.http.FileContent;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.drive.model.File;
+import com.google.api.services.drive.model.FileList;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveRequest;
 import com.google.api.services.drive.DriveRequestInitializer;
 import com.google.api.services.drive.DriveScopes;
+import com.google.api.services.drive.model.FileList;
 
 class OnTokenAcquired implements AccountManagerCallback<Bundle> {
     private Activity activity;
@@ -62,6 +69,42 @@ class OnTokenAcquired implements AccountManagerCallback<Bundle> {
             });
 
             final Drive drive = b.build();
+
+            Thread thread = new Thread(new Runnable(){
+                @Override
+                public void run() {
+                    try {
+                        List<com.google.api.services.drive.model.File> res = new ArrayList<com.google.api.services.drive.model.File>();
+                        Drive.Files.List request = drive.files().list();
+                        System.out.println("~~~Listing");
+                        do {
+                            try {
+                                FileList files = request.setQ("'root' in parents and trashed=false").execute();
+
+                                res.addAll(files.getItems());
+                                request.setPageToken(files.getNextPageToken());
+                            } catch (IOException e) {
+                                System.out.println("An error occurred: " + e);
+                                request.setPageToken(null);
+                            }
+                        } while (request.getPageToken() != null &&
+                                request.getPageToken().length() > 0);
+
+                        for(com.google.api.services.drive.model.File f: res) {
+                            System.out.println("~~~" + f.getTitle() + " " + f.getIconLink() + " " + f.getMimeType() + " " + f.getId());
+
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println("~~~Listed");
+                }
+            });
+
+            thread.start();
+
+
+            //System.out.println(drive.files().list().size());
             /*
             final com.google.api.services.drive.model.File body = new com.google.api.services.drive.model.File();
             body.setTitle("My Test File");
@@ -113,7 +156,8 @@ class NewServiceClickListener implements OnClickListener {
 		this.serviceType = serviceType;
 	}
 
-	@Override
+	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    @Override
 	public void onClick(View v) {
         System.out.println(serviceType);
 
