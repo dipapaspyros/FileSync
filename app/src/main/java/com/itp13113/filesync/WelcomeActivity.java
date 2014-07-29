@@ -1,34 +1,16 @@
 package com.itp13113.filesync;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
-
-import com.itp13113.filesync.accounts.ServiceTypeManager;
+import com.itp13113.filesync.services.ServiceTypeManager;
 
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
-import android.content.Context;
-import android.content.res.AssetManager;
 import android.os.Bundle;
-import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-import android.os.Build;
 
 public class WelcomeActivity extends ActionBarActivity {
 
