@@ -10,6 +10,7 @@ public interface CloudStorageInterface {
 
     public void setContext(Context context);
     public String getStorageServiceTitle();
+    public String getHomeDirectory();
 
     public void authenticate() throws CloudStorageAuthenticationError;
     public void setDirectory(String directory);

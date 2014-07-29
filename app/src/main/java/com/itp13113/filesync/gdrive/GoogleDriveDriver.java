@@ -48,49 +48,6 @@ import com.itp13113.filesync.services.CloudFile;
 import com.itp13113.filesync.services.CloudStorageAuthenticationError;
 import com.itp13113.filesync.services.CloudStorageInterface;
 
-class OnTokenAcquired implements AccountManagerCallback<Bundle> {
-    private GoogleDriveDriver gDriver;
-
-    OnTokenAcquired(GoogleDriveDriver gDriver) {
-        this.gDriver = gDriver;
-    }
-
-    @Override
-    public void run(AccountManagerFuture<Bundle> result) {
-        System.out.println("Shalalala");
-        try {
-            final String token = result.getResult().getString(AccountManager.KEY_AUTHTOKEN);
-            HttpTransport httpTransport = new NetHttpTransport();
-            JacksonFactory jsonFactory = new JacksonFactory();
-            Drive.Builder b = new Drive.Builder(httpTransport, jsonFactory, null);
-            b.setDriveRequestInitializer(new DriveRequestInitializer() {
-                @Override
-                public void initializeDriveRequest(DriveRequest request) throws IOException {
-                    DriveRequest driveRequest = request;
-                    driveRequest.setPrettyPrint(true);
-                    driveRequest.setKey("f2:76:87:34:e0:e9:ff:f2:02:0c:44:f3:53:2e:95:01:25:10:f3:ee");
-                    driveRequest.setOauthToken(token);
-                }
-            });
-
-            gDriver.drive = b.build();
-            System.out.println("ok...");
-        } catch (OperationCanceledException e) {
-            gDriver.drive = null;
-        } catch (AuthenticatorException e) {
-            gDriver.drive = null;
-        } catch (IOException e) {
-            gDriver.drive = null;
-        }
-
-        //notify the google drive driver object that we have finished with the authentication
-        System.out.println("notf");
-        synchronized(gDriver.authenticationComplete) {
-            gDriver.authenticationComplete.notify();
-        }
-    }
-}
-
 public class GoogleDriveDriver implements CloudStorageInterface {
     private Context context;
     protected Drive drive = null;
@@ -108,7 +65,12 @@ public class GoogleDriveDriver implements CloudStorageInterface {
         return "Google Drive";
     }
 
-	@TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    @Override
+    public String getHomeDirectory() {
+        return "root";
+    }
+
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     public void authenticate() throws CloudStorageAuthenticationError {
         final AccountManager am = AccountManager.get(context);
@@ -128,11 +90,7 @@ public class GoogleDriveDriver implements CloudStorageInterface {
                 public void run() {
                     try {
                         final String token = am.blockingGetAuthToken(am.getAccounts()[0], //get the first available google account
-                                "oauth2:" + DriveScopes.DRIVE, true
-                                /*new Bundle(),
-                                true,
-                                new OnTokenAcquired(this),
-                                null*/);
+                                "oauth2:" + DriveScopes.DRIVE, true);
 
                         HttpTransport httpTransport = new NetHttpTransport();
                         JacksonFactory jsonFactory = new JacksonFactory();

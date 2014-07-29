@@ -1,5 +1,6 @@
 package com.itp13113.filesync;
 
+import com.itp13113.filesync.dropbox.DropboxDriver;
 import com.itp13113.filesync.services.ServiceTypeManager;
 
 import android.support.v7.app.ActionBarActivity;
@@ -15,7 +16,7 @@ import android.widget.LinearLayout;
 public class WelcomeActivity extends ActionBarActivity {
 
 	private ServiceTypeManager serviceTypeManager;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -70,5 +71,25 @@ public class WelcomeActivity extends ActionBarActivity {
 			return rootView;
 		}
 	}
+
+    protected void onResume() {
+        super.onResume();
+
+        if (serviceTypeManager.dDriver != null) {
+            if (serviceTypeManager.dDriver.mDBApi.getSession().authenticationSuccessful()) {
+                try {
+                    // Required to complete auth, sets the access token on the session
+                    serviceTypeManager.dDriver.mDBApi.getSession().finishAuthentication();
+
+                    String accessToken = serviceTypeManager.dDriver.mDBApi.getSession().getAccessTokenPair().secret;
+
+                    serviceTypeManager.dDriver.setDirectory( serviceTypeManager.dDriver.getHomeDirectory() );
+                    serviceTypeManager.dDriver.list();
+                } catch (IllegalStateException e) {
+                    System.out.println("Error authenticating dropbox");
+                }
+            }
+        }
+    }
 
 }

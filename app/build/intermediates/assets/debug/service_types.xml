@@ -5,7 +5,7 @@
         <id>gdrive</id>
         <title>Google Drive</title>
         <icon>icons/gdrive.png</icon>
-        <auth_type>gplay</auth_type>
+        <auth_type>oauth2</auth_type>
         <list_uri></list_uri>
     </service_type>
 

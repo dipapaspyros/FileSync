@@ -31,16 +31,19 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.api.services.drive.DriveScopes;
+import com.itp13113.filesync.dropbox.DropboxDriver;
 import com.itp13113.filesync.gdrive.GoogleDriveDriver;
 
 
 /*Listener class to handle connection and callbacks*/
 class NewServiceClickListener implements OnClickListener {
+    private ServiceTypeManager serviceTypeManager;
     private Context context;
     private Activity activity;
 	private ServiceType serviceType;
 	
-	public NewServiceClickListener(Activity activity, ServiceType serviceType) {
+	public NewServiceClickListener(ServiceTypeManager serviceTypeManager, Activity activity, ServiceType serviceType) {
+        this.serviceTypeManager = serviceTypeManager;
         this.context = activity.getApplicationContext();
         this.activity = activity;
 		this.serviceType = serviceType;
@@ -51,18 +54,29 @@ class NewServiceClickListener implements OnClickListener {
 	public void onClick(View v) {
         System.out.println(serviceType);
 
-		if (serviceType.auth_type.equals("gplay")) {
+		if (serviceType.id.equals("gdrive")) {
             GoogleDriveDriver gDriver = new GoogleDriveDriver();
             try {
                 gDriver.setContext(context);
                 gDriver.authenticate();
-                gDriver.setDirectory("root");
+                gDriver.setDirectory( gDriver.getHomeDirectory() );
                 gDriver.list();
             } catch (CloudStorageAuthenticationError cloudStorageAuthenticationError) {
                 System.out.println("Could not authenticate");
                 cloudStorageAuthenticationError.printStackTrace();
             }
         }
+        else if (serviceType.id.equals("dropbox")) {
+            serviceTypeManager.dDriver = new DropboxDriver();
+            try {
+                serviceTypeManager.dDriver.setContext(context);
+                serviceTypeManager.dDriver.authenticate();
+            } catch (CloudStorageAuthenticationError cloudStorageAuthenticationError) {
+                System.out.println("Could not authenticate");
+                cloudStorageAuthenticationError.printStackTrace();
+            }
+        }
+
 	}
 
 }
@@ -72,6 +86,7 @@ public class ServiceTypeManager {
 	//private Context applicationContext;
 	private AssetManager assetManager;
 
+    public DropboxDriver dDriver;
 
     public ServiceTypeManager(Context applicationContext, AssetManager assetManager) {
 		//this.applicationContext = applicationContext;
@@ -124,7 +139,6 @@ public class ServiceTypeManager {
                           //else ptr = -1;
 	                      break;
                       case XmlPullParser.TEXT:
-                          System.out.println("@" + ptr + " -> " + parser.getText());
                           if (ptr >=0 && ptr<5 && xmlText[ptr].equals(""))
                             xmlText[ptr] = parser.getText();
                           break;
@@ -161,7 +175,7 @@ public class ServiceTypeManager {
                 }
             }
 
-            NewServiceClickListener cl = new NewServiceClickListener(activity, service_type);
+            NewServiceClickListener cl = new NewServiceClickListener(this, activity, service_type);
 	        b.setOnClickListener(cl);
 	        
 	        l.addView(b);
