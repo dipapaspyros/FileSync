@@ -18,6 +18,9 @@
             <file
                 name="service_types.xml"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\service_types.xml" />
+            <file
+                name="storages.xml"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\storages.xml" />
         </source>
     </dataSet>
     <dataSet config="debug" >

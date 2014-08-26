@@ -65,7 +65,7 @@ public class DropboxDriver implements CloudStorageInterface {
 
     @Override
     public Vector<CloudFile> list() {
-        Vector<CloudFile> resultList = null;
+        Vector<CloudFile> resultList = new Vector<CloudFile>();
 
         Thread thread = new Thread(new Runnable(){
             @Override

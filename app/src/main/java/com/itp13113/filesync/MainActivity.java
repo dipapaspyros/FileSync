@@ -1,7 +1,9 @@
 package com.itp13113.filesync;
 
 import java.io.File;
+import java.io.IOException;
 
+import android.content.res.AssetManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -14,7 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
+import com.itp13113.filesync.dropbox.DropboxDriver;
+import com.itp13113.filesync.services.CloudStorageAuthenticationError;
+import com.itp13113.filesync.services.CloudStorageInterface;
+import com.itp13113.filesync.services.StorageManager;
+
 public class MainActivity extends ActionBarActivity {
+    private StorageManager storageManager;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +30,22 @@ public class MainActivity extends ActionBarActivity {
 		setContentView(R.layout.activity_main);
 		
 		//check if configuration with stored services exists
-		File services = new File("services.xml");
-		if(!services.exists()) { //if not, go to welcome page
-			Intent welcomeIntent = new Intent(getApplicationContext(), WelcomeActivity.class);
+        AssetManager mg = getResources().getAssets();
+        try {
+            mg.open("storages.xml");
+            storageManager = new StorageManager( getAssets() );
+            storageManager.setContext(getApplicationContext());
+            storageManager.authenticate();
+            storageManager.list();
+        } catch (IOException ex) {
+            Intent welcomeIntent = new Intent(getApplicationContext(), WelcomeActivity.class);
             startActivity(welcomeIntent);
-		}
-		
-		if (savedInstanceState == null) {
+        } catch (CloudStorageAuthenticationError cloudStorageAuthenticationError) {
+            System.out.println("Authentication Error");
+            cloudStorageAuthenticationError.printStackTrace();
+        }
+
+        if (savedInstanceState == null) {
 			getSupportFragmentManager().beginTransaction()
 					.add(R.id.container, new PlaceholderFragment()).commit();
 		}
@@ -70,5 +87,26 @@ public class MainActivity extends ActionBarActivity {
 			return rootView;
 		}
 	}
+
+    protected void onResume() {
+        super.onResume();
+
+        DropboxDriver dDriver;
+        if (dDriver != null) {
+            if (dDriver.mDBApi.getSession().authenticationSuccessful()) {
+                try {
+                    // Required to complete auth, sets the access token on the session
+                    dDriver.mDBApi.getSession().finishAuthentication();
+
+                    String accessToken = dDriver.mDBApi.getSession().getAccessTokenPair().secret;
+
+                    dDriver.setDirectory(dDriver.getHomeDirectory());
+                    dDriver.list();
+                } catch (IllegalStateException e) {
+                    System.out.println("Error authenticating dropbox");
+                }
+            }
+        }
+    }
 
 }

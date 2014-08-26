@@ -53,7 +53,7 @@ public class GoogleDriveDriver implements CloudStorageInterface {
     protected Drive drive = null;
     private String currentDirectory;
     //locks
-    protected Integer authenticationComplete = new Integer(0);
+    Integer authenticationComplete = new Integer(0);
 
     @Override
     public void setContext(Context context) {
@@ -106,7 +106,6 @@ public class GoogleDriveDriver implements CloudStorageInterface {
                         });
 
                         drive = b.build();
-                        System.out.println("ok...");
                     } catch (OperationCanceledException e) {
                         drive = null;
                         System.out.println("Could not complete operation");
@@ -134,6 +133,7 @@ public class GoogleDriveDriver implements CloudStorageInterface {
             }
 
         }
+
     }
 
     @Override
@@ -143,10 +143,10 @@ public class GoogleDriveDriver implements CloudStorageInterface {
 
     @Override
     public Vector<CloudFile> list() {
-        System.out.println("ls");
         final Vector<CloudFile> resultList = new Vector<CloudFile>();
         final Integer listingComplete = new Integer(0);
 
+        System.out.println("ls");
         Thread thread = new Thread(new Runnable(){
             @Override
             public void run() {
