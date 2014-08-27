@@ -1,10 +1,12 @@
 package com.itp13113.filesync.dropbox;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import com.dropbox.client2.DropboxAPI;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.exception.DropboxException;
+import com.dropbox.client2.session.AccessTokenPair;
 import com.dropbox.client2.session.AppKeyPair;
 import com.dropbox.client2.session.Session;
 import com.itp13113.filesync.services.CloudFile;
@@ -55,7 +57,16 @@ public class DropboxDriver implements CloudStorageInterface {
 
     @Override
     public void authenticate() throws CloudStorageAuthenticationError {
-        mDBApi.getSession().startAuthentication(context);
+        SharedPreferences prefs = context.getSharedPreferences(
+                "com.itp13113.FileSync", Context.MODE_PRIVATE);
+        String key = prefs.getString("DropboxKey", "");
+        String secret = prefs.getString("DropboxSecret", "");
+
+        if (key.equals("") || secret.equals("")) { //first time authenticating
+            mDBApi.getSession().startAuthentication(context);
+        } else { //has authenticated before
+            mDBApi.getSession().setAccessTokenPair(new AccessTokenPair(key, secret));
+        }
     }
 
     @Override
@@ -63,9 +74,13 @@ public class DropboxDriver implements CloudStorageInterface {
         this.directory = directory;
     }
 
+    private String getIconFile(String ic) {
+        return "icons/dropbox/" + ic + ".gif";
+    }
+
     @Override
     public Vector<CloudFile> list() {
-        Vector<CloudFile> resultList = new Vector<CloudFile>();
+        final Vector<CloudFile> resultList = new Vector<CloudFile>();
 
         Thread thread = new Thread(new Runnable(){
             @Override
@@ -74,7 +89,9 @@ public class DropboxDriver implements CloudStorageInterface {
 
                     DropboxAPI.Entry entries = mDBApi.metadata(directory, 100, null, true, null);
                     for (DropboxAPI.Entry e : entries.contents) {
-                        System.out.println("----" + e.fileName());
+                        String icon = getIconFile(e.icon);
+                        System.out.println("----" + e.fileName() + " " + icon + " " + e.mimeType + " " + e.hash);
+                        resultList.add(new CloudFile(e.fileName(), e.fileName(), icon, e.isDir, e.mimeType));
                     }
                 } catch (DropboxException e) {
                     System.out.println("Dropbox could not list " + directory + " directory");

@@ -1,8 +1,11 @@
 package com.itp13113.filesync;
 
+import com.dropbox.client2.session.AccessTokenPair;
 import com.itp13113.filesync.dropbox.DropboxDriver;
 import com.itp13113.filesync.services.ServiceTypeManager;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -81,7 +84,14 @@ public class WelcomeActivity extends ActionBarActivity {
                     // Required to complete auth, sets the access token on the session
                     serviceTypeManager.dDriver.mDBApi.getSession().finishAuthentication();
 
-                    String accessToken = serviceTypeManager.dDriver.mDBApi.getSession().getAccessTokenPair().secret;
+
+                    AccessTokenPair accessToken = serviceTypeManager.dDriver.mDBApi.getSession().getAccessTokenPair();
+
+                    //store the access token
+                    SharedPreferences prefs = this.getSharedPreferences(
+                            "com.itp13113.FileSync", Context.MODE_PRIVATE);
+                    prefs.edit().putString("DropboxKey", accessToken.key).apply();
+                    prefs.edit().putString("DropboxSecret", accessToken.secret).apply();
 
                     serviceTypeManager.dDriver.setDirectory( serviceTypeManager.dDriver.getHomeDirectory() );
                     serviceTypeManager.dDriver.list();

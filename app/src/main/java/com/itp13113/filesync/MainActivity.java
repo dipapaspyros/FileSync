@@ -3,6 +3,8 @@ package com.itp13113.filesync;
 import java.io.File;
 import java.io.IOException;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
@@ -15,7 +17,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.LinearLayout;
 
+import com.dropbox.client2.session.AccessTokenPair;
 import com.itp13113.filesync.dropbox.DropboxDriver;
 import com.itp13113.filesync.services.CloudStorageAuthenticationError;
 import com.itp13113.filesync.services.CloudStorageInterface;
@@ -23,17 +27,21 @@ import com.itp13113.filesync.services.StorageManager;
 
 public class MainActivity extends ActionBarActivity {
     private StorageManager storageManager;
+    private LinearLayout fileList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
+        //get the list view where files will be presented
+        fileList = (LinearLayout) this.findViewById(R.id.fileList);
+
 		//check if configuration with stored services exists
         AssetManager mg = getResources().getAssets();
         try {
             mg.open("storages.xml");
-            storageManager = new StorageManager( getAssets() );
+            storageManager = new StorageManager( getAssets() , fileList);
             storageManager.setContext(getApplicationContext());
             storageManager.authenticate();
             storageManager.list();
@@ -91,22 +99,31 @@ public class MainActivity extends ActionBarActivity {
     protected void onResume() {
         super.onResume();
 
-        DropboxDriver dDriver;
+        /*DropboxDriver dDriver = storageManager.getPendingDropboxDriver();
         if (dDriver != null) {
             if (dDriver.mDBApi.getSession().authenticationSuccessful()) {
                 try {
                     // Required to complete auth, sets the access token on the session
                     dDriver.mDBApi.getSession().finishAuthentication();
 
-                    String accessToken = dDriver.mDBApi.getSession().getAccessTokenPair().secret;
+                    AccessTokenPair accessToken = dDriver.mDBApi.getSession().getAccessTokenPair();
+
+                    //store the access token
+                    SharedPreferences prefs = this.getSharedPreferences(
+                            "com.itp13113.FileSync", Context.MODE_PRIVATE);
+                    prefs.edit().putString("DropboxKey", accessToken.key).apply();
+                    prefs.edit().putString("DropboxSecret", accessToken.secret).apply();
 
                     dDriver.setDirectory(dDriver.getHomeDirectory());
-                    dDriver.list();
+                    storageManager.list();
+
                 } catch (IllegalStateException e) {
                     System.out.println("Error authenticating dropbox");
                 }
+            } else {
+                System.out.println("Could not loggin to dropbox");
             }
-        }
+        }*/
     }
 
 }

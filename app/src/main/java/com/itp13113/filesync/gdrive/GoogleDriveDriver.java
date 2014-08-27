@@ -168,8 +168,9 @@ public class GoogleDriveDriver implements CloudStorageInterface {
                             request.getPageToken().length() > 0);
 
                     for(com.google.api.services.drive.model.File f: res) {
-                        resultList.add( new CloudFile(f.getId(), f.getTitle(), f.getIconLink(), f.getMimeType().equals("directory"), f.getMimeType()) );
-                        System.out.println("~~~" + f.getTitle() + " " + f.getIconLink() + " " + f.getMimeType() + " " + f.getId());
+                        String icon = "icons/gdrive/" + f.getIconLink().substring(f.getIconLink().lastIndexOf("/") + 1);
+                        resultList.add( new CloudFile(f.getId(), f.getTitle(), icon, f.getMimeType().equals("directory"), f.getMimeType()) );
+                        System.out.println("~~~" + f.getTitle() + " " + icon + " " + f.getMimeType() + " " + f.getId());
                     }
 
 

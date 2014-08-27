@@ -302,7 +302,7 @@ int id action_context_bar 0x7f070020
 int id action_menu_divider 0x7f070018
 int id action_menu_presenter 0x7f070019
 int id action_mode_close_button 0x7f070027
-int id action_settings 0x7f070043
+int id action_settings 0x7f070044
 int id activity_chooser_view_content 0x7f070028
 int id always 0x7f070012
 int id beginning 0x7f07000a
@@ -317,13 +317,14 @@ int id edit_query 0x7f070033
 int id end 0x7f07000c
 int id expand_activities_button 0x7f070029
 int id expanded_menu 0x7f07002f
+int id fileList 0x7f070040
 int id home 0x7f07001a
 int id homeAsUp 0x7f070005
 int id hybrid 0x7f07000f
 int id icon 0x7f07002d
 int id ifRoom 0x7f070011
 int id image 0x7f07002a
-int id linearLayout 0x7f070040
+int id linearLayout 0x7f070041
 int id listMode 0x7f070001
 int id list_item 0x7f07002c
 int id middle 0x7f07000b
@@ -352,8 +353,8 @@ int id split_action_bar 0x7f070021
 int id submit_area 0x7f07003c
 int id tabMode 0x7f070002
 int id terrain 0x7f07000e
-int id textView1 0x7f070041
-int id textView2 0x7f070042
+int id textView1 0x7f070042
+int id textView2 0x7f070043
 int id title 0x7f07002e
 int id top_action_bar 0x7f070023
 int id up 0x7f070024
