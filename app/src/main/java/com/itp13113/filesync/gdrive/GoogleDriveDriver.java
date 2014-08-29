@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Stack;
 import java.util.Vector;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -46,12 +47,15 @@ import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.FileList;
 import com.itp13113.filesync.services.CloudFile;
 import com.itp13113.filesync.services.CloudStorageAuthenticationError;
-import com.itp13113.filesync.services.CloudStorageInterface;
+import com.itp13113.filesync.services.CloudStorageDirectoryNotExists;
+import com.itp13113.filesync.services.CloudStorageDriver;
 
-public class GoogleDriveDriver implements CloudStorageInterface {
+public class GoogleDriveDriver extends CloudStorageDriver {
     private Context context;
+    private String currentFolderID = "root";
+    private Stack<String> prevFolderIDs = new Stack<String>();
     protected Drive drive = null;
-    private String currentDirectory;
+
     //locks
     Integer authenticationComplete = new Integer(0);
 
@@ -68,6 +72,42 @@ public class GoogleDriveDriver implements CloudStorageInterface {
     @Override
     public String getHomeDirectory() {
         return "root";
+    }
+
+    @Override
+    public void setDirectory(String directory) throws CloudStorageDirectoryNotExists {
+        if (directory.equals("..") && currentDirectory.equals(getHomeDirectory())) { //parent directory unavaildable on <home>
+            return;
+        }
+
+        directoryExists = true;
+
+        if (directory.equals(".") ) { //current directory
+            return;
+        }
+
+        if (directory.equals("..") && !currentDirectory.equals(getHomeDirectory())) { //parent directory - unavaildable on <home>
+            currentDirectory = currentDirectory.substring(0, currentDirectory.lastIndexOf("/"));
+            currentFolderID = prevFolderIDs.pop();
+            return;
+        }
+
+        currentDirectory += "/" + directory;
+        prevFolderIDs.push(new String(currentFolderID));
+
+        for (CloudFile file : fileList) { //find a subdirectory
+            if (file.isDirectory() && file.getTitle().equals(directory)) {
+                System.out.println("Folder ID = " + currentFolderID);
+                currentFolderID = file.getId();
+                return;
+            }
+        }
+
+        //directory not found in the drive
+        directoryExists = false;
+        currentFolderID = "-1";
+
+        throw new CloudStorageDirectoryNotExists();
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -137,14 +177,14 @@ public class GoogleDriveDriver implements CloudStorageInterface {
     }
 
     @Override
-    public void setDirectory(String currentDirectory) {
-        this.currentDirectory = currentDirectory;
-    }
-
-    @Override
     public Vector<CloudFile> list() {
-        final Vector<CloudFile> resultList = new Vector<CloudFile>();
         final Integer listingComplete = new Integer(0);
+
+        fileList.removeAllElements();
+        //check if this directory exists in the drive
+        if (!this.directoryExists) {
+            return fileList;
+        }
 
         System.out.println("ls");
         Thread thread = new Thread(new Runnable(){
@@ -156,7 +196,7 @@ public class GoogleDriveDriver implements CloudStorageInterface {
                     System.out.println("~~~Listing");
                     do {
                         try {
-                            FileList files = request.setQ("'" +  currentDirectory + "' in parents and trashed=false").execute();
+                            FileList files = request.setQ("'" +  currentFolderID + "' in parents and trashed=false").execute();
 
                             res.addAll(files.getItems());
                             request.setPageToken(files.getNextPageToken());
@@ -169,7 +209,7 @@ public class GoogleDriveDriver implements CloudStorageInterface {
 
                     for(com.google.api.services.drive.model.File f: res) {
                         String icon = "icons/gdrive/" + f.getIconLink().substring(f.getIconLink().lastIndexOf("/") + 1);
-                        resultList.add( new CloudFile(f.getId(), f.getTitle(), icon, f.getMimeType().equals("directory"), f.getMimeType()) );
+                        fileList.add( new CloudFile(f.getId(), f.getTitle(), icon, f.getMimeType().equals("application/vnd.google-apps.folder"), f.getMimeType()) );
                         System.out.println("~~~" + f.getTitle() + " " + icon + " " + f.getMimeType() + " " + f.getId());
                     }
 
@@ -198,6 +238,6 @@ public class GoogleDriveDriver implements CloudStorageInterface {
         }
         System.out.println("Ls  complete");
 
-        return resultList;
+        return fileList;
     }
 }

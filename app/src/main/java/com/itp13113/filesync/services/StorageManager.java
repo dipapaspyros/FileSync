@@ -1,12 +1,18 @@
 package com.itp13113.filesync.services;
 
+import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.itp13113.filesync.dropbox.DropboxDriver;
 import com.itp13113.filesync.gdrive.GoogleDriveDriver;
@@ -29,20 +35,44 @@ import java.util.Vector;
 /**
  * Created by dimitris on 26/8/2014.
  */
-public class StorageManager implements CloudStorageInterface {
+
+class CloudFileClickListener implements View.OnClickListener {
+    private CloudFile file;
+    private StorageManager storageManager;
+
+    public CloudFileClickListener(StorageManager storageManager, CloudFile file) {
+        this.storageManager = storageManager;
+        this.file = file;
+    }
+
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    @Override
+    public void onClick(View v) {
+        System.out.println(file.getTitle() + " " + file.isDirectory());
+
+        if (file.isDirectory()) {
+            storageManager.setDirectory( file.getTitle() );
+            storageManager.list();
+        }
+    }
+}
+
+public class StorageManager extends CloudStorageDriver {
     private Context context;
-    private LinearLayout fileList;
-    private ArrayList<CloudStorageInterface> storages;
+    private LinearLayout fileListView;
+    private EditText dirEditText;
+    private ArrayList<CloudStorageDriver> storages;
     private AssetManager assetManager;
 
     public Integer onResume = new Integer(0);
     private Drawable icon;
 
-    public StorageManager(AssetManager assetManager, LinearLayout fileList) {
+    public StorageManager(AssetManager assetManager, LinearLayout fileListView, EditText dirEditText) {
         this.assetManager = assetManager;
-        this.fileList = fileList;
+        this.fileListView = fileListView;
+        this.dirEditText = dirEditText;
 
-        storages = new ArrayList<CloudStorageInterface>();
+        storages = new ArrayList<CloudStorageDriver>();
 
         try {
             String[] xmlText = new String[5];
@@ -91,8 +121,8 @@ public class StorageManager implements CloudStorageInterface {
     public void setContext(Context context) {
         this.context = context;
 
-        for (int i = 0; i < storages.size(); i++) {
-            storages.get(i).setContext(context);
+        for (CloudStorageDriver storage : storages) {
+            storage.setContext(context);
         }
     }
 
@@ -109,32 +139,37 @@ public class StorageManager implements CloudStorageInterface {
     @Override
     public void authenticate() throws CloudStorageAuthenticationError {
 
-        for (int i = 0; i < storages.size(); i++) {
-            CloudStorageInterface storage = storages.get(i);
+        for (CloudStorageDriver storage : storages) {
             storage.authenticate();
-            storage.setDirectory(storage.getHomeDirectory());
         }
     }
 
     @Override
     public void setDirectory(String directory) {
-        for (int i = 0; i < storages.size(); i++) {
-            storages.get(i).setDirectory(directory);
+        //call "change directory" for each storage
+        for (CloudStorageDriver storage : storages) {
+            try {
+                storage.setDirectory(directory);
+            } catch (CloudStorageDirectoryNotExists cloudStorageDirectoryNotExists) {
+
+            }
         }
+
+        //change the directory title in the text view
+        dirEditText.setText(storages.get(0).getDirectoryTitle() );
     }
 
     @Override
     public Vector<CloudFile> list() {
         //get a list of all the files
-        final Vector<CloudFile> result = new Vector<CloudFile>();
-
-        for (int i = 0; i < storages.size(); i++) {
-            result.addAll(storages.get(i).list());
+        fileList.removeAllElements();
+        for (CloudStorageDriver storage : storages) {
+            fileList.addAll(storage.list());
         }
 
         //show the files
-        fileList.removeAllViewsInLayout();
-        for (CloudFile file : result) {
+        fileListView.removeAllViews();
+        for (CloudFile file : fileList) {
             Button b = new Button(context);
             b.setText(file.getTitle());
 
@@ -149,10 +184,13 @@ public class StorageManager implements CloudStorageInterface {
                 }
             }
 
-            fileList.addView(b);
+            CloudFileClickListener cl = new CloudFileClickListener(this, file);
+            b.setOnClickListener(cl);
+
+            fileListView.addView(b);
         }
 
 
-        return result;
+        return fileList;
     }
 }

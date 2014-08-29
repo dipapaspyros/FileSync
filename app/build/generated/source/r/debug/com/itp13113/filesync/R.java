@@ -1108,6 +1108,8 @@ containing a value of this type.
         public static final int ic_plusone_small_off_client=0x7f020071;
         public static final int ic_plusone_standard_off_client=0x7f020072;
         public static final int ic_plusone_tall_off_client=0x7f020073;
+        public static final int refresh=0x7f020074;
+        public static final int up=0x7f020075;
     }
     public static final class id {
         public static final int action_bar=0x7f07001f;
@@ -1121,7 +1123,7 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f070018;
         public static final int action_menu_presenter=0x7f070019;
         public static final int action_mode_close_button=0x7f070027;
-        public static final int action_settings=0x7f070044;
+        public static final int action_settings=0x7f070047;
         public static final int activity_chooser_view_content=0x7f070028;
         public static final int always=0x7f070012;
         public static final int beginning=0x7f07000a;
@@ -1130,20 +1132,21 @@ containing a value of this type.
         public static final int container=0x7f07003f;
         public static final int default_activity_button=0x7f07002b;
         public static final int dialog=0x7f070015;
+        public static final int dirTextView=0x7f070040;
         public static final int disableHome=0x7f070008;
         public static final int dropdown=0x7f070016;
         public static final int edit_query=0x7f070033;
         public static final int end=0x7f07000c;
         public static final int expand_activities_button=0x7f070029;
         public static final int expanded_menu=0x7f07002f;
-        public static final int fileList=0x7f070040;
+        public static final int fileList=0x7f070043;
         public static final int home=0x7f07001a;
         public static final int homeAsUp=0x7f070005;
         public static final int hybrid=0x7f07000f;
         public static final int icon=0x7f07002d;
         public static final int ifRoom=0x7f070011;
         public static final int image=0x7f07002a;
-        public static final int linearLayout=0x7f070041;
+        public static final int linearLayout=0x7f070044;
         public static final int listMode=0x7f070001;
         public static final int list_item=0x7f07002c;
         public static final int middle=0x7f07000b;
@@ -1153,6 +1156,7 @@ containing a value of this type.
         public static final int progress_circular=0x7f07001b;
         public static final int progress_horizontal=0x7f07001c;
         public static final int radio=0x7f070032;
+        public static final int refreshButton=0x7f070041;
         public static final int satellite=0x7f07000d;
         public static final int search_badge=0x7f070035;
         public static final int search_bar=0x7f070034;
@@ -1172,11 +1176,12 @@ containing a value of this type.
         public static final int submit_area=0x7f07003c;
         public static final int tabMode=0x7f070002;
         public static final int terrain=0x7f07000e;
-        public static final int textView1=0x7f070042;
-        public static final int textView2=0x7f070043;
+        public static final int textView1=0x7f070045;
+        public static final int textView2=0x7f070046;
         public static final int title=0x7f07002e;
         public static final int top_action_bar=0x7f070023;
         public static final int up=0x7f070024;
+        public static final int upButton=0x7f070042;
         public static final int useLogo=0x7f070003;
         public static final int withText=0x7f070013;
     }

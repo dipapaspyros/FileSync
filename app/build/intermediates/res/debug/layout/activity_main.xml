@@ -7,11 +7,52 @@
     tools:ignore="MergeRootFrame" >
 
     <LinearLayout
-        android:id="@+id/fileList"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical" />
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        >
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp">
+            <EditText
+                android:id="@+id/dirTextView"
+                android:focusable="false"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
 
+                android:enabled="false"
+                android:text="Home"
+                >
+            </EditText>
+            <ImageButton
+                android:id="@+id/refreshButton"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_toRightOf="@+id/dirTextView"
+                android:src="@drawable/refresh"
+                android:onClick="onRefreshClick"
+                />
+            <ImageButton
+                android:id="@+id/upButton"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_toRightOf="@+id/refreshButton"
+                android:src="@drawable/up"
+                android:onClick="onUpClick"
+                />
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            >
+            <LinearLayout
+                android:id="@+id/fileList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical" />
+        </ScrollView>
+    </LinearLayout>
 </FrameLayout>
 
 <!-- From: file:/C:/Users/dimitris/AndroidstudioProjects/FileSync/app/src/main/res/layout/activity_main.xml -->

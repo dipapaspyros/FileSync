@@ -138,6 +138,9 @@
             <file
                 name="icons/gdrive/icon_11_collection_list.png"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive\icon_11_collection_list.png" />
+            <file
+                name="icons/gdrive/icon_10_generic_list.png"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive\icon_10_generic_list.png" />
         </source>
     </dataSet>
     <dataSet config="debug" >

@@ -59,7 +59,6 @@ class NewServiceClickListener implements OnClickListener {
             try {
                 gDriver.setContext(context);
                 gDriver.authenticate();
-                gDriver.setDirectory( gDriver.getHomeDirectory() );
                 gDriver.list();
             } catch (CloudStorageAuthenticationError cloudStorageAuthenticationError) {
                 System.out.println("Could not authenticate");

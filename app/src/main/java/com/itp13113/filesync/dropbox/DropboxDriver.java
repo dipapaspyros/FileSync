@@ -11,7 +11,7 @@ import com.dropbox.client2.session.AppKeyPair;
 import com.dropbox.client2.session.Session;
 import com.itp13113.filesync.services.CloudFile;
 import com.itp13113.filesync.services.CloudStorageAuthenticationError;
-import com.itp13113.filesync.services.CloudStorageInterface;
+import com.itp13113.filesync.services.CloudStorageDriver;
 
 import com.dropbox.core.*;
 
@@ -22,9 +22,8 @@ import java.util.Vector;
 /**
  * Created by dimitris on 29/7/2014.
  */
-public class DropboxDriver implements CloudStorageInterface {
+public class DropboxDriver extends CloudStorageDriver {
     private Context context;
-    private String directory;
     private Integer listingComplete = new Integer(0);
 
     final static private String APP_KEY = "pcgi5otwwfny748";
@@ -69,32 +68,31 @@ public class DropboxDriver implements CloudStorageInterface {
         }
     }
 
-    @Override
-    public void setDirectory(String directory) {
-        this.directory = directory;
-    }
-
     private String getIconFile(String ic) {
         return "icons/dropbox/" + ic + ".gif";
     }
 
     @Override
     public Vector<CloudFile> list() {
-        final Vector<CloudFile> resultList = new Vector<CloudFile>();
+        fileList.removeAllElements();
+        //check if this directory exists in dropbox
+        if (!this.directoryExists) {
+            return fileList;
+        }
 
         Thread thread = new Thread(new Runnable(){
             @Override
             public void run() {
                 try {
 
-                    DropboxAPI.Entry entries = mDBApi.metadata(directory, 100, null, true, null);
+                    DropboxAPI.Entry entries = mDBApi.metadata(currentDirectory, 100, null, true, null);
                     for (DropboxAPI.Entry e : entries.contents) {
                         String icon = getIconFile(e.icon);
                         System.out.println("----" + e.fileName() + " " + icon + " " + e.mimeType + " " + e.hash);
-                        resultList.add(new CloudFile(e.fileName(), e.fileName(), icon, e.isDir, e.mimeType));
+                        fileList.add(new CloudFile(e.fileName(), e.fileName(), icon, e.isDir, e.mimeType));
                     }
                 } catch (DropboxException e) {
-                    System.out.println("Dropbox could not list " + directory + " directory");
+                    System.out.println("Dropbox could not list " + currentDirectory + " directory");
                     e.printStackTrace();
                 }
 
@@ -104,6 +102,7 @@ public class DropboxDriver implements CloudStorageInterface {
             }});
         //start the file listing thread
         thread.start();
+
         //wait for it to complete listing
         System.out.println("Waiting ls");
         synchronized(listingComplete) {
@@ -114,6 +113,6 @@ public class DropboxDriver implements CloudStorageInterface {
         }
         System.out.println("Ls  complete");
 
-        return resultList;
+        return fileList;
     }
 }

@@ -17,17 +17,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.dropbox.client2.session.AccessTokenPair;
 import com.itp13113.filesync.dropbox.DropboxDriver;
 import com.itp13113.filesync.services.CloudStorageAuthenticationError;
-import com.itp13113.filesync.services.CloudStorageInterface;
 import com.itp13113.filesync.services.StorageManager;
 
 public class MainActivity extends ActionBarActivity {
     private StorageManager storageManager;
     private LinearLayout fileList;
+    private EditText dirTextView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -36,12 +38,14 @@ public class MainActivity extends ActionBarActivity {
 
         //get the list view where files will be presented
         fileList = (LinearLayout) this.findViewById(R.id.fileList);
+        //get the directory title edit view
+        dirTextView = (EditText) this.findViewById(R.id.dirTextView);
 
 		//check if configuration with stored services exists
         AssetManager mg = getResources().getAssets();
         try {
             mg.open("storages.xml");
-            storageManager = new StorageManager( getAssets() , fileList);
+            storageManager = new StorageManager( getAssets() , fileList, dirTextView);
             storageManager.setContext(getApplicationContext());
             storageManager.authenticate();
             storageManager.list();
@@ -126,4 +130,14 @@ public class MainActivity extends ActionBarActivity {
         }*/
     }
 
+    public void onRefreshClick(View v) {
+        // does something very interesting
+        storageManager.list();
+    }
+
+    public void onUpClick(View v) {
+        // does something very interesting
+        storageManager.setDirectory("..");
+        storageManager.list();
+    }
 }

@@ -93,7 +93,6 @@ public class WelcomeActivity extends ActionBarActivity {
                     prefs.edit().putString("DropboxKey", accessToken.key).apply();
                     prefs.edit().putString("DropboxSecret", accessToken.secret).apply();
 
-                    serviceTypeManager.dDriver.setDirectory( serviceTypeManager.dDriver.getHomeDirectory() );
                     serviceTypeManager.dDriver.list();
                 } catch (IllegalStateException e) {
                     System.out.println("Error authenticating dropbox");
