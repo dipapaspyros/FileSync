@@ -11,8 +11,9 @@ public class CloudFile {
     private String iconLink;
     private CloudFileType fileType;
     private String mimeType;
+    private Long size;
 
-    public CloudFile(String id, String title, String iconLink, boolean isDirectory, String mimeType) {
+    public CloudFile(String id, String title, String iconLink, boolean isDirectory, String mimeType, long size) {
         this.id = id;
         this.title = title;
         this.iconLink = iconLink;
@@ -21,6 +22,7 @@ public class CloudFile {
         else
             this.fileType = CloudFileType.CFT_FILE;
         this.mimeType = mimeType;
+        this.size = new Long(size);
     }
 
     public String getId() {
@@ -41,5 +43,16 @@ public class CloudFile {
 
     public boolean isDirectory() {
         return this.fileType == CloudFileType.CFT_DIRECTORY;
+    }
+
+    public Long getFileSize() {return size;}
+
+    public String getFileSizeReadable() {
+        long bytes = this.size.longValue();
+        int unit = 1000;
+        if (bytes < unit) return bytes + " B";
+        int exp = (int) (Math.log(bytes) / Math.log(unit));
+        String pre = ("KMGTPE").charAt(exp-1) + "";
+        return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
     }
 }

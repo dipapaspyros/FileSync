@@ -35,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.google.api.client.http.FileContent;
+import com.google.api.client.http.HttpResponseException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
@@ -82,7 +83,7 @@ public class GoogleDriveDriver extends CloudStorageDriver {
 
         directoryExists = true;
 
-        if (directory.equals(".") ) { //current directory
+        if (directory.equals(".")) { //current directory
             return;
         }
 
@@ -123,9 +124,8 @@ public class GoogleDriveDriver extends CloudStorageDriver {
         if (am.getAccounts().length == 0) {
             System.out.println("No Google account found");
             throw new CloudStorageAuthenticationError();
-        }
-        else {
-            Thread thread = new Thread(new Runnable(){
+        } else {
+            Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
@@ -157,15 +157,16 @@ public class GoogleDriveDriver extends CloudStorageDriver {
                         System.out.println("Could not authenticate");
                     }
 
-                    synchronized(authenticationComplete) {
+                    synchronized (authenticationComplete) {
                         authenticationComplete.notify();
                     }
-                } });
+                }
+            });
             //start the authentication thread
             thread.start();
 
             //wait for the authentication to complete
-            synchronized(authenticationComplete) {
+            synchronized (authenticationComplete) {
                 try {
                     authenticationComplete.wait();
                 } catch (InterruptedException e) {
@@ -187,30 +188,48 @@ public class GoogleDriveDriver extends CloudStorageDriver {
         }
 
         System.out.println("ls");
-        Thread thread = new Thread(new Runnable(){
+        Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
                     List<com.google.api.services.drive.model.File> res = new ArrayList<File>();
                     Drive.Files.List request = drive.files().list();
                     System.out.println("~~~Listing");
+
                     do {
                         try {
-                            FileList files = request.setQ("'" +  currentFolderID + "' in parents and trashed=false").execute();
+                            FileList files = request.setQ("'" + currentFolderID + "' in parents and trashed=false").execute();
 
                             res.addAll(files.getItems());
                             request.setPageToken(files.getNextPageToken());
+                        } catch (HttpResponseException e) {
+
+                            if (e.getStatusCode() == 401) { // Credentials have been revoked.
+                                System.out.println("Google Drive API credentials have been revoked");
+                                // TODO: Redirect the user to the authorization URL.
+                                authenticate();
+                            }
                         } catch (IOException e) {
                             System.out.println("An error occurred: " + e);
                             request.setPageToken(null);
+
                         }
+
                     } while (request.getPageToken() != null &&
                             request.getPageToken().length() > 0);
 
-                    for(com.google.api.services.drive.model.File f: res) {
+
+                    for (com.google.api.services.drive.model.File f : res) {
+                        Long fSize = f.getFileSize(); long size;
+                        if (fSize != null) {
+                            size = fSize.longValue();
+                        } else {
+                            size = f.size();
+                        }
+
                         String icon = "icons/gdrive/" + f.getIconLink().substring(f.getIconLink().lastIndexOf("/") + 1);
-                        fileList.add( new CloudFile(f.getId(), f.getTitle(), icon, f.getMimeType().equals("application/vnd.google-apps.folder"), f.getMimeType()) );
                         System.out.println("~~~" + f.getTitle() + " " + icon + " " + f.getMimeType() + " " + f.getId());
+                        fileList.add(new CloudFile(f.getId(), f.getTitle(), icon, f.getMimeType().equals("application/vnd.google-apps.folder"), f.getMimeType(), size));
                     }
 
 
@@ -220,7 +239,7 @@ public class GoogleDriveDriver extends CloudStorageDriver {
 
                 System.out.println("~~~Listed");
                 //notify parent function that listing has completed
-                synchronized(listingComplete) {
+                synchronized (listingComplete) {
                     listingComplete.notify();
                 }
             }
@@ -230,7 +249,7 @@ public class GoogleDriveDriver extends CloudStorageDriver {
         thread.start();
         //wait for it to complete listing
         System.out.println("Waiting ls");
-        synchronized(listingComplete) {
+        synchronized (listingComplete) {
             try {
                 listingComplete.wait();
             } catch (InterruptedException e) {

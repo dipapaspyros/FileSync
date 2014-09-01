@@ -133,7 +133,7 @@ public class StorageManager extends CloudStorageDriver {
 
     @Override
     public String getHomeDirectory() {
-        return "";
+        return "Home";
     }
 
     @Override
@@ -155,8 +155,10 @@ public class StorageManager extends CloudStorageDriver {
             }
         }
 
+        //storage manager directory contains just the title
+        this.currentDirectory = storages.get(0).getDirectoryTitle();
         //change the directory title in the text view
-        dirEditText.setText(storages.get(0).getDirectoryTitle() );
+        dirEditText.setText(currentDirectory);
     }
 
     @Override
@@ -171,15 +173,18 @@ public class StorageManager extends CloudStorageDriver {
         fileListView.removeAllViews();
         for (CloudFile file : fileList) {
             Button b = new Button(context);
-            b.setText(file.getTitle());
+            String bTitle = file.getTitle();
+            if (!file.isDirectory()) {
+                bTitle = bTitle + " (" + file.getFileSizeReadable() + ")";
+            }
+            b.setText(bTitle);
 
             //load the icon if it was specified
             if (!file.getIconLink().equals("")) {
                 try {
                     Drawable icon  = Drawable.createFromResourceStream(context.getResources(), null, assetManager.open(file.getIconLink()), file.getIconLink(), new BitmapFactory.Options());
                     b.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
-                } catch (IOException e) {
-                    //invalid icon name - do nothing
+                } catch (IOException e) { //invalid icon name - do nothing
                     System.out.println("Icon could not be displayed - " + file.getIconLink());
                 }
             }

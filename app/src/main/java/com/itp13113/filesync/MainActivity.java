@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -131,13 +133,23 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onRefreshClick(View v) {
-        // does something very interesting
+        // list all files in all storages again
         storageManager.list();
     }
 
     public void onUpClick(View v) {
-        // does something very interesting
+        // go to up level
         storageManager.setDirectory("..");
         storageManager.list();
     }
+
+    @Override
+    public void onBackPressed() {
+        if (storageManager.getHomeDirectory().equals( storageManager.getDirectory())) { //return to parent directory
+            super.onBackPressed();
+        } else { //if already at <home> just leave the application
+            onUpClick((ImageButton) this.findViewById(R.id.upButton));
+        }
+    }
+
 }

@@ -30,6 +30,11 @@ public abstract class CloudStorageDriver {
         }
 
     }
+
+    public String getDirectory() {
+        return currentDirectory;
+    }
+
     public void setDirectory(String directory) throws CloudStorageDirectoryNotExists {
         if (directory.equals("..") && currentDirectory.equals(getHomeDirectory())) { //parent directory unavaildable on <home>
             return;

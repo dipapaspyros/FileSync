@@ -89,7 +89,7 @@ public class DropboxDriver extends CloudStorageDriver {
                     for (DropboxAPI.Entry e : entries.contents) {
                         String icon = getIconFile(e.icon);
                         System.out.println("----" + e.fileName() + " " + icon + " " + e.mimeType + " " + e.hash);
-                        fileList.add(new CloudFile(e.fileName(), e.fileName(), icon, e.isDir, e.mimeType));
+                        fileList.add(new CloudFile(e.fileName(), e.fileName(), icon, e.isDir, e.mimeType, e.bytes));
                     }
                 } catch (DropboxException e) {
                     System.out.println("Dropbox could not list " + currentDirectory + " directory");
