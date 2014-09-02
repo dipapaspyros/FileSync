@@ -17,4 +17,12 @@
         <list_uri></list_uri>
     </service_type>
 
+	<service_type>
+        <id>onedrive</id>
+        <title>Microsoft OneDrive</title>
+        <icon>icons/onedrive.png</icon>
+        <auth_type>oauth2</auth_type>
+        <list_uri></list_uri>
+    </service_type>
+	
 </service_types>

@@ -47,7 +47,7 @@ public class MainActivity extends ActionBarActivity {
         AssetManager mg = getResources().getAssets();
         try {
             mg.open("storages.xml");
-            storageManager = new StorageManager( getAssets() , fileList, dirTextView);
+            storageManager = new StorageManager( this, getAssets() , fileList, dirTextView);
             storageManager.setContext(getApplicationContext());
             storageManager.authenticate();
             storageManager.list();
@@ -145,9 +145,9 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        if (storageManager.getHomeDirectory().equals( storageManager.getDirectory())) { //return to parent directory
+        if (storageManager.getHomeDirectory().equals( storageManager.getDirectory())) { //if already at <home> just leave the application
             super.onBackPressed();
-        } else { //if already at <home> just leave the application
+        } else { //return to previous (1 level up) directory
             onUpClick((ImageButton) this.findViewById(R.id.upButton));
         }
     }

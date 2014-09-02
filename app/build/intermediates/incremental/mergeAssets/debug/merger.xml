@@ -10,125 +10,122 @@
     <dataSet config="main" >
         <source path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets" >
             <file
-                name="icons/dropbox.png"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox.png" />
-            <file
-                name="icons/gdrive.png"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive.png" />
-            <file
-                name="service_types.xml"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\service_types.xml" />
-            <file
-                name="storages.xml"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\storages.xml" />
-            <file
-                name="icons/dropbox/page_white_csharp.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_csharp.gif" />
-            <file
-                name="icons/dropbox/page_white_dvd.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_dvd.gif" />
-            <file
-                name="icons/dropbox/folder_public.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\folder_public.gif" />
-            <file
-                name="icons/dropbox/page_white_ruby.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_ruby.gif" />
-            <file
-                name="icons/dropbox/page_white.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white.gif" />
-            <file
-                name="icons/dropbox/page_white_text.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_text.gif" />
-            <file
-                name="icons/dropbox/page_white_c.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_c.gif" />
-            <file
-                name="icons/dropbox/page_white_picture.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_picture.gif" />
+                name="icons/dropbox/folder.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\folder.gif" />
             <file
                 name="icons/dropbox/folder_app.gif"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\folder_app.gif" />
             <file
+                name="icons/dropbox/folder_camera.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\folder_camera.gif" />
+            <file
                 name="icons/dropbox/folder_gray.gif"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\folder_gray.gif" />
             <file
-                name="icons/dropbox/folder_user_gray.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\folder_user_gray.gif" />
-            <file
-                name="icons/dropbox/page_white_excel.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_excel.gif" />
-            <file
-                name="icons/dropbox/page_white_actionscript.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_actionscript.gif" />
-            <file
-                name="icons/dropbox/page_white_code.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_code.gif" />
-            <file
-                name="icons/dropbox/page_white_acrobat.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_acrobat.gif" />
-            <file
-                name="icons/dropbox/page_white_tux.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_tux.gif" />
+                name="icons/dropbox/folder_public.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\folder_public.gif" />
             <file
                 name="icons/dropbox/folder_star.gif"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\folder_star.gif" />
             <file
-                name="icons/dropbox/folder_camera.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\folder_camera.gif" />
+                name="icons/dropbox/folder_user.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\folder_user.gif" />
             <file
-                name="icons/dropbox/page_white_sound.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_sound.gif" />
-            <file
-                name="icons/dropbox/page_white_gear.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_gear.gif" />
-            <file
-                name="icons/dropbox/page_white_php.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_php.gif" />
-            <file
-                name="icons/dropbox/page_white_vector.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_vector.gif" />
-            <file
-                name="icons/dropbox/folder.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\folder.gif" />
-            <file
-                name="icons/dropbox/page_white_word.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_word.gif" />
+                name="icons/dropbox/folder_user_gray.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\folder_user_gray.gif" />
             <file
                 name="icons/dropbox/package.gif"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\package.gif" />
             <file
-                name="icons/dropbox/page_white_film.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_film.gif" />
+                name="icons/dropbox/page_white.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white.gif" />
             <file
-                name="icons/dropbox/page_white_cplusplus.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_cplusplus.gif" />
+                name="icons/dropbox/page_white_acrobat.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_acrobat.gif" />
+            <file
+                name="icons/dropbox/page_white_actionscript.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_actionscript.gif" />
+            <file
+                name="icons/dropbox/page_white_c.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_c.gif" />
+            <file
+                name="icons/dropbox/page_white_code.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_code.gif" />
             <file
                 name="icons/dropbox/page_white_compressed.gif"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_compressed.gif" />
             <file
-                name="icons/dropbox/page_white_flash.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_flash.gif" />
+                name="icons/dropbox/page_white_cplusplus.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_cplusplus.gif" />
             <file
-                name="icons/dropbox/folder_user.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\folder_user.gif" />
-            <file
-                name="icons/dropbox/page_white_visualstudio.gif"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_visualstudio.gif" />
+                name="icons/dropbox/page_white_csharp.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_csharp.gif" />
             <file
                 name="icons/dropbox/page_white_cup.gif"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_cup.gif" />
             <file
+                name="icons/dropbox/page_white_dvd.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_dvd.gif" />
+            <file
+                name="icons/dropbox/page_white_excel.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_excel.gif" />
+            <file
+                name="icons/dropbox/page_white_film.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_film.gif" />
+            <file
+                name="icons/dropbox/page_white_flash.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_flash.gif" />
+            <file
+                name="icons/dropbox/page_white_gear.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_gear.gif" />
+            <file
                 name="icons/dropbox/page_white_paint.gif"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_paint.gif" />
+            <file
+                name="icons/dropbox/page_white_php.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_php.gif" />
+            <file
+                name="icons/dropbox/page_white_picture.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_picture.gif" />
             <file
                 name="icons/dropbox/page_white_powerpoint.gif"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_powerpoint.gif" />
             <file
-                name="icons/gdrive/icon_11_shared_collection_list.png"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive\icon_11_shared_collection_list.png" />
+                name="icons/dropbox/page_white_ruby.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_ruby.gif" />
+            <file
+                name="icons/dropbox/page_white_sound.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_sound.gif" />
+            <file
+                name="icons/dropbox/page_white_text.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_text.gif" />
+            <file
+                name="icons/dropbox/page_white_tux.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_tux.gif" />
+            <file
+                name="icons/dropbox/page_white_vector.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_vector.gif" />
+            <file
+                name="icons/dropbox/page_white_visualstudio.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_visualstudio.gif" />
+            <file
+                name="icons/dropbox/page_white_word.gif"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox\page_white_word.gif" />
+            <file
+                name="icons/dropbox.png"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\dropbox.png" />
+            <file
+                name="icons/gdrive/icon_10_generic_list.png"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive\icon_10_generic_list.png" />
+            <file
+                name="icons/gdrive/icon_11_collection_list.png"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive\icon_11_collection_list.png" />
             <file
                 name="icons/gdrive/icon_11_form_list.png"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive\icon_11_form_list.png" />
+            <file
+                name="icons/gdrive/icon_11_shared_collection_list.png"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive\icon_11_shared_collection_list.png" />
             <file
                 name="icons/gdrive/icon_11_spreadsheet_list.png"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive\icon_11_spreadsheet_list.png" />
@@ -136,11 +133,23 @@
                 name="icons/gdrive/icon_9_archive_list.png"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive\icon_9_archive_list.png" />
             <file
-                name="icons/gdrive/icon_11_collection_list.png"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive\icon_11_collection_list.png" />
+                name="icons/gdrive.png"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive.png" />
             <file
-                name="icons/gdrive/icon_10_generic_list.png"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive\icon_10_generic_list.png" />
+                name="icons/onedrive.jpg"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\onedrive.jpg" />
+            <file
+                name="service_types.xml"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\service_types.xml" />
+            <file
+                name="storages.xml"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\storages.xml" />
+            <file
+                name="icons/onedrive/file.ico"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\onedrive\file.ico" />
+            <file
+                name="icons/onedrive/folder.ico"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\onedrive\folder.ico" />
         </source>
     </dataSet>
     <dataSet config="debug" >

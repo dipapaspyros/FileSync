@@ -23,7 +23,6 @@ import java.util.Vector;
  * Created by dimitris on 29/7/2014.
  */
 public class DropboxDriver extends CloudStorageDriver {
-    private Context context;
     private Integer listingComplete = new Integer(0);
 
     final static private String APP_KEY = "pcgi5otwwfny748";
@@ -37,11 +36,6 @@ public class DropboxDriver extends CloudStorageDriver {
         AppKeyPair appKeys = new AppKeyPair(APP_KEY, APP_SECRET);
         AndroidAuthSession session = new AndroidAuthSession(appKeys, ACCESS_TYPE);
         mDBApi = new DropboxAPI<AndroidAuthSession>(session);
-    }
-
-    @Override
-    public void setContext(Context context) {
-        this.context = context;
     }
 
     @Override

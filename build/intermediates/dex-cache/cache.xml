@@ -20,23 +20,11 @@
         revision="20.0.0"
         sha1="2e66da15851f9f5b5079228f856c2f090ba98c38"/>
     <item
-        dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\google-http-client-gson-1.17.0-rc-2c8fad5ecc43c9c73dfaeaedfb5ec6b46e8606ed.jar"
-        jar="C:\Users\dimitris\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client-gson\1.17.0-rc\3696033c14cc5ce68fe3ac818bade2707df9c2cd\google-http-client-gson-1.17.0-rc.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="3696033c14cc5ce68fe3ac818bade2707df9c2cd"/>
-    <item
         dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\httpmime-4.0.3-63f3df6c1d52b6d9ebb48e73ba44f064ec387fdf.jar"
         jar="C:\Users\dimitris\.gradle\caches\modules-2\files-2.1\org.apache.httpcomponents\httpmime\4.0.3\e3fa40a58c124132d63a7184075520f7eb3c09cd\httpmime-4.0.3.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="e3fa40a58c124132d63a7184075520f7eb3c09cd"/>
-    <item
-        dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\jackson-core-2.2.4-f65ebdbeaf117e5412568dcde11d2bab6dc5f94a.jar"
-        jar="C:\Users\dimitris\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-core\2.2.4\95705b2e89a4101f2a82af6b303945755d7f93ab\jackson-core-2.2.4.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="95705b2e89a4101f2a82af6b303945755d7f93ab"/>
     <item
         dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\google-http-client-jackson2-1.11.0-beta-d044e79ce4a71be5750c9a96968a8127bbcf0dea.jar"
         jar="C:\Users\dimitris\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client-jackson2\1.11.0-beta\f72d3dfe80fffbc25ed7aaf818048aa6291d6583\google-http-client-jackson2-1.11.0-beta.jar"
@@ -74,6 +62,60 @@
         revision="20.0.0"
         sha1="bfb0de53a2587ccc2716155762de089b1d2b7ec8"/>
     <item
+        dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\classes-1e606b487fda85489f5233260b4611f2289c1f52.jar"
+        jar="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\classes.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
+    <item
+        dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\google-http-client-xml-1.17.0-rc-1769a97dbb1a1cf2941999e3ace020708aec41db.jar"
+        jar="C:\Users\dimitris\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client-xml\1.17.0-rc\ed8ce02cd8c41305af41ea475c61b3cf57ac8552\google-http-client-xml-1.17.0-rc.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="ed8ce02cd8c41305af41ea475c61b3cf57ac8552"/>
+    <item
+        dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\google-http-client-android-1.17.0-rc-beae84ed94787ccc3ab74157724ecce286737838.jar"
+        jar="C:\Users\dimitris\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client-android\1.17.0-rc\f3fc9acc57c2a55fd17a421710f564b73dabda21\google-http-client-android-1.17.0-rc.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="f3fc9acc57c2a55fd17a421710f564b73dabda21"/>
+    <item
+        dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\commons-codec-1.3-79de95b65b2760220021fc5eba838338b4805582.jar"
+        jar="C:\Users\dimitris\.gradle\caches\modules-2\files-2.1\commons-codec\commons-codec\1.3\fd32786786e2adb664d5ecc965da47629dca14ba\commons-codec-1.3.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="fd32786786e2adb664d5ecc965da47629dca14ba"/>
+    <item
+        dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\internal_impl-20.0.0-68f83c4486faa5d7812f652ed69daa7e5687831b.jar"
+        jar="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\libs\internal_impl-20.0.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
+    <item
+        dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\google-api-client-1.17.0-rc-e4f3c127c42702994d668546f690eb7c7c1c3598.jar"
+        jar="C:\Users\dimitris\.gradle\caches\modules-2\files-2.1\com.google.api-client\google-api-client\1.17.0-rc\f01974c9ec3e5570d8c75ecf7fce004e06757e03\google-api-client-1.17.0-rc.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="f01974c9ec3e5570d8c75ecf7fce004e06757e03"/>
+    <item
+        dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\support-annotations-20.0.0-92e2be4412a1e7dd1c90d0f9bc78e365f2a0d9ee.jar"
+        jar="C:\Users\dimitris\AppData\Local\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-annotations\20.0.0\support-annotations-20.0.0.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
+    <item
+        dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\google-http-client-gson-1.17.0-rc-2c8fad5ecc43c9c73dfaeaedfb5ec6b46e8606ed.jar"
+        jar="C:\Users\dimitris\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client-gson\1.17.0-rc\3696033c14cc5ce68fe3ac818bade2707df9c2cd\google-http-client-gson-1.17.0-rc.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="3696033c14cc5ce68fe3ac818bade2707df9c2cd"/>
+    <item
+        dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\jackson-core-2.2.4-f65ebdbeaf117e5412568dcde11d2bab6dc5f94a.jar"
+        jar="C:\Users\dimitris\.gradle\caches\modules-2\files-2.1\com.fasterxml.jackson.core\jackson-core\2.2.4\95705b2e89a4101f2a82af6b303945755d7f93ab\jackson-core-2.2.4.jar"
+        jumboMode="false"
+        revision="20.0.0"
+        sha1="95705b2e89a4101f2a82af6b303945755d7f93ab"/>
+    <item
         dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\guava-14.0.1-fae5452caeb36a066477b6afd368d940f06d336f.jar"
         jar="C:\Users\dimitris\.gradle\caches\modules-2\files-2.1\com.google.guava\guava\14.0.1\69e12f4c6aeac392555f1ea86fab82b5e5e31ad4\guava-14.0.1.jar"
         jumboMode="false"
@@ -92,35 +134,17 @@
         revision="20.0.0"
         sha1="7d1d979d0b0baa67cd00495317ccf46c050c1c25"/>
     <item
-        dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\classes-1e606b487fda85489f5233260b4611f2289c1f52.jar"
-        jar="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\classes.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="8694693636ab36910c8100ce527c258ff3ebece0"/>
-    <item
-        dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\google-http-client-xml-1.17.0-rc-1769a97dbb1a1cf2941999e3ace020708aec41db.jar"
-        jar="C:\Users\dimitris\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client-xml\1.17.0-rc\ed8ce02cd8c41305af41ea475c61b3cf57ac8552\google-http-client-xml-1.17.0-rc.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="ed8ce02cd8c41305af41ea475c61b3cf57ac8552"/>
-    <item
-        dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\httpcore-4.0.1-ce637013e020d8dd88aa1690f01d758a5d4b4053.jar"
-        jar="C:\Users\dimitris\.gradle\caches\modules-2\files-2.1\org.apache.httpcomponents\httpcore\4.0.1\e813b8722c387b22e1adccf7914729db09bcb4a9\httpcore-4.0.1.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="e813b8722c387b22e1adccf7914729db09bcb4a9"/>
-    <item
         dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\google-api-client-xml-1.17.0-rc-56a91ddc9abf401d177f27b8f46054716583ff5e.jar"
         jar="C:\Users\dimitris\.gradle\caches\modules-2\files-2.1\com.google.api-client\google-api-client-xml\1.17.0-rc\62de2de564686d5ae4be9191d7728dfe30c79790\google-api-client-xml-1.17.0-rc.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="62de2de564686d5ae4be9191d7728dfe30c79790"/>
     <item
-        dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\google-http-client-android-1.17.0-rc-beae84ed94787ccc3ab74157724ecce286737838.jar"
-        jar="C:\Users\dimitris\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client-android\1.17.0-rc\f3fc9acc57c2a55fd17a421710f564b73dabda21\google-http-client-android-1.17.0-rc.jar"
+        dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\httpcore-4.0.1-ce637013e020d8dd88aa1690f01d758a5d4b4053.jar"
+        jar="C:\Users\dimitris\.gradle\caches\modules-2\files-2.1\org.apache.httpcomponents\httpcore\4.0.1\e813b8722c387b22e1adccf7914729db09bcb4a9\httpcore-4.0.1.jar"
         jumboMode="false"
         revision="20.0.0"
-        sha1="f3fc9acc57c2a55fd17a421710f564b73dabda21"/>
+        sha1="e813b8722c387b22e1adccf7914729db09bcb4a9"/>
     <item
         dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\google-http-client-1.17.0-rc-56f1a3fe073c7d0414d7df65c76831ff8405db80.jar"
         jar="C:\Users\dimitris\.gradle\caches\modules-2\files-2.1\com.google.http-client\google-http-client\1.17.0-rc\637da6cca16f4a97c4771137bce02e7c291e67af\google-http-client-1.17.0-rc.jar"
@@ -140,34 +164,10 @@
         revision="20.0.0"
         sha1="cfef30e5d361e2fd2892eed93a183db48dcae153"/>
     <item
-        dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\commons-codec-1.3-79de95b65b2760220021fc5eba838338b4805582.jar"
-        jar="C:\Users\dimitris\.gradle\caches\modules-2\files-2.1\commons-codec\commons-codec\1.3\fd32786786e2adb664d5ecc965da47629dca14ba\commons-codec-1.3.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="fd32786786e2adb664d5ecc965da47629dca14ba"/>
-    <item
-        dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\internal_impl-20.0.0-68f83c4486faa5d7812f652ed69daa7e5687831b.jar"
-        jar="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\libs\internal_impl-20.0.0.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="e40b3078e3fbd353c9f44da8df25a8fc0078209d"/>
-    <item
         dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\dropbox-android-sdk-1.6.1-2ce3fcd787747d68c961230ae326d651a1f6522b.jar"
         jar="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\lib\dropbox-android-sdk-1.6.1.jar"
         jumboMode="false"
         revision="20.0.0"
         sha1="61a4504a9dc660389b086e8fff62971c867ba4ce"/>
-    <item
-        dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\google-api-client-1.17.0-rc-e4f3c127c42702994d668546f690eb7c7c1c3598.jar"
-        jar="C:\Users\dimitris\.gradle\caches\modules-2\files-2.1\com.google.api-client\google-api-client\1.17.0-rc\f01974c9ec3e5570d8c75ecf7fce004e06757e03\google-api-client-1.17.0-rc.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="f01974c9ec3e5570d8c75ecf7fce004e06757e03"/>
-    <item
-        dex="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\pre-dexed\debug\support-annotations-20.0.0-92e2be4412a1e7dd1c90d0f9bc78e365f2a0d9ee.jar"
-        jar="C:\Users\dimitris\AppData\Local\Android\android-studio\sdk\extras\android\m2repository\com\android\support\support-annotations\20.0.0\support-annotations-20.0.0.jar"
-        jumboMode="false"
-        revision="20.0.0"
-        sha1="9d9013e9ff35fc3756411e62873c363c70c638fa"/>
 
 </pre-dex-items>

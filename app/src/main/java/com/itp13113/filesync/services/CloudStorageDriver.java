@@ -8,6 +8,7 @@ import java.util.Vector;
  */
 public abstract class CloudStorageDriver {
 
+    protected Context context; //application context
     protected String currentDirectory; //the current directory - home directory after authentication
     protected final Vector<CloudFile> fileList = new Vector<CloudFile>(); //list of directory files after list() is called
     protected boolean directoryExists = true;
@@ -16,7 +17,10 @@ public abstract class CloudStorageDriver {
         currentDirectory = getHomeDirectory();
     }
 
-    abstract public void setContext(Context context);
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
     abstract public String getStorageServiceTitle();
     abstract  public String getHomeDirectory();
 

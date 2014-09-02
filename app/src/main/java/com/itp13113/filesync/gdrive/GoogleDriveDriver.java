@@ -50,19 +50,16 @@ import com.itp13113.filesync.services.CloudFile;
 import com.itp13113.filesync.services.CloudStorageAuthenticationError;
 import com.itp13113.filesync.services.CloudStorageDirectoryNotExists;
 import com.itp13113.filesync.services.CloudStorageDriver;
+import com.itp13113.filesync.services.CloudStorageStackedDriver;
 
-public class GoogleDriveDriver extends CloudStorageDriver {
-    private Context context;
-    private String currentFolderID = "root";
-    private Stack<String> prevFolderIDs = new Stack<String>();
+public class GoogleDriveDriver extends CloudStorageStackedDriver {
     protected Drive drive = null;
 
     //locks
     Integer authenticationComplete = new Integer(0);
 
-    @Override
-    public void setContext(Context context) {
-        this.context = context;
+    public GoogleDriveDriver() {
+        this.currentFolderID = "root";
     }
 
     @Override
@@ -73,42 +70,6 @@ public class GoogleDriveDriver extends CloudStorageDriver {
     @Override
     public String getHomeDirectory() {
         return "root";
-    }
-
-    @Override
-    public void setDirectory(String directory) throws CloudStorageDirectoryNotExists {
-        if (directory.equals("..") && currentDirectory.equals(getHomeDirectory())) { //parent directory unavaildable on <home>
-            return;
-        }
-
-        directoryExists = true;
-
-        if (directory.equals(".")) { //current directory
-            return;
-        }
-
-        if (directory.equals("..") && !currentDirectory.equals(getHomeDirectory())) { //parent directory - unavaildable on <home>
-            currentDirectory = currentDirectory.substring(0, currentDirectory.lastIndexOf("/"));
-            currentFolderID = prevFolderIDs.pop();
-            return;
-        }
-
-        currentDirectory += "/" + directory;
-        prevFolderIDs.push(new String(currentFolderID));
-
-        for (CloudFile file : fileList) { //find a subdirectory
-            if (file.isDirectory() && file.getTitle().equals(directory)) {
-                System.out.println("Folder ID = " + currentFolderID);
-                currentFolderID = file.getId();
-                return;
-            }
-        }
-
-        //directory not found in the drive
-        directoryExists = false;
-        currentFolderID = "-1";
-
-        throw new CloudStorageDirectoryNotExists();
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -228,7 +189,7 @@ public class GoogleDriveDriver extends CloudStorageDriver {
                         }
 
                         String icon = "icons/gdrive/" + f.getIconLink().substring(f.getIconLink().lastIndexOf("/") + 1);
-                        System.out.println("~~~" + f.getTitle() + " " + icon + " " + f.getMimeType() + " " + f.getId());
+                        System.out.println("----" + f.getTitle() + " " + icon + " " + f.getMimeType() + " " + f.getId());
                         fileList.add(new CloudFile(f.getId(), f.getTitle(), icon, f.getMimeType().equals("application/vnd.google-apps.folder"), f.getMimeType(), size));
                     }
 

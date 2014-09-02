@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.itp13113.filesync.dropbox.DropboxDriver;
 import com.itp13113.filesync.gdrive.GoogleDriveDriver;
+import com.itp13113.filesync.onedrive.OneDriveDriver;
 
 import org.apache.james.mime4j.storage.Storage;
 import org.xmlpull.v1.XmlPullParser;
@@ -58,6 +59,7 @@ class CloudFileClickListener implements View.OnClickListener {
 }
 
 public class StorageManager extends CloudStorageDriver {
+    private Activity activity;
     private Context context;
     private LinearLayout fileListView;
     private EditText dirEditText;
@@ -67,7 +69,7 @@ public class StorageManager extends CloudStorageDriver {
     public Integer onResume = new Integer(0);
     private Drawable icon;
 
-    public StorageManager(AssetManager assetManager, LinearLayout fileListView, EditText dirEditText) {
+    public StorageManager(Activity activity, AssetManager assetManager, LinearLayout fileListView, EditText dirEditText) {
         this.assetManager = assetManager;
         this.fileListView = fileListView;
         this.dirEditText = dirEditText;
@@ -99,6 +101,8 @@ public class StorageManager extends CloudStorageDriver {
                             storages.add(new GoogleDriveDriver());
                         else if (type.equals("dropbox"))
                             storages.add(new DropboxDriver());
+                        else if (type.equals("onedrive"))
+                            storages.add(new OneDriveDriver(activity));
                         break;
                 }
                 event = parser.next();
