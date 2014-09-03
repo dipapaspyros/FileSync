@@ -189,12 +189,14 @@ public class GoogleDriveDriver extends CloudStorageStackedDriver {
                         }
 
                         String icon = "icons/gdrive/" + f.getIconLink().substring(f.getIconLink().lastIndexOf("/") + 1);
-                        String url = f.getDownloadUrl();
-                        if (url == null) {
+                        String url;
+                        if (f.getDownloadUrl() == null) {
                             url = f.getAlternateLink();
+                        } else {
+                            url = f.getWebContentLink();
                         }
 
-                        System.out.println("----" + f.getTitle() + " " + icon + " " + f.getMimeType() + " " + url);
+                        System.out.println("----" + f.getTitle() + " " + f.getIconLink() + " " + f.getMimeType() + " " + url);
                         fileList.add(new CloudFile(f.getId(), f.getTitle(), icon, f.getMimeType().equals("application/vnd.google-apps.folder"), f.getMimeType(), size, url));
                     }
 

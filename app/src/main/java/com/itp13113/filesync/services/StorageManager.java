@@ -9,13 +9,18 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.itp13113.filesync.MainActivity;
 import com.itp13113.filesync.dropbox.DropboxDriver;
 import com.itp13113.filesync.gdrive.GoogleDriveDriver;
 import com.itp13113.filesync.onedrive.OneDriveDriver;
@@ -55,17 +60,34 @@ class CloudFileClickListener implements View.OnClickListener {
             storageManager.setDirectory( file.getTitle() );
             storageManager.list();
         } else { //open the file - default action
-            System.out.println(file.getDownloadUrl());
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(file.getDownloadUrl()));
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(file.getOpenUrl()));
             browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             storageManager.getContext().startActivity(browserIntent);
         }
     }
 }
 
+class CloudFileLongClickListener implements View.OnLongClickListener {
+    private CloudFile file;
+    private StorageManager storageManager;
+
+    public CloudFileLongClickListener(StorageManager storageManager, CloudFile file) {
+        this.storageManager = storageManager;
+        this.file = file;
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+        Toast.makeText(storageManager.context, "TODO: Context Menu", Toast.LENGTH_LONG).show();
+
+        return true;
+    }
+}
+
 public class StorageManager extends CloudStorageDriver {
     private Activity activity;
     private LinearLayout fileListView;
+    private ProgressBar loading;
     private EditText dirEditText;
     private ArrayList<CloudStorageDriver> storages;
     private AssetManager assetManager;
@@ -73,9 +95,11 @@ public class StorageManager extends CloudStorageDriver {
     public Integer onResume = new Integer(0);
     private Drawable icon;
 
-    public StorageManager(Activity activity, AssetManager assetManager, LinearLayout fileListView, EditText dirEditText) {
+    public StorageManager(Activity activity, AssetManager assetManager, LinearLayout fileListView, ProgressBar loading, EditText dirEditText) {
+        this.activity = activity;
         this.assetManager = assetManager;
         this.fileListView = fileListView;
+        this.loading = loading;
         this.dirEditText = dirEditText;
 
         storages = new ArrayList<CloudStorageDriver>();
@@ -171,39 +195,63 @@ public class StorageManager extends CloudStorageDriver {
 
     @Override
     public Vector<CloudFile> list() {
-        //get a list of all the files
-        fileList.removeAllElements();
-        for (CloudStorageDriver storage : storages) {
-            fileList.addAll(storage.list());
-        }
-
-        //show the files
+        final StorageManager that = this;
         fileListView.removeAllViews();
-        for (CloudFile file : fileList) {
-            Button b = new Button(context);
-            String bTitle = file.getTitle();
-            if (!file.isDirectory()) {
-                bTitle = bTitle + " (" + file.getFileSizeReadable() + ")";
-            }
-            b.setText(bTitle);
+        loading.setVisibility(View.VISIBLE);
 
-            //load the icon if it was specified
-            if (!file.getIconLink().equals("")) {
-                try {
-                    Drawable icon  = Drawable.createFromResourceStream(context.getResources(), null, assetManager.open(file.getIconLink()), file.getIconLink(), new BitmapFactory.Options());
-                    b.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
-                } catch (IOException e) { //invalid icon name - do nothing
-                    System.out.println("Icon could not be displayed - " + file.getIconLink());
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //get a list of all the files
+                fileList.removeAllElements();
+                for (CloudStorageDriver storage : storages) {
+                    fileList.addAll(storage.list());
                 }
+
+                //show the files
+                for (CloudFile file : fileList) {
+                    final Button b = new Button(context);
+                    String bTitle = file.getTitle();
+                    if (!file.isDirectory()) {
+                        bTitle = bTitle + " (" + file.getFileSizeReadable() + ")";
+                    }
+                    b.setText(bTitle);
+
+                    //load the icon if it was specified
+                    if (!file.getIconLink().equals("")) {
+                        try {
+                            Drawable icon  = Drawable.createFromResourceStream(context.getResources(), null, assetManager.open(file.getIconLink()), file.getIconLink(), new BitmapFactory.Options());
+                            b.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
+                        } catch (IOException e) { //invalid icon name - do nothing
+                            System.out.println("Icon could not be displayed - " + file.getIconLink());
+                        }
+                    }
+
+                    CloudFileClickListener cl = new CloudFileClickListener(that, file);
+                    CloudFileLongClickListener lcl = new CloudFileLongClickListener(that, file);
+                    b.setOnClickListener(cl);
+                    b.setOnLongClickListener(lcl);
+
+                    //add the file/folder button
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            fileListView.addView(b);
+                        }
+                    });
+                }
+
+                //hide the loading progress bar
+                activity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        loading.setVisibility(View.GONE);
+                    }
+                });
             }
+        });
+        thread.start();
 
-            CloudFileClickListener cl = new CloudFileClickListener(this, file);
-            b.setOnClickListener(cl);
-
-            fileListView.addView(b);
-        }
-
-
-        return fileList;
+        return null;
     }
 }

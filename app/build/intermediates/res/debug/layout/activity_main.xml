@@ -40,7 +40,16 @@
                 android:src="@drawable/up"
                 android:onClick="onUpClick"
                 />
+
         </RelativeLayout>
+
+        <ProgressBar
+            android:id="@+id/loading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
 
         <ScrollView
             android:layout_width="fill_parent"

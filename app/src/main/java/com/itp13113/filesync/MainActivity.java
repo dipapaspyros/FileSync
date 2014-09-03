@@ -21,6 +21,7 @@ import android.os.Build;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dropbox.client2.session.AccessTokenPair;
@@ -32,22 +33,25 @@ public class MainActivity extends ActionBarActivity {
     private StorageManager storageManager;
     private LinearLayout fileList;
     private EditText dirTextView;
+    private ProgressBar loading;
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         //get the list view where files will be presented
         fileList = (LinearLayout) this.findViewById(R.id.fileList);
         //get the directory title edit view
         dirTextView = (EditText) this.findViewById(R.id.dirTextView);
+        //get the progress bar
+        loading = (ProgressBar) this.findViewById(R.id.loading);
 
-		//check if configuration with stored services exists
+        //check if configuration with stored services exists
         AssetManager mg = getResources().getAssets();
         try {
             mg.open("storages.xml");
-            storageManager = new StorageManager( this, getAssets() , fileList, dirTextView);
+            storageManager = new StorageManager(this, getAssets(), fileList, loading, dirTextView);
             storageManager.setContext(getApplicationContext());
             storageManager.authenticate();
             storageManager.list();
@@ -60,47 +64,47 @@ public class MainActivity extends ActionBarActivity {
         }
 
         if (savedInstanceState == null) {
-			getSupportFragmentManager().beginTransaction()
-					.add(R.id.container, new PlaceholderFragment()).commit();
-		}
-	}
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.container, new PlaceholderFragment()).commit();
+        }
+    }
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
 
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		// Handle action bar item clicks here. The action bar will
-		// automatically handle clicks on the Home/Up button, so long
-		// as you specify a parent activity in AndroidManifest.xml.
-		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
-	/**
-	 * A placeholder fragment containing a simple view.
-	 */
-	public static class PlaceholderFragment extends Fragment {
+    /**
+     * A placeholder fragment containing a simple view.
+     */
+    public static class PlaceholderFragment extends Fragment {
 
-		public PlaceholderFragment() {
-		}
+        public PlaceholderFragment() {
+        }
 
-		@Override
-		public View onCreateView(LayoutInflater inflater, ViewGroup container,
-				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_main, container,
-					false);
-			return rootView;
-		}
-	}
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                                 Bundle savedInstanceState) {
+            View rootView = inflater.inflate(R.layout.fragment_main, container,
+                    false);
+            return rootView;
+        }
+    }
 
     protected void onResume() {
         super.onResume();
@@ -133,7 +137,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onRefreshClick(View v) {
-        // list all files in all storages again
         storageManager.list();
     }
 
@@ -145,7 +148,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        if (storageManager.getHomeDirectory().equals( storageManager.getDirectory())) { //if already at <home> just leave the application
+        if (storageManager.getHomeDirectory().equals(storageManager.getDirectory())) { //if already at <home> just leave the application
             super.onBackPressed();
         } else { //return to previous (1 level up) directory
             onUpClick((ImageButton) this.findViewById(R.id.upButton));

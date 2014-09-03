@@ -150,6 +150,9 @@
             <file
                 name="icons/onedrive/folder.png"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\onedrive\folder.png" />
+            <file
+                name="icons/gdrive/icon_11_image_list.png"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive\icon_11_image_list.png" />
         </source>
     </dataSet>
     <dataSet config="debug" >
