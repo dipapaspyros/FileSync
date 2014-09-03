@@ -145,11 +145,11 @@
                 name="storages.xml"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\storages.xml" />
             <file
-                name="icons/onedrive/file.ico"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\onedrive\file.ico" />
+                name="icons/onedrive/file.png"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\onedrive\file.png" />
             <file
-                name="icons/onedrive/folder.ico"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\onedrive\folder.ico" />
+                name="icons/onedrive/folder.png"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\onedrive\folder.png" />
         </source>
     </dataSet>
     <dataSet config="debug" >

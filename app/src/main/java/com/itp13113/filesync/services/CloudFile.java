@@ -12,17 +12,21 @@ public class CloudFile {
     private CloudFileType fileType;
     private String mimeType;
     private Long size;
+    private String downloadUrl;
 
-    public CloudFile(String id, String title, String iconLink, boolean isDirectory, String mimeType, long size) {
+    public CloudFile(String id, String title, String iconLink, boolean isDirectory, String mimeType, long size, String downloadUrl) {
         this.id = id;
         this.title = title;
         this.iconLink = iconLink;
+
         if (isDirectory)
             this.fileType = CloudFileType.CFT_DIRECTORY;
         else
             this.fileType = CloudFileType.CFT_FILE;
+        
         this.mimeType = mimeType;
         this.size = new Long(size);
+        this.downloadUrl = downloadUrl;
     }
 
     public String getId() {
@@ -46,6 +50,8 @@ public class CloudFile {
     }
 
     public Long getFileSize() {return size;}
+
+    public String getDownloadUrl() {return downloadUrl;}
 
     public String getFileSizeReadable() {
         long bytes = this.size.longValue();

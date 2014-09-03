@@ -20,6 +20,7 @@ public abstract class CloudStorageDriver {
     public void setContext(Context context) {
         this.context = context;
     }
+    public Context getContext() {return context;}
 
     abstract public String getStorageServiceTitle();
     abstract  public String getHomeDirectory();

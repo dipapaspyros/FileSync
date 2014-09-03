@@ -15,6 +15,12 @@ import com.itp13113.filesync.services.CloudStorageDriver;
 
 import com.dropbox.core.*;
 
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.List;
 import java.util.Locale;
 import java.util.Vector;
@@ -28,6 +34,9 @@ public class DropboxDriver extends CloudStorageDriver {
     final static private String APP_KEY = "pcgi5otwwfny748";
     final static private String APP_SECRET = "z0nq7lnwk33kud3";
     final static private Session.AccessType ACCESS_TYPE = Session.AccessType.DROPBOX;
+
+    private String key;
+    private String secret;
 
     public DropboxAPI<AndroidAuthSession> mDBApi;
 
@@ -52,8 +61,8 @@ public class DropboxDriver extends CloudStorageDriver {
     public void authenticate() throws CloudStorageAuthenticationError {
         SharedPreferences prefs = context.getSharedPreferences(
                 "com.itp13113.FileSync", Context.MODE_PRIVATE);
-        String key = prefs.getString("DropboxKey", "");
-        String secret = prefs.getString("DropboxSecret", "");
+        key = prefs.getString("DropboxKey", "");
+        secret = prefs.getString("DropboxSecret", "");
 
         if (key.equals("") || secret.equals("")) { //first time authenticating
             mDBApi.getSession().startAuthentication(context);
@@ -82,8 +91,12 @@ public class DropboxDriver extends CloudStorageDriver {
                     DropboxAPI.Entry entries = mDBApi.metadata(currentDirectory, 100, null, true, null);
                     for (DropboxAPI.Entry e : entries.contents) {
                         String icon = getIconFile(e.icon);
-                        System.out.println("----" + e.fileName() + " " + icon + " " + e.mimeType + " " + e.hash);
-                        fileList.add(new CloudFile(e.fileName(), e.fileName(), icon, e.isDir, e.mimeType, e.bytes));
+                        System.out.println("----" + e.fileName() + " " + icon + " " + e.mimeType + e.contents);
+                        String url = "";
+                        if (!e.isDir) {
+                            url = mDBApi.media(e.path, true).url;
+                        }
+                        fileList.add(new CloudFile(e.fileName(), e.fileName(), icon, e.isDir, e.mimeType, e.bytes, url));
                     }
                 } catch (DropboxException e) {
                     System.out.println("Dropbox could not list " + currentDirectory + " directory");

@@ -36,6 +36,7 @@ class OneDriveDriverAuthListener implements LiveAuthListener {
     public void onAuthComplete(LiveStatus status, LiveConnectSession session, Object userState) {
         if(status == LiveStatus.CONNECTED) {
             driver.client = new LiveConnectClient(session);
+            driver.token = session.getAccessToken();
         }
         else {
             driver.client = null;
@@ -52,6 +53,7 @@ class OneDriveDriverAuthListener implements LiveAuthListener {
 public class OneDriveDriver extends CloudStorageStackedDriver {
     private Activity activity;
     private LiveAuthClient auth;
+    protected String token;
     protected LiveConnectClient client;
     private String APP_CLIENT_ID = "0000000048127603";
 
@@ -77,13 +79,13 @@ public class OneDriveDriver extends CloudStorageStackedDriver {
         OneDriveDriverAuthListener listener = new OneDriveDriverAuthListener(this);
 
         auth = new LiveAuthClient(activity, APP_CLIENT_ID);
-        Iterable<String> scopes = Arrays.asList("wl.signin", "wl.basic", "wl.skydrive");
+        Iterable<String> scopes = Arrays.asList("wl.signin", "wl.basic", "wl.skydrive", "wl.skydrive_update");
         auth.login(activity, scopes, listener);
     }
 
     private String getIcon(String ftype, String fname) {
         if (ftype.equals("folder")) {
-            return "icons/onedrive/folder.jpg";
+            return "icons/onedrive/folder.png";
         }
 
         return "icons/onedrive/file.png";
@@ -125,7 +127,7 @@ public class OneDriveDriver extends CloudStorageStackedDriver {
                                 System.out.println("----" + name + " " + type + " " + id);
                                 String icon = getIcon(type, name);
 
-                                fileList.add(new CloudFile(id, name, icon, type.equals("folder"), type, file.getLong("size")));
+                                fileList.add(new CloudFile(id, name, icon, type.equals("folder"), type, file.getLong("size"), file.getString("upload_location")+"?access_token="+token));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -146,6 +148,7 @@ public class OneDriveDriver extends CloudStorageStackedDriver {
                     }
                 }
             });
+            //start the file listing thread
             thread.start();
 
             //wait for it to complete listing

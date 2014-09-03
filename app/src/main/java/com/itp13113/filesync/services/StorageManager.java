@@ -3,9 +3,11 @@ package com.itp13113.filesync.services;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.view.View;
 import android.widget.Button;
@@ -49,18 +51,20 @@ class CloudFileClickListener implements View.OnClickListener {
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     public void onClick(View v) {
-        System.out.println(file.getTitle() + " " + file.isDirectory());
-
-        if (file.isDirectory()) {
+        if (file.isDirectory()) { //open the directory
             storageManager.setDirectory( file.getTitle() );
             storageManager.list();
+        } else { //open the file - default action
+            System.out.println(file.getDownloadUrl());
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(file.getDownloadUrl()));
+            browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            storageManager.getContext().startActivity(browserIntent);
         }
     }
 }
 
 public class StorageManager extends CloudStorageDriver {
     private Activity activity;
-    private Context context;
     private LinearLayout fileListView;
     private EditText dirEditText;
     private ArrayList<CloudStorageDriver> storages;
