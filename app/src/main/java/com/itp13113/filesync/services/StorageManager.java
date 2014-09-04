@@ -2,15 +2,21 @@ package com.itp13113.filesync.services;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.content.res.AssetManager;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Parcel;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -26,6 +32,7 @@ import com.itp13113.filesync.gdrive.GoogleDriveDriver;
 import com.itp13113.filesync.onedrive.OneDriveDriver;
 
 import org.apache.james.mime4j.storage.Storage;
+import org.w3c.dom.Text;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -38,6 +45,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -56,14 +64,10 @@ class CloudFileClickListener implements View.OnClickListener {
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     public void onClick(View v) {
-        if (file.isDirectory()) { //open the directory
-            storageManager.setDirectory( file.getTitle() );
-            storageManager.list();
-        } else { //open the file - default action
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(file.getOpenUrl()));
-            browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            storageManager.getContext().startActivity(browserIntent);
-        }
+        //hide the context menu
+        storageManager.contextMenu.setVisibility(View.GONE);
+
+        storageManager.openFile(file);
     }
 }
 
@@ -78,7 +82,18 @@ class CloudFileLongClickListener implements View.OnLongClickListener {
 
     @Override
     public boolean onLongClick(View view) {
-        Toast.makeText(storageManager.context, "TODO: Context Menu", Toast.LENGTH_LONG).show();
+        //rearrange items so that the menu appears under the file
+        storageManager.fileListView.removeView( storageManager.contextMenu );
+        storageManager.fileListView.addView( storageManager.contextMenu, storageManager.fileListView.indexOfChild(view) + 1);
+
+        //load the info
+        storageManager.fileInfo.setText( file.info() );
+
+        //show the menu
+        storageManager.contextMenu.setVisibility(View.VISIBLE);
+
+        //set the context file
+        storageManager.contextFile = file;
 
         return true;
     }
@@ -86,19 +101,24 @@ class CloudFileLongClickListener implements View.OnLongClickListener {
 
 public class StorageManager extends CloudStorageDriver {
     private Activity activity;
-    private LinearLayout fileListView;
+    protected LinearLayout fileListView, contextMenu;
+    protected TextView fileInfo;
     private ProgressBar loading;
     private EditText dirEditText;
     private ArrayList<CloudStorageDriver> storages;
     private AssetManager assetManager;
+    public CloudFile contextFile = null;
 
     public Integer onResume = new Integer(0);
     private Drawable icon;
 
-    public StorageManager(Activity activity, AssetManager assetManager, LinearLayout fileListView, ProgressBar loading, EditText dirEditText) {
+    public StorageManager(Activity activity, AssetManager assetManager, LinearLayout fileListView, TextView fileInfo, LinearLayout contextMenu, ProgressBar loading, EditText dirEditText) {
         this.activity = activity;
+        this.context = activity.getApplicationContext();
         this.assetManager = assetManager;
         this.fileListView = fileListView;
+        this.contextMenu = contextMenu;
+        this.fileInfo = fileInfo;
         this.loading = loading;
         this.dirEditText = dirEditText;
 
@@ -113,9 +133,9 @@ public class StorageManager extends CloudStorageDriver {
             factory.setNamespaceAware(true);
             XmlPullParser parser = factory.newPullParser();
 
-            //read the storages from asset file
-            InputStream storages_ins = assetManager.open("storages.xml");
-            parser.setInput(new InputStreamReader(storages_ins));
+            //read the storages xml file
+            InputStream inputStream = context.openFileInput("storages.xml");
+            parser.setInput(new InputStreamReader(inputStream));
 
             //parse storages xml
             int event = parser.getEventType();
@@ -144,6 +164,25 @@ public class StorageManager extends CloudStorageDriver {
 
     }
 
+    public void openFile(CloudFile file) {
+        if (file.isDirectory()) { //open the directory
+            setDirectory(file.getTitle());
+            list();
+        } else { //open the file - default action
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(file.openUrl()));
+            browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getContext().startActivity(browserIntent);
+        }
+    }
+
+    public void downloadFile(CloudFile file) {
+        if (!file.isDirectory()) { //download the file
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(file.downloadUrl()));
+            browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            getContext().startActivity(browserIntent);
+        }
+    }
+
     public DropboxDriver getPendingDropboxDriver() {
         //TODO: code to get the pending dropbox driver in order to resume it
         return (DropboxDriver) storages.get(1);
@@ -166,6 +205,11 @@ public class StorageManager extends CloudStorageDriver {
     @Override
     public String getHomeDirectory() {
         return "Home";
+    }
+
+    @Override
+    public void authorize() throws CloudStorageAuthorizationError {
+        return; //no operation needed - authorization has already happened for each storage
     }
 
     @Override
@@ -197,6 +241,7 @@ public class StorageManager extends CloudStorageDriver {
     public Vector<CloudFile> list() {
         final StorageManager that = this;
         fileListView.removeAllViews();
+        fileListView.addView(contextMenu);
         loading.setVisibility(View.VISIBLE);
 
         Thread thread = new Thread(new Runnable() {

@@ -1,7 +1,9 @@
 package com.itp13113.filesync;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -30,8 +32,9 @@ import com.itp13113.filesync.services.CloudStorageAuthenticationError;
 import com.itp13113.filesync.services.StorageManager;
 
 public class MainActivity extends ActionBarActivity {
-    private StorageManager storageManager;
-    private LinearLayout fileList;
+    private StorageManager storageManager = null;
+    private LinearLayout fileList, contextMenu;
+    private TextView fileInfo;
     private EditText dirTextView;
     private ProgressBar loading;
 
@@ -40,18 +43,22 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //get the list view where files will be presented
+        //get the list view where files will be presented and the context menu
         fileList = (LinearLayout) this.findViewById(R.id.fileList);
+        contextMenu = (LinearLayout) this.findViewById(R.id.contextMenu);
+
+        //get the file info text view
+        fileInfo = (TextView) this.findViewById(R.id.fileInfo);
+
         //get the directory title edit view
         dirTextView = (EditText) this.findViewById(R.id.dirTextView);
         //get the progress bar
         loading = (ProgressBar) this.findViewById(R.id.loading);
 
         //check if configuration with stored services exists
-        AssetManager mg = getResources().getAssets();
         try {
-            mg.open("storages.xml");
-            storageManager = new StorageManager(this, getAssets(), fileList, loading, dirTextView);
+            InputStream inputStream = openFileInput("storages.xml");
+            storageManager = new StorageManager(this, getAssets(), fileList, fileInfo, contextMenu, loading, dirTextView);
             storageManager.setContext(getApplicationContext());
             storageManager.authenticate();
             storageManager.list();
@@ -106,48 +113,30 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    protected void onResume() {
+    @Override
+    public void onResume() {
         super.onResume();
 
-        /*DropboxDriver dDriver = storageManager.getPendingDropboxDriver();
-        if (dDriver != null) {
-            if (dDriver.mDBApi.getSession().authenticationSuccessful()) {
-                try {
-                    // Required to complete auth, sets the access token on the session
-                    dDriver.mDBApi.getSession().finishAuthentication();
+        if ((storageManager == null)) { //first run
+            try {
+                InputStream inputStream = openFileInput("storages.xml");
+                storageManager = new StorageManager(this, getAssets(), fileList, fileInfo, contextMenu, loading, dirTextView);
+                storageManager.setContext(getApplicationContext());
+                storageManager.authenticate();
+                storageManager.list();
+            } catch (CloudStorageAuthenticationError e) {
+                System.out.println("Authentication Error");
+                e.printStackTrace();
+            } catch (FileNotFoundException e) {
 
-                    AccessTokenPair accessToken = dDriver.mDBApi.getSession().getAccessTokenPair();
-
-                    //store the access token
-                    SharedPreferences prefs = this.getSharedPreferences(
-                            "com.itp13113.FileSync", Context.MODE_PRIVATE);
-                    prefs.edit().putString("DropboxKey", accessToken.key).apply();
-                    prefs.edit().putString("DropboxSecret", accessToken.secret).apply();
-
-                    dDriver.setDirectory(dDriver.getHomeDirectory());
-                    storageManager.list();
-
-                } catch (IllegalStateException e) {
-                    System.out.println("Error authenticating dropbox");
-                }
-            } else {
-                System.out.println("Could not loggin to dropbox");
             }
-        }*/
-    }
-
-    public void onRefreshClick(View v) {
-        storageManager.list();
-    }
-
-    public void onUpClick(View v) {
-        // go to up level
-        storageManager.setDirectory("..");
-        storageManager.list();
+        }
     }
 
     @Override
     public void onBackPressed() {
+        onContextClose((ImageButton) this.findViewById(R.id.upButton));
+
         if (storageManager.getHomeDirectory().equals(storageManager.getDirectory())) { //if already at <home> just leave the application
             super.onBackPressed();
         } else { //return to previous (1 level up) directory
@@ -155,4 +144,47 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    //clicks
+
+    public void onRefreshClick(View v) {
+        onContextClose(v);
+        storageManager.resetCashe();
+        storageManager.list();
+    }
+
+    public void onUpClick(View v) {
+        onContextClose(v);
+        // go to up level
+        storageManager.setDirectory("..");
+        storageManager.list();
+    }
+
+    public void onContextClose(View v) {
+        storageManager.contextFile = null;
+        contextMenu.setVisibility(View.GONE);
+    }
+
+    public void onContextOpen(View v) {
+        storageManager.openFile( storageManager.contextFile );
+
+        onContextClose(v);
+    }
+
+    public void onContextDownload(View v) {
+        //storageManager.openFile( storageManager.contextFile );
+
+        onContextClose(v);
+    }
+
+    public void onContextShare(View v) {
+        storageManager.downloadFile( storageManager.contextFile );
+
+        onContextClose(v);
+    }
+
+    public void onContextDelete(View v) {
+        //storageManager.openFile( storageManager.contextFile );
+
+        onContextClose(v);
+    }
 }

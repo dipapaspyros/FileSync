@@ -3,6 +3,7 @@ package com.itp13113.filesync.services;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +34,7 @@ import android.widget.Toast;
 import com.google.api.services.drive.DriveScopes;
 import com.itp13113.filesync.dropbox.DropboxDriver;
 import com.itp13113.filesync.gdrive.GoogleDriveDriver;
+import com.itp13113.filesync.onedrive.OneDriveDriver;
 
 
 /*Listener class to handle connection and callbacks*/
@@ -53,27 +55,30 @@ class NewServiceClickListener implements OnClickListener {
     @Override
 	public void onClick(View v) {
         System.out.println(serviceType);
+        CloudStorageDriver driver = null;
 
 		if (serviceType.id.equals("gdrive")) {
-            GoogleDriveDriver gDriver = new GoogleDriveDriver();
-            try {
-                gDriver.setContext(context);
-                gDriver.authenticate();
-                gDriver.list();
-            } catch (CloudStorageAuthenticationError cloudStorageAuthenticationError) {
-                System.out.println("Could not authenticate");
-                cloudStorageAuthenticationError.printStackTrace();
-            }
+            driver = new GoogleDriveDriver();
         }
         else if (serviceType.id.equals("dropbox")) {
             serviceTypeManager.dDriver = new DropboxDriver();
+            driver = serviceTypeManager.dDriver;
+        }
+        else if (serviceType.id.equals("onedrive")) {
+            driver = new OneDriveDriver(activity);
+        }
+
+        if (driver != null) {
             try {
-                serviceTypeManager.dDriver.setContext(context);
-                serviceTypeManager.dDriver.authenticate();
-            } catch (CloudStorageAuthenticationError cloudStorageAuthenticationError) {
-                System.out.println("Could not authenticate");
-                cloudStorageAuthenticationError.printStackTrace();
+                driver.setContext(context);
+                driver.authorize();
+                serviceTypeManager.storages += "<storage>" + serviceType.id + "</storage>\n";
+            } catch (CloudStorageAuthorizationError e) {
+                System.out.println("Could not authorize " + driver.getStorageServiceTitle());
+                e.printStackTrace();
             }
+
+            v.setVisibility(View.GONE);
         }
 
 	}
@@ -84,11 +89,16 @@ public class ServiceTypeManager {
 	private ArrayList<ServiceType> service_types;
 	//private Context applicationContext;
 	private AssetManager assetManager;
+    private Context context;
+    private boolean hasFinalized = false;
 
-    public DropboxDriver dDriver;
+    public String storages = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
+            "<storages>\n";
 
-    public ServiceTypeManager(Context applicationContext, AssetManager assetManager) {
-		//this.applicationContext = applicationContext;
+    public DropboxDriver dDriver; //must be exposed for onResume to catch
+
+    public ServiceTypeManager(Context context, AssetManager assetManager) {
+		this.context = context;
 		this.assetManager = assetManager;
 		
 		service_types = new ArrayList<ServiceType>();
@@ -180,4 +190,20 @@ public class ServiceTypeManager {
 	        l.addView(b);
 		}
 	}
+
+    public void finalize() {
+        if (!hasFinalized) {
+            hasFinalized = true;
+            storages += "</storages>";
+
+            try {
+                OutputStreamWriter outputStreamWriter = new OutputStreamWriter(this.context.openFileOutput("storages.xml", Context.MODE_PRIVATE));
+                outputStreamWriter.write(storages);
+                outputStreamWriter.close();
+            }
+            catch (IOException e) {
+                System.err.println("File write failed: " + e.toString());
+            }
+        }
+    }
 }

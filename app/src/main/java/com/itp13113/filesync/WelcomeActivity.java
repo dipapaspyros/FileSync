@@ -75,30 +75,35 @@ public class WelcomeActivity extends ActionBarActivity {
 		}
 	}
 
-    protected void onResume() {
+    protected void onResume() { //on resume is called for dropbox auth
         super.onResume();
 
-        if (serviceTypeManager.dDriver != null) {
-            if (serviceTypeManager.dDriver.mDBApi.getSession().authenticationSuccessful()) {
+        DropboxDriver dDriver = serviceTypeManager.dDriver;
+        if (dDriver != null) {
+            if (dDriver.mDBApi.getSession().authenticationSuccessful()) {
                 try {
                     // Required to complete auth, sets the access token on the session
-                    serviceTypeManager.dDriver.mDBApi.getSession().finishAuthentication();
+                    dDriver.mDBApi.getSession().finishAuthentication();
 
-
-                    AccessTokenPair accessToken = serviceTypeManager.dDriver.mDBApi.getSession().getAccessTokenPair();
+                    AccessTokenPair accessToken = dDriver.mDBApi.getSession().getAccessTokenPair();
 
                     //store the access token
                     SharedPreferences prefs = this.getSharedPreferences(
                             "com.itp13113.FileSync", Context.MODE_PRIVATE);
                     prefs.edit().putString("DropboxKey", accessToken.key).apply();
                     prefs.edit().putString("DropboxSecret", accessToken.secret).apply();
-
-                    serviceTypeManager.dDriver.list();
                 } catch (IllegalStateException e) {
                     System.out.println("Error authenticating dropbox");
                 }
+            } else {
+                System.out.println("Could not loggin to dropbox");
             }
         }
+    }
+
+    public void finalize(View v) { //called when the user presses i'm ready
+        serviceTypeManager.finalize();
+        super.onBackPressed();
     }
 
 }

@@ -136,14 +136,8 @@
                 name="icons/gdrive.png"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive.png" />
             <file
-                name="icons/onedrive.jpg"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\onedrive.jpg" />
-            <file
                 name="service_types.xml"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\service_types.xml" />
-            <file
-                name="storages.xml"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\storages.xml" />
             <file
                 name="icons/onedrive/file.png"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\onedrive\file.png" />
@@ -153,6 +147,9 @@
             <file
                 name="icons/gdrive/icon_11_image_list.png"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive\icon_11_image_list.png" />
+            <file
+                name="icons/onedrive.png"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\onedrive.png" />
         </source>
     </dataSet>
     <dataSet config="debug" >

@@ -11,6 +11,7 @@ import com.dropbox.client2.session.AppKeyPair;
 import com.dropbox.client2.session.Session;
 import com.itp13113.filesync.services.CloudFile;
 import com.itp13113.filesync.services.CloudStorageAuthenticationError;
+import com.itp13113.filesync.services.CloudStorageAuthorizationError;
 import com.itp13113.filesync.services.CloudStorageDriver;
 
 import com.dropbox.core.*;
@@ -28,6 +29,68 @@ import java.util.Vector;
 /**
  * Created by dimitris on 29/7/2014.
  */
+class DropboxCloudFile extends CloudFile {
+    private DropboxAPI.Entry e;
+    private DropboxAPI<AndroidAuthSession> mDBApi;
+
+    public DropboxCloudFile( DropboxAPI<AndroidAuthSession> mDBApi, String iconFile, DropboxAPI.Entry e) {
+        super(e.fileName(), e.fileName(), iconFile, e.isDir, e.mimeType);
+
+        this.e = e;
+        this.size = e.bytes;
+        this.mDBApi = mDBApi;
+
+        System.out.println("----" + e.fileName() + " " + iconFile + " " + e.mimeType + e.contents);
+    }
+
+    @Override
+    public String openUrl() {
+        String url = "";
+        if (!e.isDir) {
+            try {
+                url = mDBApi.media(e.path, true).url;
+            } catch (DropboxException e1) {
+                url = "";
+            }
+        }
+
+        return url;
+    }
+
+    @Override
+    public String downloadUrl() {
+        String url = "";
+        if (!e.isDir) {
+            try {
+                url = mDBApi.media(e.path, true).url;
+            } catch (DropboxException e1) {
+                url = "";
+            }
+        }
+
+        return url;
+    }
+
+    @Override
+    public String shareUrl() {
+        return null;
+    }
+
+    @Override
+    public String info() {
+        String info = "Last modified on: " + e.modified + ", type is ";
+        if (isDirectory()) {
+            info += "directory";
+        } else {
+            info += e.mimeType;
+        }
+
+        info += ".";
+        
+        return info;
+    }
+}
+
 public class DropboxDriver extends CloudStorageDriver {
     private Integer listingComplete = new Integer(0);
 
@@ -58,17 +121,18 @@ public class DropboxDriver extends CloudStorageDriver {
     }
 
     @Override
+    public void authorize() throws CloudStorageAuthorizationError {
+        mDBApi.getSession().startAuthentication(context);
+    }
+
+    @Override
     public void authenticate() throws CloudStorageAuthenticationError {
         SharedPreferences prefs = context.getSharedPreferences(
                 "com.itp13113.FileSync", Context.MODE_PRIVATE);
         key = prefs.getString("DropboxKey", "");
         secret = prefs.getString("DropboxSecret", "");
 
-        if (key.equals("") || secret.equals("")) { //first time authenticating
-            mDBApi.getSession().startAuthentication(context);
-        } else { //has authenticated before
-            mDBApi.getSession().setAccessTokenPair(new AccessTokenPair(key, secret));
-        }
+        mDBApi.getSession().setAccessTokenPair(new AccessTokenPair(key, secret));
     }
 
     private String getIconFile(String ic) {
@@ -77,11 +141,16 @@ public class DropboxDriver extends CloudStorageDriver {
 
     @Override
     public Vector<CloudFile> list() {
-        fileList.removeAllElements();
-        //check if this directory exists in dropbox
+        //check if this directory exists in the drive
         if (!this.directoryExists) {
+            fileList.removeAllElements();
             return fileList;
         }
+
+        if (!directoryHasChanged) {
+            return fileList;
+        }
+        fileList.removeAllElements();
 
         Thread thread = new Thread(new Runnable(){
             @Override
@@ -90,13 +159,7 @@ public class DropboxDriver extends CloudStorageDriver {
 
                     DropboxAPI.Entry entries = mDBApi.metadata(currentDirectory, 100, null, true, null);
                     for (DropboxAPI.Entry e : entries.contents) {
-                        String icon = getIconFile(e.icon);
-                        System.out.println("----" + e.fileName() + " " + icon + " " + e.mimeType + e.contents);
-                        String url = "";
-                        if (!e.isDir) {
-                            url = mDBApi.media(e.path, true).url;
-                        }
-                        fileList.add(new CloudFile(e.fileName(), e.fileName(), icon, e.isDir, e.mimeType, e.bytes, url));
+                        fileList.add(new DropboxCloudFile(mDBApi, getIconFile(e.icon), e));
                     }
                 } catch (DropboxException e) {
                     System.out.println("Dropbox could not list " + currentDirectory + " directory");

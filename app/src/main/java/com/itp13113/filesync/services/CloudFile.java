@@ -5,16 +5,15 @@ package com.itp13113.filesync.services;
  */
 enum CloudFileType {CFT_FILE, CFT_DIRECTORY};
 
-public class CloudFile {
+public abstract class CloudFile {
     private String id;
     private String title;
     private String iconLink;
     private CloudFileType fileType;
     private String mimeType;
-    private Long size;
-    private String openUrl;
+    protected Long size;
 
-    public CloudFile(String id, String title, String iconLink, boolean isDirectory, String mimeType, long size, String openUrl) {
+    public CloudFile(String id, String title, String iconLink, boolean isDirectory, String mimeType) {
         this.id = id;
         this.title = title;
         this.iconLink = iconLink;
@@ -25,8 +24,6 @@ public class CloudFile {
             this.fileType = CloudFileType.CFT_FILE;
         
         this.mimeType = mimeType;
-        this.size = new Long(size);
-        this.openUrl = openUrl;
     }
 
     public String getId() {
@@ -51,8 +48,6 @@ public class CloudFile {
 
     public Long getFileSize() {return size;}
 
-    public String getOpenUrl() {return openUrl;}
-
     public String getFileSizeReadable() {
         long bytes = this.size.longValue();
         int unit = 1000;
@@ -61,4 +56,10 @@ public class CloudFile {
         String pre = ("KMGTPE").charAt(exp-1) + "";
         return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
     }
+
+    /*File methods*/
+    public abstract String openUrl();
+    public abstract String downloadUrl();
+    public abstract String shareUrl();
+    public abstract String info();
 }

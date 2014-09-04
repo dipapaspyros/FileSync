@@ -14,16 +14,19 @@ public abstract class CloudStorageStackedDriver extends CloudStorageDriver {
     @Override
     public void setDirectory(String directory) throws CloudStorageDirectoryNotExists {
         if (directory.equals("..") && currentDirectory.equals(getHomeDirectory())) { //parent directory unavaildable on <home>
+            directoryHasChanged = false;
             return;
         }
 
         directoryExists = true;
 
         if (directory.equals(".")) { //current directory
+            directoryHasChanged = false;
             return;
         }
 
         if (directory.equals("..") && !currentDirectory.equals(getHomeDirectory())) { //parent directory - unavaildable on <home>
+            directoryHasChanged = true;
             currentDirectory = currentDirectory.substring(0, currentDirectory.lastIndexOf("/"));
             currentFolderID = prevFolderIDs.pop();
             return;
@@ -35,6 +38,7 @@ public abstract class CloudStorageStackedDriver extends CloudStorageDriver {
         for (CloudFile file : fileList) { //find a subdirectory
             if (file.isDirectory() && file.getTitle().equals(directory)) {
                 System.out.println("Folder ID = " + currentFolderID);
+                directoryHasChanged = true;
                 currentFolderID = file.getId();
                 return;
             }
@@ -42,6 +46,7 @@ public abstract class CloudStorageStackedDriver extends CloudStorageDriver {
 
         //directory not found in the drive
         directoryExists = false;
+        directoryHasChanged = false;
         currentFolderID = "-1";
 
         throw new CloudStorageDirectoryNotExists();

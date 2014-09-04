@@ -8,6 +8,7 @@ import android.os.Looper;
 import com.itp13113.filesync.MainActivity;
 import com.itp13113.filesync.services.CloudFile;
 import com.itp13113.filesync.services.CloudStorageAuthenticationError;
+import com.itp13113.filesync.services.CloudStorageAuthorizationError;
 import com.itp13113.filesync.services.CloudStorageDirectoryNotExists;
 import com.itp13113.filesync.services.CloudStorageDriver;
 
@@ -25,6 +26,66 @@ import org.json.JSONObject;
 /**
  * Created by dimitris on 1/9/2014.
  */
+class OneDriveCloudFile extends CloudFile {
+    private JSONObject f;
+    private String openUrl;
+
+    public OneDriveCloudFile(JSONObject f, String id, String title, String iconLink, boolean isDirectory, String mimeType, Long size, String openUrl) {
+        super(id, title, iconLink, isDirectory, mimeType);
+
+        this.f = f;
+        this.size = size;
+        this.openUrl = openUrl;
+    }
+
+    @Override
+    public String openUrl() {
+        return openUrl;
+    }
+
+    @Override
+    public String downloadUrl() {
+        return openUrl;
+    }
+
+    @Override
+    public String shareUrl() {
+        return null;
+    }
+
+    @Override
+    public String info() {
+        String info = "";
+
+        if (isDirectory()) {
+            //count items inside
+            int count = 0;
+            try {
+                count = f.getInt("count");
+            } catch (JSONException e) {
+            }
+
+            if (count>0) {
+                info += count;
+            } else {
+                info += "No";
+            }
+
+            info += " items inside. ";
+        }
+
+        try {
+            info += "Last modified on " + f.getString("updated_time") + ".";
+        } catch (JSONException e) {
+
+        }
+
+
+
+        return info;
+    }
+}
+
 class OneDriveDriverAuthListener implements LiveAuthListener {
     OneDriveDriver driver;
 
@@ -75,12 +136,24 @@ public class OneDriveDriver extends CloudStorageStackedDriver {
     }
 
     @Override
+    public void authorize() throws CloudStorageAuthorizationError {
+        OneDriveDriverAuthListener listener = new OneDriveDriverAuthListener(this);
+
+        auth = new LiveAuthClient(activity, APP_CLIENT_ID);
+
+        Iterable<String> scopes = Arrays.asList("wl.offline_access", "wl.signin", "wl.basic", "wl.skydrive", "wl.skydrive_update");
+        auth.initialize(scopes, listener);
+        auth.login(activity, scopes, listener);
+    }
+
+    @Override
     public void authenticate() throws CloudStorageAuthenticationError {
         OneDriveDriverAuthListener listener = new OneDriveDriverAuthListener(this);
 
         auth = new LiveAuthClient(activity, APP_CLIENT_ID);
-        Iterable<String> scopes = Arrays.asList("wl.signin", "wl.basic", "wl.skydrive", "wl.skydrive_update");
-        auth.login(activity, scopes, listener);
+
+        Iterable<String> scopes = Arrays.asList("wl.offline_access", "wl.signin", "wl.basic", "wl.skydrive", "wl.skydrive_update");
+        auth.initialize(scopes, listener);
     }
 
     private String getIcon(String ftype, String fname) {
@@ -93,13 +166,18 @@ public class OneDriveDriver extends CloudStorageStackedDriver {
 
     @Override
     public Vector<CloudFile> list() {
-        final Integer listingComplete = new Integer(0);
-
-        fileList.removeAllElements();
         //check if this directory exists in the drive
         if (!this.directoryExists) {
+            fileList.removeAllElements();
             return fileList;
         }
+
+        if (!directoryHasChanged) {
+            return fileList;
+        }
+
+        final Integer listingComplete = new Integer(0);
+        fileList.removeAllElements();
 
         if (client != null) { //verify that the Live Connect client has been loaded
 
@@ -127,7 +205,7 @@ public class OneDriveDriver extends CloudStorageStackedDriver {
                                 System.out.println("----" + name + " " + type + " " + id);
                                 String icon = getIcon(type, name);
 
-                                fileList.add(new CloudFile(id, name, icon, type.equals("folder"), type, file.getLong("size"), file.getString("upload_location")+"?access_token="+token));
+                                fileList.add(new OneDriveCloudFile(file, id, name, icon, type.equals("folder"), type, file.getLong("size"), file.getString("upload_location")+"?access_token="+token));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

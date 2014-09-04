@@ -48,9 +48,74 @@ import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.FileList;
 import com.itp13113.filesync.services.CloudFile;
 import com.itp13113.filesync.services.CloudStorageAuthenticationError;
+import com.itp13113.filesync.services.CloudStorageAuthorizationError;
 import com.itp13113.filesync.services.CloudStorageDirectoryNotExists;
 import com.itp13113.filesync.services.CloudStorageDriver;
 import com.itp13113.filesync.services.CloudStorageStackedDriver;
+
+class GoogleCloudFile extends CloudFile {
+    private com.google.api.services.drive.model.File f;
+
+    public GoogleCloudFile(com.google.api.services.drive.model.File f) {
+        super(f.getId(), f.getTitle(),
+                "icons/gdrive/" + f.getIconLink().substring(f.getIconLink().lastIndexOf("/") + 1),
+                f.getMimeType().equals("application/vnd.google-apps.folder"), f.getMimeType());
+
+        this.f = f;
+
+        Long fSize = f.getFileSize(); long size;
+        if (fSize != null) {
+            this.size = fSize.longValue();
+        } else {
+            this.size = new Long(f.size());
+        }
+
+        System.out.println("----" + f.getTitle() + " " + f.getIconLink() + " " + f.getMimeType());
+    }
+
+    @Override
+    public String openUrl() {
+        String url;
+        if (f.getDownloadUrl() == null) { //google docs
+            url = f.getAlternateLink();
+        } else { //other files
+            url = f.getWebContentLink();
+        }
+
+        return url;
+    }
+
+    @Override
+    public String downloadUrl() {
+        String url;
+        if (f.getDownloadUrl() == null) { //google docs
+            url = f.getAlternateLink();
+        } else { //other files
+            url = f.getWebContentLink();
+        }
+
+        return url;
+    }
+
+    @Override
+    public String shareUrl() {
+        return null;
+    }
+
+    @Override
+    public String info() {
+        String info = "";
+
+        if (f.getLastViewedByMeDate() != null ) {
+            info += "Last access on " + f.getLastViewedByMeDate().toStringRfc3339();
+        } else {
+            info += "Never accessed";
+        }
+        info += ", modified by " + f.getLastModifyingUser().getDisplayName() + ".";
+
+        return info;
+    }
+}
 
 public class GoogleDriveDriver extends CloudStorageStackedDriver {
     protected Drive drive = null;
@@ -70,6 +135,16 @@ public class GoogleDriveDriver extends CloudStorageStackedDriver {
     @Override
     public String getHomeDirectory() {
         return "root";
+    }
+
+    @Override
+    public void authorize() throws CloudStorageAuthorizationError {
+        try {
+            this.authenticate();
+        } catch (CloudStorageAuthenticationError cloudStorageAuthenticationError) {
+            cloudStorageAuthenticationError.printStackTrace();
+            throw new CloudStorageAuthorizationError();
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
@@ -140,13 +215,18 @@ public class GoogleDriveDriver extends CloudStorageStackedDriver {
 
     @Override
     public Vector<CloudFile> list() {
-        final Integer listingComplete = new Integer(0);
-
-        fileList.removeAllElements();
         //check if this directory exists in the drive
         if (!this.directoryExists) {
+            fileList.removeAllElements();
             return fileList;
         }
+
+        if (!directoryHasChanged) {
+            return fileList;
+        }
+
+        final Integer listingComplete = new Integer(0);
+        fileList.removeAllElements();
 
         System.out.println("ls");
         Thread thread = new Thread(new Runnable() {
@@ -181,23 +261,7 @@ public class GoogleDriveDriver extends CloudStorageStackedDriver {
 
 
                     for (com.google.api.services.drive.model.File f : res) {
-                        Long fSize = f.getFileSize(); long size;
-                        if (fSize != null) {
-                            size = fSize.longValue();
-                        } else {
-                            size = f.size();
-                        }
-
-                        String icon = "icons/gdrive/" + f.getIconLink().substring(f.getIconLink().lastIndexOf("/") + 1);
-                        String url;
-                        if (f.getDownloadUrl() == null) {
-                            url = f.getAlternateLink();
-                        } else {
-                            url = f.getWebContentLink();
-                        }
-
-                        System.out.println("----" + f.getTitle() + " " + f.getIconLink() + " " + f.getMimeType() + " " + url);
-                        fileList.add(new CloudFile(f.getId(), f.getTitle(), icon, f.getMimeType().equals("application/vnd.google-apps.folder"), f.getMimeType(), size, url));
+                        fileList.add(new GoogleCloudFile(f));
                     }
 
 

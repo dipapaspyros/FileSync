@@ -35,5 +35,13 @@
 
     </LinearLayout>
 
+    <Button
+        android:id="@+id/readyButton"
+        android:text="I'm ready!"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="finalize"
+        android:layout_gravity="right|bottom" />
+
 </FrameLayout>
 
