@@ -13,6 +13,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AccountManagerCallback;
 import android.accounts.AccountManagerFuture;
@@ -119,14 +120,17 @@ class GoogleCloudFile extends CloudFile {
 
 public class GoogleDriveDriver extends CloudStorageStackedDriver {
     protected Drive drive = null;
+    private String accountName;
 
     //locks
     Integer authenticationComplete = new Integer(0);
 
-    public GoogleDriveDriver() {
+    public GoogleDriveDriver(String accountName) {
+        this.accountName = accountName;
         this.currentFolderID = "root";
     }
 
+    public String getAccountNumber() {return this.accountName;}
     @Override
     public String getStorageServiceTitle() {
         return "Google Drive";
@@ -150,6 +154,8 @@ public class GoogleDriveDriver extends CloudStorageStackedDriver {
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     public void authenticate() throws CloudStorageAuthenticationError {
+
+        //get the account manager
         final AccountManager am = AccountManager.get(context);
 
         if (am == null) {
@@ -157,15 +163,25 @@ public class GoogleDriveDriver extends CloudStorageStackedDriver {
             throw new CloudStorageAuthenticationError();
         }
 
-        if (am.getAccounts().length == 0) {
-            System.out.println("No Google account found");
+        //find the account by name
+        Account acf = null;
+        for (Account acc : am.getAccounts()) {
+            if (acc.name.equals(accountName)) {
+                acf = acc;
+                break;
+            }
+        }
+        final Account account = acf;
+
+        if (acf == null) {
+            System.out.println("No Google account " + accountName + " found");
             throw new CloudStorageAuthenticationError();
         } else {
             Thread thread = new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
-                        final String token = am.blockingGetAuthToken(am.getAccounts()[0], //get the first available google account
+                        final String token = am.blockingGetAuthToken(account, //get the first available google account
                                 "oauth2:" + DriveScopes.DRIVE, true);
 
                         HttpTransport httpTransport = new NetHttpTransport();

@@ -137,6 +137,11 @@ public class MainActivity extends ActionBarActivity {
     public void onBackPressed() {
         onContextClose((ImageButton) this.findViewById(R.id.upButton));
 
+        if (storageManager == null) {
+            super.onBackPressed();
+            return;
+        }
+
         if (storageManager.getHomeDirectory().equals(storageManager.getDirectory())) { //if already at <home> just leave the application
             super.onBackPressed();
         } else { //return to previous (1 level up) directory
@@ -160,7 +165,9 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onContextClose(View v) {
-        storageManager.contextFile = null;
+        if (storageManager != null) {
+            storageManager.contextFile = null;
+        }
         contextMenu.setVisibility(View.GONE);
     }
 

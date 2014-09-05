@@ -33,6 +33,10 @@ import com.itp13113.filesync.gdrive.GoogleDriveDriver;
 import com.itp13113.filesync.onedrive.OneDriveDriver;
 
 import org.apache.james.mime4j.storage.Storage;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -48,6 +52,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
  * Created by dimitris on 26/8/2014.
@@ -129,36 +136,41 @@ public class StorageManager extends CloudStorageDriver {
             String[] xmlText = new String[5];
             int ptr = -1;
 
-            //create the xml parser
-            XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-            factory.setNamespaceAware(true);
-            XmlPullParser parser = factory.newPullParser();
+            //create the dom factory
+            DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 
             //read the storages xml file
             InputStream inputStream = context.openFileInput("storages.xml");
-            parser.setInput(new InputStreamReader(inputStream));
 
-            //parse storages xml
-            int event = parser.getEventType();
-            while (event != XmlPullParser.END_DOCUMENT) {
-                String name, type = "";
+            try {
+                DocumentBuilder builder = domFactory.newDocumentBuilder();
+                Document dom = builder.parse(inputStream);
+                Element root = dom.getDocumentElement();
 
-                switch (event) {
-                    case XmlPullParser.TEXT:
-                        type = parser.getText();
-                        if (type.equals("gdrive"))
-                            storages.add(new GoogleDriveDriver());
-                        else if (type.equals("dropbox"))
-                            storages.add(new DropboxDriver());
-                        else if (type.equals("onedrive"))
-                            storages.add(new OneDriveDriver(activity, this));
-                        break;
+                NodeList items = root.getChildNodes();
+                for (int i = 0; i < items.getLength(); i++) {
+                    Node item = items.item(i);
+                    if (item instanceof Element) {
+                        Element element = (Element) item;
+                        if (element.getTagName().equals("storage")) { //a new storage element
+                            String type = element.getAttribute("type");
+                            System.out.println("Init - " + type);
+                            if (type.equals("gdrive")) {
+                                storages.add(new GoogleDriveDriver(element.getAttribute("name")));
+                            } else if (type.equals("dropbox")) {
+                                storages.add(new DropboxDriver(element.getAttribute("key"), element.getAttribute("secret")));
+                            } else if (type.equals("onedrive")) {
+                                storages.add(new OneDriveDriver(activity, this));
+                            } else {
+                                System.out.println("Unsupported storage type: " + type);
+                            }
+                        }
+                    }
                 }
-                event = parser.next();
-
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
-        } catch (XmlPullParserException e) {
-            e.printStackTrace();
+
         } catch (IOException e) {
             e.printStackTrace();
         }

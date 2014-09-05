@@ -100,13 +100,16 @@ public class DropboxDriver extends CloudStorageDriver {
 
     private boolean waitAuthorization = false;
 
-    private String key;
-    private String secret;
+    public String key = "";
+    public String secret = "";
 
     public DropboxAPI<AndroidAuthSession> mDBApi;
 
-    public DropboxDriver() {
-        // And later in some initialization function:
+    public DropboxDriver(String key, String secret) {
+        this.key = key;
+        this.secret = secret;
+
+        //initialization function:
         AppKeyPair appKeys = new AppKeyPair(APP_KEY, APP_SECRET);
         AndroidAuthSession session = new AndroidAuthSession(appKeys, ACCESS_TYPE);
         mDBApi = new DropboxAPI<AndroidAuthSession>(session);
@@ -129,6 +132,8 @@ public class DropboxDriver extends CloudStorageDriver {
     }
 
     public void authorizeComplete() {
+        System.out.println("dbox auth ok!");
+
         this.waitAuthorization = false;
 
         if (mDBApi.getSession().authenticationSuccessful()) {
@@ -137,12 +142,8 @@ public class DropboxDriver extends CloudStorageDriver {
                 mDBApi.getSession().finishAuthentication();
 
                 AccessTokenPair accessToken = mDBApi.getSession().getAccessTokenPair();
-
-                //store the access token
-                SharedPreferences prefs = context.getSharedPreferences(
-                        "com.itp13113.FileSync", Context.MODE_PRIVATE);
-                prefs.edit().putString("DropboxKey", accessToken.key).apply();
-                prefs.edit().putString("DropboxSecret", accessToken.secret).apply();
+                this.key = accessToken.key;
+                this.secret = accessToken.secret;
             } catch (IllegalStateException e) {
                 System.out.println("Error authenticating dropbox");
             }
@@ -155,11 +156,7 @@ public class DropboxDriver extends CloudStorageDriver {
 
     @Override
     public void authenticate() throws CloudStorageAuthenticationError {
-        SharedPreferences prefs = context.getSharedPreferences(
-                "com.itp13113.FileSync", Context.MODE_PRIVATE);
-        key = prefs.getString("DropboxKey", "");
-        secret = prefs.getString("DropboxSecret", "");
-
+        System.out.println("DKEY: " + key+ " " + secret);
         mDBApi.getSession().setAccessTokenPair(new AccessTokenPair(key, secret));
     }
 

@@ -81,6 +81,7 @@ public class WelcomeActivity extends ActionBarActivity {
         DropboxDriver dDriver = serviceTypeManager.getPendingDropboxDriver();
         if (dDriver != null) {
             dDriver.authorizeComplete();
+            serviceTypeManager.storages += "<storage type=\"dropbox\" key=\"" + dDriver.key +"\" secret=\"" + dDriver.secret + "\" />";
         }
     }
 
