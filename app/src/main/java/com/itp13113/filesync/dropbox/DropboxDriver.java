@@ -86,7 +86,7 @@ class DropboxCloudFile extends CloudFile {
         }
 
         info += ".";
-        
+
         return info;
     }
 }
@@ -97,6 +97,8 @@ public class DropboxDriver extends CloudStorageDriver {
     final static private String APP_KEY = "pcgi5otwwfny748";
     final static private String APP_SECRET = "z0nq7lnwk33kud3";
     final static private Session.AccessType ACCESS_TYPE = Session.AccessType.DROPBOX;
+
+    private boolean waitAuthorization = false;
 
     private String key;
     private String secret;
@@ -122,8 +124,34 @@ public class DropboxDriver extends CloudStorageDriver {
 
     @Override
     public void authorize() throws CloudStorageAuthorizationError {
+        this.waitAuthorization = true;
         mDBApi.getSession().startAuthentication(context);
     }
+
+    public void authorizeComplete() {
+        this.waitAuthorization = false;
+
+        if (mDBApi.getSession().authenticationSuccessful()) {
+            try {
+                // Required to complete auth, sets the access token on the session
+                mDBApi.getSession().finishAuthentication();
+
+                AccessTokenPair accessToken = mDBApi.getSession().getAccessTokenPair();
+
+                //store the access token
+                SharedPreferences prefs = context.getSharedPreferences(
+                        "com.itp13113.FileSync", Context.MODE_PRIVATE);
+                prefs.edit().putString("DropboxKey", accessToken.key).apply();
+                prefs.edit().putString("DropboxSecret", accessToken.secret).apply();
+            } catch (IllegalStateException e) {
+                System.out.println("Error authenticating dropbox");
+            }
+        } else {
+            System.out.println("Could not loggin to dropbox");
+        }
+    }
+
+    public boolean waitAuthorization() {return this.waitAuthorization;}
 
     @Override
     public void authenticate() throws CloudStorageAuthenticationError {

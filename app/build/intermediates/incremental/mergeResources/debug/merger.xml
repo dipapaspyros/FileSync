@@ -2118,16 +2118,16 @@
                     msgid="4181637455539816337" >"Habilitar servicios de Google Play"
                 </string>
                 <string
+                    name="common_google_play_services_invalid_account_text"
+                    msgid="4983316348021735578" >"La cuenta especificada no existe en este dispositivo. Selecciona otra cuenta."
+                </string>
+                <string
                     name="common_google_play_services_unsupported_title"
                     msgid="6334768798839376943" >"Servicios de Google Play"
                 </string>
                 <string
                     name="common_google_play_services_network_error_title"
                     msgid="3827284619958211114" >"Error de red"
-                </string>
-                <string
-                    name="common_google_play_services_invalid_account_text"
-                    msgid="4983316348021735578" >"La cuenta especificada no existe en este dispositivo. Selecciona otra cuenta."
                 </string>
                 <string
                     name="common_google_play_services_install_text_tablet"
@@ -5559,16 +5559,16 @@
                     msgid="2429381841831957106" >"Conectați-vă cu Google"
                 </string>
                 <string
+                    name="common_google_play_services_network_error_text"
+                    msgid="9038847255613537209" >"Este necesară o conexiune de date pentru a vă conecta la serviciile Google Play."
+                </string>
+                <string
                     name="common_google_play_services_network_error_title"
                     msgid="3827284619958211114" >"Eroare de reţea"
                 </string>
                 <string
                     name="auth_client_play_services_err_notification_msg"
                     msgid="3635065018897986478" >"Eroare Servicii Google Play"
-                </string>
-                <string
-                    name="common_google_play_services_network_error_text"
-                    msgid="9038847255613537209" >"Este necesară o conexiune de date pentru a vă conecta la serviciile Google Play."
                 </string>
                 <string
                     name="common_signin_button_text"
@@ -12006,16 +12006,16 @@ useLogo|showHome|showTitle
                     msgid="2031811694353399454" >"Επιλέξτε κάποια εφαρμογή"
                 </string>
                 <string
+                    name="abc_searchview_description_clear"
+                    msgid="3691816814315814921" >"Διαγραφή ερωτήματος"
+                </string>
+                <string
                     name="abc_searchview_description_voice"
                     msgid="893419373245838918" >"Φωνητική αναζήτηση"
                 </string>
                 <string
                     name="abc_action_menu_overflow_description"
                     msgid="3588849162933574182" >"Περισσότερες επιλογές"
-                </string>
-                <string
-                    name="abc_searchview_description_clear"
-                    msgid="3691816814315814921" >"Διαγραφή ερωτήματος"
                 </string>
             </file>
             <file
@@ -13338,16 +13338,16 @@ false
                     msgid="4076576682505996667" >"Atlikta"
                 </string>
                 <string
+                    name="abc_action_bar_home_description"
+                    msgid="4600421777120114993" >"Eiti į pagrindinį puslapį"
+                </string>
+                <string
                     name="abc_searchview_description_search"
                     msgid="8264924765203268293" >"Paieška"
                 </string>
                 <string
                     name="abc_shareactionprovider_share_with_application"
                     msgid="7165123711973476752" >"Bendrinti naudojant „%s“"
-                </string>
-                <string
-                    name="abc_action_bar_home_description"
-                    msgid="4600421777120114993" >"Eiti į pagrindinį puslapį"
                 </string>
             </file>
             <file

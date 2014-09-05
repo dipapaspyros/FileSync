@@ -17,6 +17,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Parcel;
 import android.support.annotation.NonNull;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -83,11 +84,11 @@ class CloudFileLongClickListener implements View.OnLongClickListener {
     @Override
     public boolean onLongClick(View view) {
         //rearrange items so that the menu appears under the file
-        storageManager.fileListView.removeView( storageManager.contextMenu );
-        storageManager.fileListView.addView( storageManager.contextMenu, storageManager.fileListView.indexOfChild(view) + 1);
+        storageManager.fileListView.removeView(storageManager.contextMenu);
+        storageManager.fileListView.addView(storageManager.contextMenu, storageManager.fileListView.indexOfChild(view) + 1);
 
         //load the info
-        storageManager.fileInfo.setText( file.info() );
+        storageManager.fileInfo.setText(file.info());
 
         //show the menu
         storageManager.contextMenu.setVisibility(View.VISIBLE);
@@ -150,7 +151,7 @@ public class StorageManager extends CloudStorageDriver {
                         else if (type.equals("dropbox"))
                             storages.add(new DropboxDriver());
                         else if (type.equals("onedrive"))
-                            storages.add(new OneDriveDriver(activity));
+                            storages.add(new OneDriveDriver(activity, this));
                         break;
                 }
                 event = parser.next();
@@ -165,27 +166,38 @@ public class StorageManager extends CloudStorageDriver {
     }
 
     public void openFile(CloudFile file) {
+        final CloudFile f = file;
+
         if (file.isDirectory()) { //open the directory
             setDirectory(file.getTitle());
             list();
         } else { //open the file - default action
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(file.openUrl()));
-            browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            getContext().startActivity(browserIntent);
+            Thread thread = new Thread(new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(f.openUrl()));
+                    browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getContext().startActivity(browserIntent);
+                }
+            }));
+            thread.start();
         }
     }
 
     public void downloadFile(CloudFile file) {
-        if (!file.isDirectory()) { //download the file
-            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(file.downloadUrl()));
-            browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            getContext().startActivity(browserIntent);
-        }
-    }
+        final CloudFile f = file;
 
-    public DropboxDriver getPendingDropboxDriver() {
-        //TODO: code to get the pending dropbox driver in order to resume it
-        return (DropboxDriver) storages.get(1);
+        if (!file.isDirectory()) { //download the file
+            Thread thread = new Thread(new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(f.downloadUrl()));
+                    browserIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    getContext().startActivity(browserIntent);
+                }
+            }));
+            thread.start();
+        }
     }
 
     @Override
@@ -240,51 +252,75 @@ public class StorageManager extends CloudStorageDriver {
     @Override
     public Vector<CloudFile> list() {
         final StorageManager that = this;
-        fileListView.removeAllViews();
-        fileListView.addView(contextMenu);
-        loading.setVisibility(View.VISIBLE);
+
 
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                //get a list of all the files
-                fileList.removeAllElements();
-                for (CloudStorageDriver storage : storages) {
-                    fileList.addAll(storage.list());
-                }
-
-                //show the files
-                for (CloudFile file : fileList) {
-                    final Button b = new Button(context);
-                    String bTitle = file.getTitle();
-                    if (!file.isDirectory()) {
-                        bTitle = bTitle + " (" + file.getFileSizeReadable() + ")";
-                    }
-                    b.setText(bTitle);
-
-                    //load the icon if it was specified
-                    if (!file.getIconLink().equals("")) {
-                        try {
-                            Drawable icon  = Drawable.createFromResourceStream(context.getResources(), null, assetManager.open(file.getIconLink()), file.getIconLink(), new BitmapFactory.Options());
-                            b.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
-                        } catch (IOException e) { //invalid icon name - do nothing
-                            System.out.println("Icon could not be displayed - " + file.getIconLink());
-                        }
-                    }
-
-                    CloudFileClickListener cl = new CloudFileClickListener(that, file);
-                    CloudFileLongClickListener lcl = new CloudFileLongClickListener(that, file);
-                    b.setOnClickListener(cl);
-                    b.setOnLongClickListener(lcl);
-
-                    //add the file/folder button
+                synchronized (that.fileList) { //synchronize on fileList so that a new list() command will have to wait
                     activity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            fileListView.addView(b);
+                            fileListView.removeAllViews();
+                            fileListView.addView(contextMenu);
+                            loading.setVisibility(View.VISIBLE);
                         }
                     });
-                }
+
+                    //get a list of all the files
+                    fileList.removeAllElements();
+                    for (CloudStorageDriver storage : storages) {
+                        fileList.addAll(storage.list());
+                    }
+
+                    //show the files
+                    for (CloudFile file : fileList) {
+                        final Button b = new Button(context);
+                        String bTitle = file.getTitle();
+                        if (!file.isDirectory()) {
+                            bTitle = bTitle + " (" + file.getFileSizeReadable() + ")";
+                        }
+                        b.setText(bTitle);
+
+                        //load the icon if it was specified
+                        if (!file.getIconLink().equals("")) {
+                            try {
+                                Drawable icon = Drawable.createFromResourceStream(context.getResources(), null, assetManager.open(file.getIconLink()), file.getIconLink(), new BitmapFactory.Options());
+                                b.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
+                            } catch (IOException e) { //invalid icon name - do nothing
+                                System.out.println("Icon could not be displayed - " + file.getIconLink());
+                            }
+                        }
+
+                        CloudFileClickListener cl = new CloudFileClickListener(that, file);
+                        CloudFileLongClickListener lcl = new CloudFileLongClickListener(that, file);
+                        b.setOnClickListener(cl);
+                        b.setOnLongClickListener(lcl);
+
+                        //add the file/folder button
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                fileListView.addView(b);
+                            }
+                        });
+                    }
+
+                    if (fileList.isEmpty()) { //show appropriate message on empty directories
+                        final TextView tv = new TextView(context);
+                        tv.setText("This folder is empty");
+                        tv.setPadding(5, 5, 5, 5);
+                        tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                fileListView.addView(tv);
+                            }
+                        });
+
+                        }
+                    }
 
                 //hide the loading progress bar
                 activity.runOnUiThread(new Runnable() {

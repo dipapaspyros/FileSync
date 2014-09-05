@@ -111,7 +111,7 @@ class GoogleCloudFile extends CloudFile {
         } else {
             info += "Never accessed";
         }
-        info += ", modified by " + f.getLastModifyingUser().getDisplayName() + ".";
+        info += ", modified by " + f.getLastModifyingUser().getDisplayName() + ", type is " + f.getMimeType();
 
         return info;
     }

@@ -65,7 +65,7 @@ class NewServiceClickListener implements OnClickListener {
             driver = serviceTypeManager.dDriver;
         }
         else if (serviceType.id.equals("onedrive")) {
-            driver = new OneDriveDriver(activity);
+            driver = new OneDriveDriver(activity, null);
         }
 
         if (driver != null) {
@@ -87,7 +87,6 @@ class NewServiceClickListener implements OnClickListener {
 
 public class ServiceTypeManager {
 	private ArrayList<ServiceType> service_types;
-	//private Context applicationContext;
 	private AssetManager assetManager;
     private Context context;
     private boolean hasFinalized = false;
@@ -95,7 +94,28 @@ public class ServiceTypeManager {
     public String storages = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
             "<storages>\n";
 
-    public DropboxDriver dDriver; //must be exposed for onResume to catch
+    protected DropboxDriver dDriver; //must be exposed for onResume to catch
+
+    public DropboxDriver getPendingDropboxDriver() {
+        /*
+        for (CloudStorageDriver driver : storages) {
+            if (driver instanceof DropboxDriver) {
+                if (((DropboxDriver) driver).waitAuthorization())
+                    return (DropboxDriver) driver;
+            }
+        }
+
+        return null;*/
+        if (dDriver == null) {
+            return null;
+        }
+
+        if (dDriver.waitAuthorization()) {
+            return dDriver;
+        }
+
+        return dDriver;
+    }
 
     public ServiceTypeManager(Context context, AssetManager assetManager) {
 		this.context = context;

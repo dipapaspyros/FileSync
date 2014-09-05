@@ -17,6 +17,7 @@ import java.util.Stack;
 import java.util.Vector;
 
 import com.itp13113.filesync.services.CloudStorageStackedDriver;
+import com.itp13113.filesync.services.StorageManager;
 import com.microsoft.live.*;
 
 import org.json.JSONArray;
@@ -80,8 +81,6 @@ class OneDriveCloudFile extends CloudFile {
 
         }
 
-
-
         return info;
     }
 }
@@ -98,6 +97,11 @@ class OneDriveDriverAuthListener implements LiveAuthListener {
         if(status == LiveStatus.CONNECTED) {
             driver.client = new LiveConnectClient(session);
             driver.token = session.getAccessToken();
+
+            if (driver.storageManager != null) {
+                driver.storageManager.resetCashe();
+                driver.storageManager.list();
+            }
         }
         else {
             driver.client = null;
@@ -107,6 +111,7 @@ class OneDriveDriverAuthListener implements LiveAuthListener {
 
     @Override
     public void onAuthError(LiveAuthException exception, Object userState) {
+        driver.client = null;
         System.out.println("Error signing in: " + exception.getMessage());
     }
 }
@@ -116,12 +121,14 @@ public class OneDriveDriver extends CloudStorageStackedDriver {
     private LiveAuthClient auth;
     protected String token;
     protected LiveConnectClient client;
+
+    protected StorageManager storageManager;
+
     private String APP_CLIENT_ID = "0000000048127603";
 
-    protected Integer authenticationComplete = new Integer(0); //authentication lock
-
-    public OneDriveDriver(Activity activity) {
+    public OneDriveDriver(Activity activity, StorageManager storageManager) {
         this.activity = activity;
+        this.storageManager = storageManager;
         this.currentFolderID = "me/skydrive";
     }
 
@@ -137,13 +144,13 @@ public class OneDriveDriver extends CloudStorageStackedDriver {
 
     @Override
     public void authorize() throws CloudStorageAuthorizationError {
-        OneDriveDriverAuthListener listener = new OneDriveDriverAuthListener(this);
+         OneDriveDriverAuthListener listener = new OneDriveDriverAuthListener(this);
 
-        auth = new LiveAuthClient(activity, APP_CLIENT_ID);
+         auth = new LiveAuthClient(activity, APP_CLIENT_ID);
 
-        Iterable<String> scopes = Arrays.asList("wl.offline_access", "wl.signin", "wl.basic", "wl.skydrive", "wl.skydrive_update");
-        auth.initialize(scopes, listener);
-        auth.login(activity, scopes, listener);
+         Iterable<String> scopes = Arrays.asList("wl.offline_access", "wl.signin", "wl.basic", "wl.skydrive", "wl.skydrive_update");
+         auth.initialize(scopes, listener);
+         auth.login(activity, scopes, listener);
     }
 
     @Override
