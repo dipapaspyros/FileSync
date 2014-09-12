@@ -66,9 +66,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="gone"
                     android:padding="5dp"
                     android:layout_marginBottom="20dp"
+                    android:visibility="gone"
                     android:background="#070707"
                     >
 
@@ -86,15 +86,16 @@
                         >
                         <ImageButton
                             android:id="@+id/cmClose"
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:layout_marginRight="10dp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:layout_marginRight="30dp"
                             android:src="@drawable/close"
-                            android:background="@android:color/transparent"
+                            android:background="#95a5a6"
                             android:onClick="onContextClose"
                             />
 
-                        <Button
+                        <ImageButton
                             android:id="@+id/cmOpen"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -103,45 +104,45 @@
                             android:background="#16a085"
                             android:textColor="#fff"
                             android:textSize="9sp"
+                            android:src="@drawable/view"
                             android:layout_margin="2dp"
-                            android:paddingLeft="2dp"
-                            android:paddingRight="2dp"/>
-                        <Button
+                            android:padding="10dp"/>
+                        <ImageButton
                             android:id="@+id/cmDownload"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Download"
                             android:onClick="onContextDownload"
+                            android:src="@drawable/download"
                             android:background="#2980b9"
                             android:textColor="#fff"
                             android:textSize="9sp"
                             android:layout_margin="2dp"
-                            android:paddingLeft="2dp"
-                            android:paddingRight="2dp"/>
-                        <Button
+                            android:padding="10dp"/>
+                        <ImageButton
                             android:id="@+id/cmShare"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Share"
                             android:onClick="onContextShare"
                             android:background="#f39c12"
+                            android:src="@drawable/share"
                             android:textColor="#fff"
                             android:textSize="9sp"
                             android:layout_margin="2dp"
-                            android:paddingLeft="2dp"
-                            android:paddingRight="2dp"/>
-                        <Button
+                            android:padding="10dp"/>
+                        <ImageButton
                             android:id="@+id/cmDelete"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Delete"
                             android:onClick="onContextDelete"
+                            android:src="@drawable/delete"
                             android:background="#c0392b"
                             android:textColor="#fff"
                             android:textSize="9sp"
                             android:layout_margin="2dp"
-                            android:paddingLeft="2dp"
-                            android:paddingRight="2dp"/>
+                            android:padding="10dp"/>
                         </LinearLayout>
                     </LinearLayout>
 
