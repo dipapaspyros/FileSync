@@ -1,33 +1,26 @@
 package com.itp13113.filesync;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.res.AssetManager;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.os.Build;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.dropbox.client2.session.AccessTokenPair;
-import com.itp13113.filesync.dropbox.DropboxDriver;
 import com.itp13113.filesync.services.CloudStorageAuthenticationError;
 import com.itp13113.filesync.services.StorageManager;
 
@@ -167,31 +160,65 @@ public class MainActivity extends ActionBarActivity {
     public void onContextClose(View v) {
         if (storageManager != null) {
             storageManager.contextFile = null;
+            storageManager.contextFileButton = null;
         }
         contextMenu.setVisibility(View.GONE);
     }
 
-    public void onContextOpen(View v) {
-        storageManager.openFile( storageManager.contextFile );
+    public void onContextOpen(View v) { //context menu open click
+        storageManager.openFile(storageManager.contextFile);
 
         onContextClose(v);
     }
 
-    public void onContextDownload(View v) {
+    public void onContextDownload(View v) { //context menu download click
         //storageManager.openFile( storageManager.contextFile );
 
         onContextClose(v);
     }
 
-    public void onContextShare(View v) {
-        storageManager.downloadFile( storageManager.contextFile );
+    public void onContextShare(View v) { //context menu share click
+        storageManager.downloadFile(storageManager.contextFile);
 
         onContextClose(v);
     }
 
-    public void onContextDelete(View v) {
-        //storageManager.openFile( storageManager.contextFile );
+    public void onContextDelete(View v) { //context menu delete click
+        final Integer hasResponded = new Integer(0);
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final View view = v;
 
-        onContextClose(v);
+        builder.setTitle("Confirm");
+        builder.setMessage("Do you want to delete " + storageManager.contextFile.getTitle() + "? This action can not be undone.");
+
+        builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
+
+            public void onClick(DialogInterface dialog, int which) {
+                //Delete the file
+                storageManager.contextFile.delete();
+
+                //hide the button
+                storageManager.contextFileButton.setVisibility(View.GONE);
+
+                onContextClose(view);
+
+                dialog.dismiss();
+            }
+
+        });
+
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //Cancel action
+                onContextClose(view);
+                dialog.dismiss();
+            }
+        });
+
+        //show the dialog
+        AlertDialog alert = builder.create();
+        alert.show();
     }
 }

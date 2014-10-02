@@ -61,5 +61,7 @@ public abstract class CloudFile {
     public abstract String openUrl();
     public abstract String downloadUrl();
     public abstract String shareUrl();
+    public abstract void delete();
     public abstract String info();
+
 }

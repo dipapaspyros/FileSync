@@ -28,12 +28,14 @@ import org.json.JSONObject;
  * Created by dimitris on 1/9/2014.
  */
 class OneDriveCloudFile extends CloudFile {
+    private LiveConnectClient client;
     private JSONObject f;
     private String openUrl;
 
-    public OneDriveCloudFile(JSONObject f, String id, String title, String iconLink, boolean isDirectory, String mimeType, Long size, String openUrl) {
+    public OneDriveCloudFile(LiveConnectClient client, JSONObject f, String id, String title, String iconLink, boolean isDirectory, String mimeType, Long size, String openUrl) {
         super(id, title, iconLink, isDirectory, mimeType);
 
+        this.client = client;
         this.f = f;
         this.size = size;
         this.openUrl = openUrl;
@@ -52,6 +54,27 @@ class OneDriveCloudFile extends CloudFile {
     @Override
     public String shareUrl() {
         return null;
+    }
+
+    @Override
+    public void delete() {
+        final Integer waitForDelete = new Integer(0);
+        final String id = this.getId();
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                client.deleteAsync(id, new LiveOperationListener() {
+                    public void onError(LiveOperationException exception, LiveOperation operation) {
+                        System.err.println("Error deleting onedrive file: " + exception.getMessage());
+                    }
+                    public void onComplete(LiveOperation operation) {
+                        System.out.println(getTitle() + " deleted.");
+                    }
+                });
+            }
+        });
+        thread.start();
     }
 
     @Override
@@ -212,7 +235,7 @@ public class OneDriveDriver extends CloudStorageStackedDriver {
                                 System.out.println("----" + name + " " + type + " " + id);
                                 String icon = getIcon(type, name);
 
-                                fileList.add(new OneDriveCloudFile(file, id, name, icon, type.equals("folder"), type, file.getLong("size"), file.getString("upload_location")+"?access_token="+token));
+                                fileList.add(new OneDriveCloudFile(client, file, id, name, icon, type.equals("folder"), type, file.getLong("size"), file.getString("upload_location")+"?access_token="+token));
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

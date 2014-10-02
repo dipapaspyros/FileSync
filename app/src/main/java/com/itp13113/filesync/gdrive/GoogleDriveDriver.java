@@ -55,14 +55,16 @@ import com.itp13113.filesync.services.CloudStorageDriver;
 import com.itp13113.filesync.services.CloudStorageStackedDriver;
 
 class GoogleCloudFile extends CloudFile {
+    private Drive drive;
     private com.google.api.services.drive.model.File f;
 
-    public GoogleCloudFile(com.google.api.services.drive.model.File f) {
+    public GoogleCloudFile(Drive drive, com.google.api.services.drive.model.File f) {
         super(f.getId(), f.getTitle(),
                 "icons/gdrive/" + f.getIconLink().substring(f.getIconLink().lastIndexOf("/") + 1),
                 f.getMimeType().equals("application/vnd.google-apps.folder"), f.getMimeType());
 
         this.f = f;
+        this.drive = drive;
 
         Long fSize = f.getFileSize(); long size;
         if (fSize != null) {
@@ -101,6 +103,35 @@ class GoogleCloudFile extends CloudFile {
     @Override
     public String shareUrl() {
         return null;
+    }
+
+    @Override
+    public void delete() {
+        final Integer waitForDelete = new Integer(0);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    drive.files().delete(f.getId()).execute();
+                } catch (IOException e) {
+                    System.out.println("An error occurred: " + e);
+                }
+
+                synchronized(waitForDelete) { //notify that the file was deleted
+                    waitForDelete.notify();
+                }
+            }
+        });
+        thread.start();
+
+        synchronized(waitForDelete) { //wait for the file to be deleted
+            try {
+                waitForDelete.wait();
+            } catch (InterruptedException e) {
+            }
+        }
+
     }
 
     @Override
@@ -277,7 +308,7 @@ public class GoogleDriveDriver extends CloudStorageStackedDriver {
 
 
                     for (com.google.api.services.drive.model.File f : res) {
-                        fileList.add(new GoogleCloudFile(f));
+                        fileList.add(new GoogleCloudFile(drive, f));
                     }
 
 

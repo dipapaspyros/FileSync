@@ -73,7 +73,70 @@ class DropboxCloudFile extends CloudFile {
 
     @Override
     public String shareUrl() {
-        return null;
+        final Integer waitForUrl = new Integer(0);
+        final String[] url = {""};
+
+
+        if (!e.isDir) { //no share url for folder
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        url[0] = mDBApi.share(e.path).url;
+                    } catch (DropboxException e1) {
+                        url[0] = "";
+                    }
+
+                    synchronized(waitForUrl) { //notify that the url was retrieved
+                        waitForUrl.notify();
+                    }
+                }
+            });
+            thread.start();
+
+            synchronized(waitForUrl) { //wait for the url to be retrieved
+                try {
+                    waitForUrl.wait();
+                } catch (InterruptedException e) {
+                }
+            }
+
+            return url[0];
+        }
+
+        return "";
+    }
+
+    @Override
+    public void delete() {
+        final Integer waitForDelete = new Integer(0);
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    if (e.isDir) { //delete directory with all its contents
+                        mDBApi.delete(e.path + "/");
+                    }else { //delete the file
+                        mDBApi.delete(e.path);
+                    }
+                } catch (DropboxException e1) {
+                    e1.printStackTrace();
+                }
+
+                synchronized(waitForDelete) { //notify that the file was deleted
+                    waitForDelete.notify();
+                }
+            }
+        });
+        thread.start();
+
+        synchronized(waitForDelete) { //wait for the file to be deleted
+            try {
+                waitForDelete.wait();
+            } catch (InterruptedException e) {
+            }
+        }
     }
 
     @Override
@@ -184,7 +247,9 @@ public class DropboxDriver extends CloudStorageDriver {
 
                     DropboxAPI.Entry entries = mDBApi.metadata(currentDirectory, 100, null, true, null);
                     for (DropboxAPI.Entry e : entries.contents) {
-                        fileList.add(new DropboxCloudFile(mDBApi, getIconFile(e.icon), e));
+                        if (!e.isDeleted) { //ignore from listing deleted files
+                            fileList.add(new DropboxCloudFile(mDBApi, getIconFile(e.icon), e));
+                        }
                     }
                 } catch (DropboxException e) {
                     System.out.println("Dropbox could not list " + currentDirectory + " directory");

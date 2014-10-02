@@ -2,55 +2,33 @@ package com.itp13113.filesync.services;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ResolveInfo;
 import android.content.res.AssetManager;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Parcel;
-import android.support.annotation.NonNull;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.itp13113.filesync.MainActivity;
 import com.itp13113.filesync.dropbox.DropboxDriver;
 import com.itp13113.filesync.gdrive.GoogleDriveDriver;
 import com.itp13113.filesync.onedrive.OneDriveDriver;
 
-import org.apache.james.mime4j.storage.Storage;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Text;
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Vector;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -102,6 +80,7 @@ class CloudFileLongClickListener implements View.OnLongClickListener {
 
         //set the context file
         storageManager.contextFile = file;
+        storageManager.contextFileButton = (Button) view;
 
         return true;
     }
@@ -116,6 +95,7 @@ public class StorageManager extends CloudStorageDriver {
     private ArrayList<CloudStorageDriver> storages;
     private AssetManager assetManager;
     public CloudFile contextFile = null;
+    public Button contextFileButton = null;
 
     public Integer onResume = new Integer(0);
     private Drawable icon;

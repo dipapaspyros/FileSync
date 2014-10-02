@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merger version="2" >
 
-    <dataSet config="20.0.0" >
-        <source path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\exploded-aar\com.android.support\support-v4\20.0.0\assets" />
-    </dataSet>
-    <dataSet config="20.0.0" >
-        <source path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\20.0.0\assets" />
-    </dataSet>
     <dataSet config="main" >
         <source path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets" >
             <file
@@ -124,6 +118,9 @@
                 name="icons/gdrive/icon_11_form_list.png"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive\icon_11_form_list.png" />
             <file
+                name="icons/gdrive/icon_11_image_list.png"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive\icon_11_image_list.png" />
+            <file
                 name="icons/gdrive/icon_11_shared_collection_list.png"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive\icon_11_shared_collection_list.png" />
             <file
@@ -136,20 +133,17 @@
                 name="icons/gdrive.png"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive.png" />
             <file
-                name="service_types.xml"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\service_types.xml" />
-            <file
                 name="icons/onedrive/file.png"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\onedrive\file.png" />
             <file
                 name="icons/onedrive/folder.png"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\onedrive\folder.png" />
             <file
-                name="icons/gdrive/icon_11_image_list.png"
-                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive\icon_11_image_list.png" />
-            <file
                 name="icons/onedrive.png"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\onedrive.png" />
+            <file
+                name="service_types.xml"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\service_types.xml" />
         </source>
     </dataSet>
     <dataSet config="debug" >
