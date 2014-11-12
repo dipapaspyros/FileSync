@@ -15,8 +15,11 @@ import com.itp13113.filesync.services.CloudStorageAuthorizationError;
 import com.itp13113.filesync.services.CloudStorageDriver;
 
 import com.dropbox.core.*;
+import com.itp13113.filesync.services.CloudStorageNotEnoughSpace;
 
 import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -274,5 +277,68 @@ public class DropboxDriver extends CloudStorageDriver {
         System.out.println("Ls  complete");
 
         return fileList;
+    }
+
+    public long getTotalSpace() {
+        try {
+            return mDBApi.accountInfo().quota;
+        } catch (DropboxException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public long getUsedSpace() {
+        try {
+            return mDBApi.accountInfo().quotaNormal + mDBApi.accountInfo().quotaShared;
+        } catch (DropboxException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public long getFreeSpace() {
+        return this.getTotalSpace() - this.getUsedSpace();
+    }
+
+    public String uploadFile(String local_file, String parentID, String new_file) throws CloudStorageNotEnoughSpace {
+        //get original file
+        java.io.File lcFile = new java.io.File(local_file);
+
+        //check if there is enough space for the file
+        if (this.getFreeSpace() < lcFile.length()) {
+            throw new CloudStorageNotEnoughSpace();
+        }
+
+        FileInputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(lcFile);
+        } catch (FileNotFoundException e) {
+            System.err.println("Could not read file " + local_file);
+            e.printStackTrace();
+        }
+
+        DropboxAPI.Entry newEntry = null;
+        try {
+            newEntry = mDBApi.putFile(parentID +new_file, inputStream,
+                    lcFile.length(), null, null);
+        } catch (DropboxException e) {
+            System.err.println("Could not upload file " + local_file + " to " + getStorageServiceTitle());
+            e.printStackTrace();
+        }
+
+        return newEntry.path;
+    }
+
+    public String createDirectory(String parentID, String new_directory) throws CloudStorageNotEnoughSpace {
+        DropboxAPI.Entry newEntry = null;
+        try {
+            newEntry = mDBApi.createFolder(parentID + "/" + new_directory);
+        } catch (DropboxException e) {
+            System.err.println("Could not create folder " + parentID + "/" + new_directory + " at " + getStorageServiceTitle());
+            e.printStackTrace();
+        }
+
+        return newEntry.path;
     }
 }

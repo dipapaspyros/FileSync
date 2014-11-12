@@ -1,6 +1,9 @@
 package com.itp13113.filesync.services;
 
 import android.content.Context;
+
+import java.io.File;
+import java.util.List;
 import java.util.Vector;
 
 /**
@@ -13,7 +16,6 @@ public abstract class CloudStorageDriver {
     protected final Vector<CloudFile> fileList = new Vector<CloudFile>(); //list of directory files after list() is called
     protected boolean directoryExists = true;
     protected boolean directoryHasChanged = true;
-
     public CloudStorageDriver() {
         currentDirectory = getHomeDirectory();
     }
@@ -78,7 +80,34 @@ public abstract class CloudStorageDriver {
 
     public void resetCashe() { this.directoryHasChanged = true; }
 
+    //listing information
     abstract public Vector<CloudFile> list();
 
+    //quota information
+    abstract public long getTotalSpace();
+    abstract public long getUsedSpace();
+    abstract public long getFreeSpace();
+
+    //uploading
+    abstract public String uploadFile(String local_file, String parentID, String new_file) throws CloudStorageNotEnoughSpace;
+    abstract public String createDirectory(String parentID, String new_directory) throws CloudStorageNotEnoughSpace;
+
+    /*Upload a directory by recursively creating directories and uploading files*/
+    public String uploadDirectory(String local_directory, String parentID, String new_directory) throws CloudStorageNotEnoughSpace {
+        String newFolderID = this.createDirectory(parentID, new_directory); //create the new directory
+
+        File[] files = new File("local_directory").listFiles();
+        for (File file : files) {
+            String new_name = file.getName();
+            if (file.isDirectory()) {
+                this.uploadDirectory(file.getAbsolutePath(), newFolderID, new_name);
+            }
+            else {
+                this.uploadFile(file.getAbsolutePath(), newFolderID, new_name);
+            }
+        }
+
+        return newFolderID;
+    }
 
 }

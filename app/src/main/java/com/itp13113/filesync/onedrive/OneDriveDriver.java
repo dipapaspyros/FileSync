@@ -12,10 +12,13 @@ import com.itp13113.filesync.services.CloudStorageAuthorizationError;
 import com.itp13113.filesync.services.CloudStorageDirectoryNotExists;
 import com.itp13113.filesync.services.CloudStorageDriver;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Stack;
 import java.util.Vector;
 
+import com.itp13113.filesync.services.CloudStorageNotEnoughSpace;
 import com.itp13113.filesync.services.CloudStorageStackedDriver;
 import com.itp13113.filesync.services.StorageManager;
 import com.microsoft.live.*;
@@ -272,4 +275,89 @@ public class OneDriveDriver extends CloudStorageStackedDriver {
 
         return fileList;
     }
+
+    public long getTotalSpace() {
+        try {
+            return client.get("me/skydrive/quota").getResult().getLong("quota");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return 0;
+        } catch (LiveOperationException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public long getFreeSpace() {
+        try {
+            return client.get("me/skydrive/quota").getResult().getLong("available");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return 0;
+        } catch (LiveOperationException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public long getUsedSpace() {
+        try {
+            JSONObject result = client.get("me/skydrive/quota").getResult();
+            return result.getLong("quota") - result.getLong("available");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return 0;
+        } catch (LiveOperationException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public String uploadFile(String local_file, String parentID, String new_file) throws CloudStorageNotEnoughSpace {
+        //get original file
+        java.io.File lcFile = new java.io.File(local_file);
+
+        //check if there is enough space for the file
+        if (this.getFreeSpace() < lcFile.length()) {
+            throw new CloudStorageNotEnoughSpace();
+        }
+
+        //crete the input stream
+        FileInputStream is = null;
+        try {
+            is = new FileInputStream(lcFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return "";
+        }
+
+        //upload the file
+        try {
+            client.upload(parentID, new_file, is);
+        } catch (LiveOperationException e) {
+            e.printStackTrace();
+            return "";
+        }
+
+        return parentID + "/" + new_file;
+    }
+
+    public String createDirectory(String parentID, String new_directory) throws CloudStorageNotEnoughSpace {
+        try {
+            //create the directory json object
+            JSONObject body = new JSONObject();
+            body.put("name", new_directory);
+            //post the object to the parent directory
+            client.post(parentID, body);
+        } catch (LiveOperationException e) {
+            e.printStackTrace();
+            return "";
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "";
+        }
+
+        return parentID + "/" + new_directory;
+    }
+
 }

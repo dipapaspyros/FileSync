@@ -327,4 +327,53 @@ public class StorageManager extends CloudStorageDriver {
 
         return null;
     }
+
+    public long getTotalSpace() {
+        long totalSpace = 0;
+
+        for (CloudStorageDriver storage : storages) {
+            totalSpace += storage.getTotalSpace();
+        }
+
+        return totalSpace;
+    }
+
+    public long getUsedSpace() {
+        long usedSpace = 0;
+
+        for (CloudStorageDriver storage : storages) {
+            usedSpace += storage.getUsedSpace();
+        }
+
+        return usedSpace;
+    }
+
+    public long getFreeSpace() {
+        long freeSpace = 0;
+
+        for (CloudStorageDriver storage : storages) {
+            freeSpace += storage.getFreeSpace();
+        }
+
+        return freeSpace;
+    }
+
+    /*Show a picker to select one of the available storages*/
+    /*If only one storage is available at that directory, it is autoselected*/
+    //TODO: implement method CloudStorageDriver
+    public CloudStorageDriver storagePicker() {
+        return null;
+    }
+
+    public String uploadFile(String local_file, String parentID, String new_file) throws CloudStorageNotEnoughSpace {
+        return storagePicker().uploadFile(local_file, parentID, new_file);
+    }
+
+    public String createDirectory(String parentID, String new_directory) throws CloudStorageNotEnoughSpace {
+        return storagePicker().createDirectory(parentID, new_directory);
+    }
+
+    public String uploadDirectory(String local_directory, String parentID, String new_directory) throws CloudStorageNotEnoughSpace {
+        return storagePicker().uploadDirectory(local_directory, parentID, new_directory);
+    }
 }

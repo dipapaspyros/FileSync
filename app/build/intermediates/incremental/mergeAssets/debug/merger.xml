@@ -144,6 +144,9 @@
             <file
                 name="service_types.xml"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\service_types.xml" />
+            <file
+                name="icons/gdrive/icon_10_word_list.png"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive\icon_10_word_list.png" />
         </source>
     </dataSet>
     <dataSet config="debug" >

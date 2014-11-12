@@ -30,130 +30,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="381cdfbf-f6b2-4ad4-b532-e7a9faba93f9" name="Default" comment="">
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\apache_mime4j_0_6.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\appcompat_v7_20_0_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\commons_codec_1_3.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\dropbox_android_sdk_1_6_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\dropbox_client_1_5_3.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\dropbox_core_sdk_1_7_6.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\google_api_client_1_17_0_rc.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\google_api_client_android_1_17_0_rc.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\google_api_client_xml_1_17_0_rc.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\google_api_services_drive_v2_rev105_1_17_0_rc.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\google_api_services_tasks_v1_rev19_1_17_0_rc.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\google_http_client_1_17_0_rc.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\google_http_client_android_1_17_0_rc.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\google_http_client_gson_1_17_0_rc.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\google_http_client_jackson2_1_11_0_beta.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\google_http_client_xml_1_17_0_rc.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\google_oauth_client_1_17_0_rc.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\gson_2_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\guava_14_0_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\httpcore_4_0_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\httpmime_4_0_3.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\jackson_core_2_2_4.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\json_simple_1_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\jsr305_1_3_9.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\play_services_4_0_30.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\support_annotations_20_0_0.xml" afterPath="" />
-      <change type="DELETED" beforePath="C:\Users\dimitris\AndroidstudioProjects\FileSync\.idea\libraries\support_v4_20_0_0.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/model_data.bin" afterPath="$PROJECT_DIR$/build/intermediates/model_data.bin" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/AccessTokenRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/AccessTokenRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/ApiRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/ApiRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/ApiRequestAsync.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/ApiRequestAsync.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/AuthorizationRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/AuthorizationRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudFile.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageAuthenticationError.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageAuthenticationError.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageAuthorizationError.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageAuthorizationError.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageDirectoryNotExists.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageDirectoryNotExists.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageDriver.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageDriver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageStackedDriver.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageStackedDriver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/Config.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/Config.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/CopyRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/CopyRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/DefaultObservableOAuthRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/DefaultObservableOAuthRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/DeleteRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/DeleteRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/DeviceType.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/DeviceType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/DownloadRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/DownloadRequest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/dropbox/DropboxDriver.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/dropbox/DropboxDriver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/EntityEnclosingApiRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/EntityEnclosingApiRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/ErrorMessages.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/ErrorMessages.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/FileSync.iml" afterPath="$PROJECT_DIR$/FileSync.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/GetRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/GetRequest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/gdrive/GoogleDriveDriver.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/gdrive/GoogleDriveDriver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/HttpCopy.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/HttpCopy.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/HttpMove.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/HttpMove.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/InputStreamResponseHandler.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/InputStreamResponseHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/JsonEntity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/JsonEntity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/JsonResponseHandler.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/JsonResponseHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveAuthClient.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveAuthClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveAuthException.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveAuthException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveAuthListener.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveAuthListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveConnectClient.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveConnectClient.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveConnectSession.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveConnectSession.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveConnectUtils.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveConnectUtils.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveDownloadOperation.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveDownloadOperation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveDownloadOperationListener.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveDownloadOperationListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveOperation.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveOperation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveOperationException.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveOperationException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveOperationListener.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveOperationListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveStatus.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveStatus.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveUploadOperationListener.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/LiveUploadOperationListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/MoveRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/MoveRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/OAuth.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/OAuth.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/OAuthErrorResponse.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/OAuthErrorResponse.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/OAuthRequestObserver.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/OAuthRequestObserver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/OAuthResponse.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/OAuthResponse.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/OAuthResponseVisitor.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/OAuthResponseVisitor.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/OAuthSuccessfulResponse.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/OAuthSuccessfulResponse.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/ObservableOAuthRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/ObservableOAuthRequest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/onedrive/OneDriveDriver.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/onedrive/OneDriveDriver.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/OverwriteOption.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/OverwriteOption.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/PostRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/PostRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/PreferencesConstants.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/PreferencesConstants.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/PutRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/PutRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/QueryParameters.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/QueryParameters.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/RefreshAccessTokenRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/RefreshAccessTokenRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/ScreenSize.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/ScreenSize.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/ServiceType.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/ServiceType.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/ServiceTypeManager.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/ServiceTypeManager.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/StorageManager.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/StorageManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/TokenRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/TokenRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/TokenRequestAsync.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/TokenRequestAsync.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/UploadRequest.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/UploadRequest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/UriBuilder.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/microsoft/live/UriBuilder.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/WelcomeActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/WelcomeActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_welcome.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_welcome.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" afterPath="$PROJECT_DIR$/build/intermediates/dex-cache/cache.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values-w820dp/dimens.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values-w820dp/dimens.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_welcome.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_welcome.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/gradlew.bat" afterPath="$PROJECT_DIR$/gradlew.bat" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/import-summary.txt" afterPath="$PROJECT_DIR$/import-summary.txt" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/local.properties" afterPath="$PROJECT_DIR$/local.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/menu/main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/menu/main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" afterPath="$PROJECT_DIR$/.idea/copyright/profiles_settings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" afterPath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/assets/service_types.xml" afterPath="$PROJECT_DIR$/app/src/main/assets/service_types.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/settings.gradle" afterPath="$PROJECT_DIR$/settings.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values-v11/styles.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values-v11/styles.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values-v14/styles.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values-v14/styles.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/menu/welcome.xml" afterPath="$PROJECT_DIR$/app/src/main/res/menu/welcome.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="FileSync.iws" />
@@ -177,12 +59,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="StorageManager.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="StorageManager.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/StorageManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.071429" vertical-offset="918" max-vertical-offset="4743">
-              <caret line="96" column="40" selection-start-line="96" selection-start-column="40" selection-end-line="96" selection-end-column="40" />
-              <folding />
+            <state vertical-scroll-proportion="1.2559322" vertical-offset="4682" max-vertical-offset="5576">
+              <caret line="376" column="89" selection-start-line="376" selection-start-column="89" selection-end-line="376" selection-end-column="89" />
+              <folding>
+                <element signature="e#12815#12816#0" expanded="true" />
+                <element signature="e#12842#12843#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -190,49 +75,43 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.0714285" vertical-offset="2974" max-vertical-offset="3536">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3400">
               <caret line="202" column="37" selection-start-line="202" selection-start-column="37" selection-end-line="202" selection-end-column="37" />
-              <folding>
-                <element signature="e#6697#7102#0" expanded="true" />
-                <element signature="e#7090#7091#0" expanded="true" />
-                <element signature="e#7150#7409#0" expanded="true" />
-                <element signature="e#7398#7399#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="activity_main.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1445" max-vertical-offset="2703">
-              <caret line="101" column="47" selection-start-line="101" selection-start-column="47" selection-end-line="101" selection-end-column="47" />
-              <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ServiceType.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/ServiceType.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
-              <caret line="16" column="4" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="OneDriveDriver.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/onedrive/OneDriveDriver.java">
+      <file leaf-file-name="CloudStorageDriver.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageDriver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.520339" vertical-offset="424" max-vertical-offset="4148">
-              <caret line="71" column="69" selection-start-line="71" selection-start-column="69" selection-end-line="71" selection-end-column="69" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="1244" max-vertical-offset="1853">
+              <caret line="95" column="95" selection-start-line="95" selection-start-column="34" selection-end-line="95" selection-end-column="95" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DirectoryChooserDialog.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/util/DirectoryChooserDialog.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="4828">
+              <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
               <folding>
-                <element signature="e#1761#2332#0" expanded="true" />
-                <element signature="e#2321#2322#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#2452#2453#0" expanded="true" />
+                <element signature="e#2495#2496#0" expanded="true" />
+                <element signature="e#4098#4504#0" expanded="true" />
+                <element signature="e#4493#4494#0" expanded="true" />
+                <element signature="e#4642#5435#0" expanded="true" />
+                <element signature="e#5424#5425#0" expanded="true" />
+                <element signature="e#5818#5826#0" expanded="true" />
+                <element signature="e#6240#6386#0" expanded="true" />
+                <element signature="e#6375#6376#0" expanded="true" />
+                <element signature="e#7770#9082#0" expanded="true" />
+                <element signature="e#8149#9015#0" expanded="true" />
+                <element signature="e#8996#8997#0" expanded="true" />
+                <element signature="e#9071#9072#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -241,13 +120,33 @@
       <file leaf-file-name="GoogleDriveDriver.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/gdrive/GoogleDriveDriver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="816" max-vertical-offset="4760">
-              <caret line="132" column="9" selection-start-line="109" selection-start-column="8" selection-end-line="132" selection-end-column="9" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="5268" max-vertical-offset="6596">
+              <caret line="346" column="4" selection-start-line="346" selection-start-column="4" selection-end-line="348" selection-end-column="5" />
               <folding>
-                <element signature="e#3715#4165#0" expanded="true" />
-                <element signature="e#4154#4155#0" expanded="true" />
-                <element signature="e#9520#9526#0" expanded="true" />
+                <element signature="imports" expanded="true" />
+                <element signature="e#11566#11567#0" expanded="true" />
+                <element signature="e#11631#11632#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CloudStorageStackedDriver.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageStackedDriver.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="1020">
+              <caret line="41" column="41" selection-start-line="41" selection-start-column="41" selection-end-line="41" selection-end-column="41" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CloudStorageNotEnoughSpace.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageNotEnoughSpace.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
+              <caret line="5" column="57" selection-start-line="5" selection-start-column="57" selection-end-line="5" selection-end-column="57" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -255,7 +154,7 @@
       <file leaf-file-name="ServiceTypeManager.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/ServiceTypeManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="2609" max-vertical-offset="3893">
+            <state vertical-scroll-proportion="0.0" vertical-offset="1445" max-vertical-offset="4488">
               <caret line="85" column="62" selection-start-line="85" selection-start-column="62" selection-end-line="85" selection-end-column="62" />
               <folding />
             </state>
@@ -265,24 +164,23 @@
       <file leaf-file-name="DropboxDriver.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/dropbox/DropboxDriver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="4318">
-              <caret line="113" column="51" selection-start-line="113" selection-start-column="51" selection-end-line="113" selection-end-column="51" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="4425" max-vertical-offset="5304">
+              <caret line="310" column="9" selection-start-line="304" selection-start-column="8" selection-end-line="310" selection-end-column="9" />
               <folding>
-                <element signature="e#2282#2739#0" expanded="true" />
-                <element signature="e#2724#2725#0" expanded="true" />
-                <element signature="e#3786#3787#0" expanded="true" />
-                <element signature="e#7056#7878#0" expanded="true" />
-                <element signature="e#7876#7877#0" expanded="true" />
+                <element signature="e#3321#3933#0" expanded="true" />
+                <element signature="e#3922#3923#0" expanded="true" />
+                <element signature="e#8895#8896#0" expanded="true" />
+                <element signature="e#8960#8961#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CloudFile.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudFile.java">
+      <file leaf-file-name="OneDriveDriver.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/onedrive/OneDriveDriver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="447" max-vertical-offset="1071">
-              <caret line="63" column="34" selection-start-line="63" selection-start-column="34" selection-end-line="63" selection-end-column="34" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="3507" max-vertical-offset="5542">
+              <caret line="349" column="53" selection-start-line="349" selection-start-column="53" selection-end-line="349" selection-end-column="53" />
               <folding />
             </state>
           </provider>
@@ -1450,18 +1348,20 @@
         <option value="$PROJECT_DIR$/app/src/main/assets/storages.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageAuthorizationError.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_welcome.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageDriver.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageStackedDriver.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/test.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/WelcomeActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/ServiceTypeManager.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudFile.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/StorageManager.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/util/DirectoryChooserDialog.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageNotEnoughSpace.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageDriver.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/gdrive/GoogleDriveDriver.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/dropbox/DropboxDriver.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/onedrive/OneDriveDriver.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/StorageManager.java" />
       </list>
     </option>
   </component>
@@ -1497,6 +1397,8 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -1615,10 +1517,84 @@
               <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FileSync" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FileSync" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="filesync" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="util" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FileSync" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FileSync" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="com" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="filesync" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.android.tools.idea.gradle.projectView.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -1678,6 +1654,19 @@
       <option name="PORT" value="5005" />
       <method />
     </configuration>
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <module name="" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="HTML_FILE_NAME" />
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <option name="VM_PARAMETERS" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <method />
+    </configuration>
     <configuration default="true" type="TestNG" factoryName="TestNG">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
@@ -1703,19 +1692,6 @@
       <envs />
       <properties />
       <listeners />
-      <method />
-    </configuration>
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <module name="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="HTML_FILE_NAME" />
-      <option name="HTML_USED" value="false" />
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <option name="VM_PARAMETERS" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
       <method />
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -1824,7 +1800,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1838,7 +1814,7 @@
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.30911064" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.329718" sideWeight="0.6921875" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.329718" sideWeight="0.6921875" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -1850,8 +1826,8 @@
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3296875" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.329718" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3991323" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1878,20 +1854,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/gradlew.bat">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="257" max-vertical-offset="1632">
-          <caret line="26" column="50" selection-start-line="26" selection-start-column="47" selection-end-line="26" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.0-rc1/AndroidManifest.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
-          <caret line="21" column="36" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/build/intermediates/exploded-aar/com.android.support/appcompat-v7/21.0.0-rc1/AndroidManifest.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="527">
@@ -2107,20 +2069,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageDriver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="566" max-vertical-offset="1411">
-          <caret line="53" column="39" selection-start-line="53" selection-start-column="39" selection-end-line="53" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageStackedDriver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="1020">
-          <caret line="48" column="35" selection-start-line="48" selection-start-column="35" selection-end-line="48" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$APPLICATION_HOME_DIR$/sdk/platforms/android-19/android.jar!/java/lang/String.class">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.1440678" vertical-offset="0" max-vertical-offset="3145">
@@ -2161,7 +2109,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1445">
           <caret line="27" column="34" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2183,48 +2130,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudFile.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="447" max-vertical-offset="1071">
-          <caret line="63" column="34" selection-start-line="63" selection-start-column="34" selection-end-line="63" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.apis/google-api-services-drive/v2-rev105-1.17.0-rc/fac6f6f6a87c02eed504ec3b74eb690ed7ae75b0/google-api-services-drive-v2-rev105-1.17.0-rc-sources.jar!/com/google/api/services/drive/Drive.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3322034" vertical-offset="229" max-vertical-offset="143327">
-          <caret line="43" column="13" selection-start-line="43" selection-start-column="13" selection-end-line="43" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/StorageManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.071429" vertical-offset="918" max-vertical-offset="4743">
-          <caret line="96" column="40" selection-start-line="96" selection-start-column="40" selection-end-line="96" selection-end-column="40" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/ServiceType.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="459">
           <caret line="16" column="4" selection-start-line="16" selection-start-column="4" selection-end-line="16" selection-end-column="4" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.0714285" vertical-offset="2974" max-vertical-offset="3536">
-          <caret line="202" column="37" selection-start-line="202" selection-start-column="37" selection-end-line="202" selection-end-column="37" />
-          <folding>
-            <element signature="e#6697#7102#0" expanded="true" />
-            <element signature="e#7090#7091#0" expanded="true" />
-            <element signature="e#7150#7409#0" expanded="true" />
-            <element signature="e#7398#7399#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2240,43 +2150,120 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.3322034" vertical-offset="32393" max-vertical-offset="41123">
           <caret line="2018" column="23" selection-start-line="2018" selection-start-column="23" selection-end-line="2018" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/util/DirectoryChooserDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="204" max-vertical-offset="4828">
+          <caret line="4" column="0" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2452#2453#0" expanded="true" />
+            <element signature="e#2495#2496#0" expanded="true" />
+            <element signature="e#4098#4504#0" expanded="true" />
+            <element signature="e#4493#4494#0" expanded="true" />
+            <element signature="e#4642#5435#0" expanded="true" />
+            <element signature="e#5424#5425#0" expanded="true" />
+            <element signature="e#5818#5826#0" expanded="true" />
+            <element signature="e#6240#6386#0" expanded="true" />
+            <element signature="e#6375#6376#0" expanded="true" />
+            <element signature="e#7770#9082#0" expanded="true" />
+            <element signature="e#8149#9015#0" expanded="true" />
+            <element signature="e#8996#8997#0" expanded="true" />
+            <element signature="e#9071#9072#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3434" max-vertical-offset="3910">
+          <caret line="202" column="37" selection-start-line="202" selection-start-column="37" selection-end-line="202" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/dropbox/DropboxDriver.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageNotEnoughSpace.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="4318">
-          <caret line="113" column="51" selection-start-line="113" selection-start-column="51" selection-end-line="113" selection-end-column="51" />
-          <folding>
-            <element signature="e#2282#2739#0" expanded="true" />
-            <element signature="e#2724#2725#0" expanded="true" />
-            <element signature="e#3786#3787#0" expanded="true" />
-            <element signature="e#7056#7878#0" expanded="true" />
-            <element signature="e#7876#7877#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="221">
+          <caret line="5" column="57" selection-start-line="5" selection-start-column="57" selection-end-line="5" selection-end-column="57" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageStackedDriver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="357" max-vertical-offset="1020">
+          <caret line="41" column="41" selection-start-line="41" selection-start-column="41" selection-end-line="41" selection-end-column="41" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudFile.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3322034" vertical-offset="280" max-vertical-offset="1071">
+          <caret line="28" column="18" selection-start-line="28" selection-start-column="18" selection-end-line="28" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.apis/google-api-services-drive/v2-rev105-1.17.0-rc/fac6f6f6a87c02eed504ec3b74eb690ed7ae75b0/google-api-services-drive-v2-rev105-1.17.0-rc-sources.jar!/com/google/api/services/drive/Drive.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3322034" vertical-offset="49240" max-vertical-offset="143327">
+          <caret line="3204" column="18" selection-start-line="3204" selection-start-column="18" selection-end-line="3204" selection-end-column="18" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/gdrive/GoogleDriveDriver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="816" max-vertical-offset="4760">
-          <caret line="132" column="9" selection-start-line="109" selection-start-column="8" selection-end-line="132" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="5268" max-vertical-offset="6596">
+          <caret line="346" column="4" selection-start-line="346" selection-start-column="4" selection-end-line="348" selection-end-column="5" />
           <folding>
-            <element signature="e#3715#4165#0" expanded="true" />
-            <element signature="e#4154#4155#0" expanded="true" />
-            <element signature="e#9520#9526#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#11566#11567#0" expanded="true" />
+            <element signature="e#11631#11632#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/dropbox/DropboxDriver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4425" max-vertical-offset="5304">
+          <caret line="310" column="9" selection-start-line="304" selection-start-column="8" selection-end-line="310" selection-end-column="9" />
+          <folding>
+            <element signature="e#3321#3933#0" expanded="true" />
+            <element signature="e#3922#3923#0" expanded="true" />
+            <element signature="e#8895#8896#0" expanded="true" />
+            <element signature="e#8960#8961#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/onedrive/OneDriveDriver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.520339" vertical-offset="424" max-vertical-offset="4148">
-          <caret line="71" column="69" selection-start-line="71" selection-start-column="69" selection-end-line="71" selection-end-column="69" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="3507" max-vertical-offset="5542">
+          <caret line="349" column="53" selection-start-line="349" selection-start-column="53" selection-end-line="349" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/CloudStorageDriver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="1244" max-vertical-offset="1853">
+          <caret line="95" column="95" selection-start-line="95" selection-start-column="34" selection-end-line="95" selection-end-column="95" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/itp13113/filesync/services/StorageManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.2559322" vertical-offset="4682" max-vertical-offset="5576">
+          <caret line="376" column="89" selection-start-line="376" selection-start-column="89" selection-end-line="376" selection-end-column="89" />
           <folding>
-            <element signature="e#1761#2332#0" expanded="true" />
-            <element signature="e#2321#2322#0" expanded="true" />
+            <element signature="e#12815#12816#0" expanded="true" />
+            <element signature="e#12842#12843#0" expanded="true" />
           </folding>
         </state>
       </provider>

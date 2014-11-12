@@ -1,58 +1,39 @@
 package com.itp13113.filesync.gdrive;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Stack;
-import java.util.Vector;
-
-import org.xmlpull.v1.XmlPullParser;
-import org.xmlpull.v1.XmlPullParserException;
-import org.xmlpull.v1.XmlPullParserFactory;
-
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.accounts.AccountManagerCallback;
-import android.accounts.AccountManagerFuture;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentSender;
-import android.content.res.AssetManager;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
-import android.os.Bundle;
-import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.Toast;
+import android.webkit.MimeTypeMap;
 
 import com.google.api.client.http.FileContent;
 import com.google.api.client.http.HttpResponseException;
 import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import com.google.api.services.drive.model.File;
-import com.google.api.services.drive.model.FileList;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveRequest;
 import com.google.api.services.drive.DriveRequestInitializer;
 import com.google.api.services.drive.DriveScopes;
+import com.google.api.services.drive.model.About;
+import com.google.api.services.drive.model.File;
 import com.google.api.services.drive.model.FileList;
+import com.google.api.services.drive.model.ParentReference;
 import com.itp13113.filesync.services.CloudFile;
 import com.itp13113.filesync.services.CloudStorageAuthenticationError;
 import com.itp13113.filesync.services.CloudStorageAuthorizationError;
-import com.itp13113.filesync.services.CloudStorageDirectoryNotExists;
-import com.itp13113.filesync.services.CloudStorageDriver;
+import com.itp13113.filesync.services.CloudStorageNotEnoughSpace;
 import com.itp13113.filesync.services.CloudStorageStackedDriver;
+
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Vector;
 
 class GoogleCloudFile extends CloudFile {
     private Drive drive;
@@ -337,5 +318,83 @@ public class GoogleDriveDriver extends CloudStorageStackedDriver {
         System.out.println("Ls  complete");
 
         return fileList;
+    }
+
+    public long getTotalSpace() {
+        About about = null;
+        try {
+            about = drive.about().get().execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+        return about.getQuotaBytesTotal();
+    }
+
+    public long getUsedSpace() {
+        About about = null;
+        try {
+            about = drive.about().get().execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return 0;
+        }
+
+        return about.getQuotaBytesUsed();
+    }
+
+    public long getFreeSpace() {
+        return this.getTotalSpace() - this.getUsedSpace();
+    }
+
+    public String uploadFile(String local_file, String parentID, String new_file) throws CloudStorageNotEnoughSpace {
+        //get original file
+        java.io.File lcFile = new java.io.File(local_file);
+
+        //check if there is enough space for the file
+        if (this.getFreeSpace() < lcFile.length()) {
+            throw new CloudStorageNotEnoughSpace();
+        }
+
+        //get file mime type
+        String mimeType = "text/html";
+        String extension = MimeTypeMap.getFileExtensionFromUrl(local_file);
+        if (extension != null) {
+            MimeTypeMap mime = MimeTypeMap.getSingleton();
+            mimeType = mime.getMimeTypeFromExtension(extension);
+        }
+
+        //create the drive file
+        File newFile = new File();
+        newFile.setTitle(new_file);
+        newFile.setMimeType(mimeType);
+        newFile.setParents(Arrays.asList(new ParentReference().setId(parentID)));
+
+        //insert the file and upload contents
+        FileContent gContent = new FileContent(mimeType, lcFile);
+        try {
+            File insertedFile = drive.files().insert(newFile, gContent).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return newFile.getId();
+    }
+
+    public String createDirectory(String parentID, String new_directory) throws CloudStorageNotEnoughSpace {
+        //to create a directory just create an empty file with the appropriate mime type
+        File newFile = new File();
+        newFile.setTitle(new_directory);
+        newFile.setMimeType("application/vnd.google-apps.document");
+        newFile.setParents(Arrays.asList(new ParentReference().setId(parentID)));
+
+        try {
+            File insertedFile = drive.files().insert(newFile).execute();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return newFile.getId();
     }
 }

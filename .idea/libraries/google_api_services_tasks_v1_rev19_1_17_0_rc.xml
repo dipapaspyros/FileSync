@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="google-api-services-tasks-v1-rev19-1.17.0-rc">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.apis/google-api-services-tasks/v1-rev19-1.17.0-rc/945677e23b364c059808db7070ff88378f383548/google-api-services-tasks-v1-rev19-1.17.0-rc.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.google.apis/google-api-services-tasks/v1-rev19-1.17.0-rc/ab91cd50248488ad924898f7bf2a6489eee2b538/google-api-services-tasks-v1-rev19-1.17.0-rc-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
