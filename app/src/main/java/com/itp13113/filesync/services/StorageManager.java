@@ -365,7 +365,6 @@ public class StorageManager extends CloudStorageDriver {
 
     /*Show a picker to select one of the available storages*/
     /*If only one storage is available at that directory, it is autoselected*/
-    //TODO: implement method CloudStorageDriver
     public boolean storagePicker(final StorageOperation storageOperation) {
         final ArrayList<CloudStorageDriver> non_empty_storages = new ArrayList<CloudStorageDriver>();
         for (CloudStorageDriver storage : storages) {

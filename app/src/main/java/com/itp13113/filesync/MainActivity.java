@@ -1,11 +1,13 @@
 package com.itp13113.filesync;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
@@ -27,6 +29,7 @@ import com.itp13113.filesync.services.CloudStorageAuthenticationError;
 import com.itp13113.filesync.services.CloudStorageDriver;
 import com.itp13113.filesync.services.CloudStorageNotEnoughSpace;
 import com.itp13113.filesync.services.StorageManager;
+import com.itp13113.filesync.util.FileChooserDialog;
 import com.itp13113.filesync.util.StorageOperation;
 
 public class MainActivity extends ActionBarActivity {
@@ -228,7 +231,52 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onUploadClick(View v) {
+        final MainActivity that = this;
+        CharSequence[] options = {"Upload a file", "Upload a directory"};
 
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Choose an action");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (which == 0) { //upload a file
+                    FileChooserDialog fileChooserDialog = new FileChooserDialog(that, Environment.getExternalStorageDirectory());
+                    fileChooserDialog.addFileListener(new FileChooserDialog.FileSelectedListener() {
+                        public void fileSelected(File file) {
+                            final File f = file;
+                            final String fileName = file.toString();
+                            storageManager.storagePicker(new StorageOperation() {
+                                @Override
+                                public void onStorageSelect(CloudStorageDriver driver) { //pick a drive and create the directory
+                                    driver.uploadFile(fileName, f.getName(), that);
+
+                                }
+                            });
+                        }
+                    });
+                    fileChooserDialog.setSelectDirectoryOption(false);
+                    fileChooserDialog.showDialog();
+                } else { //upload a directory
+                    FileChooserDialog fileChooserDialog = new FileChooserDialog(that, Environment.getExternalStorageDirectory());
+                    fileChooserDialog.addDirectoryListener(new FileChooserDialog.DirectorySelectedListener() {
+                      public void directorySelected(File directory) {
+                          final File d = directory;
+                          final String directoryName = directory.toString();
+                          storageManager.storagePicker(new StorageOperation() {
+                              @Override
+                              public void onStorageSelect(CloudStorageDriver driver) { //pick a drive and create the directory
+                                  driver.uploadDirectory(directoryName, d.getName(), that);
+
+                              }
+                          });
+                      }
+                    });
+                    fileChooserDialog.setSelectDirectoryOption(true);
+                    fileChooserDialog.showDialog();
+                }
+            }
+        });
+        builder.show();
     }
 
     public void onNewDirectoryClick(View v) {
@@ -254,7 +302,6 @@ public class MainActivity extends ActionBarActivity {
                 // Do nothing.
             }
         }).show();
-
-
     }
+
 }

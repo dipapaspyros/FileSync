@@ -391,10 +391,11 @@ public class GoogleDriveDriver extends CloudStorageStackedDriver {
 
         try {
             File insertedFile = drive.files().insert(newFile).execute();
+            return insertedFile.getId();
         } catch (IOException e) {
             e.printStackTrace();
+            return null;
         }
 
-        return newFile.getId();
     }
 }

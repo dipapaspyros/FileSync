@@ -30,10 +30,10 @@ public abstract class CloudStorageStackedDriver extends CloudStorageDriver {
             currentDirectory = currentDirectory.substring(0, currentDirectory.lastIndexOf("/"));
             currentFolderID = prevFolderIDs.pop();
             return;
+        } else {
+            currentDirectory += "/" + directory;
+            prevFolderIDs.push(new String(currentFolderID));
         }
-
-        currentDirectory += "/" + directory;
-        prevFolderIDs.push(new String(currentFolderID));
 
         for (CloudFile file : fileList) { //find a subdirectory
             if (file.isDirectory() && file.getTitle().equals(directory)) {

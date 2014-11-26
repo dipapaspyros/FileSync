@@ -20,6 +20,7 @@ public abstract class CloudStorageDriver {
     protected final Vector<CloudFile> fileList = new Vector<CloudFile>(); //list of directory files after list() is called
     protected boolean directoryExists = true;
     protected boolean directoryHasChanged = true;
+
     public CloudStorageDriver() {
         currentDirectory = getHomeDirectory();
     }
@@ -27,19 +28,24 @@ public abstract class CloudStorageDriver {
     public void setContext(Context context) {
         this.context = context;
     }
-    public Context getContext() {return context;}
+
+    public Context getContext() {
+        return context;
+    }
 
     abstract public String getStorageServiceTitle();
-    abstract  public String getHomeDirectory();
+
+    abstract public String getHomeDirectory();
 
     abstract public void authorize() throws CloudStorageAuthorizationError;
+
     abstract public void authenticate() throws CloudStorageAuthenticationError;
 
     public String getDirectoryTitle() {
-        if (currentDirectory.equals( getHomeDirectory() )) {
+        if (currentDirectory.equals(getHomeDirectory())) {
             return "Home";
         } else {
-            return currentDirectory.substring( currentDirectory.lastIndexOf("/")+1, currentDirectory.length());
+            return currentDirectory.substring(currentDirectory.lastIndexOf("/") + 1, currentDirectory.length());
         }
 
     }
@@ -47,7 +53,10 @@ public abstract class CloudStorageDriver {
     public String getDirectory() {
         return currentDirectory;
     }
-    protected String getDirectoryID() { return currentDirectory; }
+
+    protected String getDirectoryID() {
+        return currentDirectory;
+    }
 
     public void setDirectory(String directory) throws CloudStorageDirectoryNotExists {
         if (directory.equals("..") && currentDirectory.equals(getHomeDirectory())) { //parent directory unavaildable on <home>
@@ -68,8 +77,9 @@ public abstract class CloudStorageDriver {
             currentDirectory = currentDirectory.substring(0, currentDirectory.lastIndexOf("/"));
             return;
         }
-
-        currentDirectory += "/" + directory;
+        else {
+            currentDirectory += "/" + directory;
+        }
 
         for (CloudFile file : fileList) { //find a subdirectory
             if (file.isDirectory() && file.getTitle().equals(directory)) {
@@ -83,28 +93,53 @@ public abstract class CloudStorageDriver {
         throw new CloudStorageDirectoryNotExists();
     }
 
-    public void resetCashe() { this.directoryHasChanged = true; }
+    public void resetCashe() {
+        this.directoryHasChanged = true;
+    }
 
     //listing information
     abstract public Vector<CloudFile> list();
 
     //quota information
     abstract public long getTotalSpace();
+
     abstract public long getUsedSpace();
+
     abstract public long getFreeSpace();
 
     //uploading
     abstract public String uploadFile(String local_file, String parentID, String new_file) throws CloudStorageNotEnoughSpace;
-    public String uploadFile(String local_file, String new_file) {
-        try {
-            return this.uploadFile(local_file, this.getDirectoryID(),new_file);
-        } catch (CloudStorageNotEnoughSpace cloudStorageNotEnoughSpace) {
-            Toast.makeText(this.getContext(), "Could not upload file", Toast.LENGTH_LONG);
-            return "";
-        }
+
+    public void uploadFile(final String local_file, final String new_file, final MainActivity mainActivity) {
+        final CloudStorageDriver that = this;
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    that.uploadFile(local_file, that.getDirectoryID(), new_file);
+                    mainActivity.onRefreshClick(mainActivity.findViewById(R.id.refreshButton));
+                    mainActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(that.getContext(), "Uploading " + new_file + " completed.", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                } catch (CloudStorageNotEnoughSpace cloudStorageNotEnoughSpace) {
+                    mainActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(that.getContext(), "Could not upload file", Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+        });
+        thread.start();
     }
 
     abstract public String createDirectory(String parentID, String new_directory) throws CloudStorageNotEnoughSpace;
+
+    //creating new directories
     public void createDirectory(final String new_directory, final MainActivity mainActivity) {
         final CloudStorageDriver that = this;
         Thread thread = new Thread(new Runnable() {
@@ -113,8 +148,14 @@ public abstract class CloudStorageDriver {
                 try {
                     that.createDirectory(that.getDirectoryID(), new_directory);
                     mainActivity.onRefreshClick(mainActivity.findViewById(R.id.refreshButton));
+
                 } catch (CloudStorageNotEnoughSpace cloudStorageNotEnoughSpace) {
-                    Toast.makeText(that.getContext(), "Could not create directory", Toast.LENGTH_LONG);
+                    mainActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(that.getContext(), "Could not create directory", Toast.LENGTH_LONG).show();
+                        }
+                    });
                 }
             }
         });
@@ -122,21 +163,41 @@ public abstract class CloudStorageDriver {
     }
 
     /*Upload a directory by recursively creating directories and uploading files*/
-    public String uploadDirectory(String local_directory, String parentID, String new_directory) throws CloudStorageNotEnoughSpace {
-        String newFolderID = this.createDirectory(parentID, new_directory); //create the new directory
+    public void uploadDirectory(final String local_directory, String parentID, String new_directory, final MainActivity mainActivity) throws CloudStorageNotEnoughSpace {
+        final String newFolderID = this.createDirectory(parentID, new_directory); //create the new directory
+        final CloudStorageDriver that = this;
 
-        File[] files = new File("local_directory").listFiles();
+
+        File[] files = new File(local_directory).listFiles();
         for (File file : files) {
-            String new_name = file.getName();
+            final String new_name = file.getName();
             if (file.isDirectory()) {
-                this.uploadDirectory(file.getAbsolutePath(), newFolderID, new_name);
-            }
-            else {
-                this.uploadFile(file.getAbsolutePath(), newFolderID, new_name);
+                that.uploadDirectory(file.getAbsolutePath(), newFolderID, new_name, mainActivity);
+            } else {
+                that.uploadFile(file.getAbsolutePath(), newFolderID, new_name);
             }
         }
+    }
 
-        return newFolderID;
+    public void uploadDirectory(final String local_directory, final String new_directory, final MainActivity mainActivity) {
+        final CloudStorageDriver that = this;
+
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    that.uploadDirectory(local_directory, that.getDirectoryID(), new_directory, mainActivity);
+                } catch (CloudStorageNotEnoughSpace cloudStorageNotEnoughSpace) {
+                    mainActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(that.getContext(), "Could not upload directory " + new_directory, Toast.LENGTH_LONG).show();
+                        }
+                    });
+                }
+            }
+        });
+        thread.start();
     }
 
 }
