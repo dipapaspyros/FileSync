@@ -52,4 +52,6 @@ public abstract class CloudStorageStackedDriver extends CloudStorageDriver {
         throw new CloudStorageDirectoryNotExists();
     }
 
+    protected String getDirectoryID() { return currentFolderID; }
+
 }

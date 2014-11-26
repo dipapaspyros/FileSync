@@ -1,6 +1,10 @@
 package com.itp13113.filesync.services;
 
 import android.content.Context;
+import android.widget.Toast;
+
+import com.itp13113.filesync.MainActivity;
+import com.itp13113.filesync.R;
 
 import java.io.File;
 import java.util.List;
@@ -43,6 +47,7 @@ public abstract class CloudStorageDriver {
     public String getDirectory() {
         return currentDirectory;
     }
+    protected String getDirectoryID() { return currentDirectory; }
 
     public void setDirectory(String directory) throws CloudStorageDirectoryNotExists {
         if (directory.equals("..") && currentDirectory.equals(getHomeDirectory())) { //parent directory unavaildable on <home>
@@ -90,7 +95,31 @@ public abstract class CloudStorageDriver {
 
     //uploading
     abstract public String uploadFile(String local_file, String parentID, String new_file) throws CloudStorageNotEnoughSpace;
+    public String uploadFile(String local_file, String new_file) {
+        try {
+            return this.uploadFile(local_file, this.getDirectoryID(),new_file);
+        } catch (CloudStorageNotEnoughSpace cloudStorageNotEnoughSpace) {
+            Toast.makeText(this.getContext(), "Could not upload file", Toast.LENGTH_LONG);
+            return "";
+        }
+    }
+
     abstract public String createDirectory(String parentID, String new_directory) throws CloudStorageNotEnoughSpace;
+    public void createDirectory(final String new_directory, final MainActivity mainActivity) {
+        final CloudStorageDriver that = this;
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    that.createDirectory(that.getDirectoryID(), new_directory);
+                    mainActivity.onRefreshClick(mainActivity.findViewById(R.id.refreshButton));
+                } catch (CloudStorageNotEnoughSpace cloudStorageNotEnoughSpace) {
+                    Toast.makeText(that.getContext(), "Could not create directory", Toast.LENGTH_LONG);
+                }
+            }
+        });
+        thread.start();
+    }
 
     /*Upload a directory by recursively creating directories and uploading files*/
     public String uploadDirectory(String local_directory, String parentID, String new_directory) throws CloudStorageNotEnoughSpace {

@@ -2,7 +2,10 @@ package com.itp13113.filesync.services;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.BitmapFactory;
@@ -20,6 +23,7 @@ import android.widget.TextView;
 import com.itp13113.filesync.dropbox.DropboxDriver;
 import com.itp13113.filesync.gdrive.GoogleDriveDriver;
 import com.itp13113.filesync.onedrive.OneDriveDriver;
+import com.itp13113.filesync.util.StorageOperation;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -30,6 +34,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Vector;
+import java.util.concurrent.Callable;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -311,8 +316,8 @@ public class StorageManager extends CloudStorageDriver {
                             }
                         });
 
-                        }
                     }
+                }
 
                 //hide the loading progress bar
                 activity.runOnUiThread(new Runnable() {
@@ -361,19 +366,91 @@ public class StorageManager extends CloudStorageDriver {
     /*Show a picker to select one of the available storages*/
     /*If only one storage is available at that directory, it is autoselected*/
     //TODO: implement method CloudStorageDriver
-    public CloudStorageDriver storagePicker() {
-        return null;
+    public boolean storagePicker(final StorageOperation storageOperation) {
+        final ArrayList<CloudStorageDriver> non_empty_storages = new ArrayList<CloudStorageDriver>();
+        for (CloudStorageDriver storage : storages) {
+            if (storage.directoryExists) {
+                non_empty_storages.add(storage);
+            }
+        }
+
+        if (non_empty_storages.size() == 0) { //no non-empty drive directory -- should not happen normally
+            return false;
+        }
+
+        if (non_empty_storages.size() == 1) { //exactly one non-empty -- autopick
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    storageOperation.onStorageSelect( non_empty_storages.get(0) );
+                }
+            });
+            thread.start();
+
+            return true;
+        }
+
+        //create CharSequence[] object
+        final CharSequence[] options = new CharSequence[non_empty_storages.size()];
+        for (int i =0; i < non_empty_storages.size(); i++) {
+            options[i] = non_empty_storages.get(i).getStorageServiceTitle();
+        }
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle("Pick a driver");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                storageOperation.onStorageSelect ( non_empty_storages.get(which) );
+            }
+        });
+        builder.show();
+
+        return true;
     }
 
-    public String uploadFile(String local_file, String parentID, String new_file) throws CloudStorageNotEnoughSpace {
-        return storagePicker().uploadFile(local_file, parentID, new_file);
+    public String uploadFile(final String local_file, final String parentID, final String new_file) {
+        storagePicker(new StorageOperation() {
+            @Override
+            public void onStorageSelect(CloudStorageDriver driver) {
+                try {
+                    driver.uploadFile(local_file, parentID, new_file);
+                } catch (CloudStorageNotEnoughSpace cloudStorageNotEnoughSpace) {
+                    System.err.println("Not enough storage in " + driver.getStorageServiceTitle());
+                }
+            }
+        });
+
+        return "Uploading file...";
     }
 
-    public String createDirectory(String parentID, String new_directory) throws CloudStorageNotEnoughSpace {
-        return storagePicker().createDirectory(parentID, new_directory);
+    public String createDirectory(final String parentID, final String new_directory) throws CloudStorageNotEnoughSpace {
+        storagePicker(new StorageOperation() {
+            @Override
+            public void onStorageSelect(CloudStorageDriver driver) {
+                try {
+                    driver.createDirectory(parentID, new_directory);
+                } catch (CloudStorageNotEnoughSpace cloudStorageNotEnoughSpace) {
+                    System.err.println("Not enough storage in " + driver.getStorageServiceTitle());
+                }
+            }
+        });
+
+        return "Creating directory...";
     }
 
-    public String uploadDirectory(String local_directory, String parentID, String new_directory) throws CloudStorageNotEnoughSpace {
-        return storagePicker().uploadDirectory(local_directory, parentID, new_directory);
+    public String uploadDirectory(final String local_directory, final String parentID, final String new_directory) throws CloudStorageNotEnoughSpace {
+        storagePicker(new StorageOperation() {
+            @Override
+            public void onStorageSelect(CloudStorageDriver driver) {
+                try {
+                    uploadDirectory(local_directory, parentID, new_directory);
+                } catch (CloudStorageNotEnoughSpace cloudStorageNotEnoughSpace) {
+                    System.err.println("Not enough storage in " + driver.getStorageServiceTitle());
+                }
+            }
+        });
+
+        return "Uploading directory...";
     }
 }

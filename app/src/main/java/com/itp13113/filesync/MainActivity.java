@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,9 +21,13 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.itp13113.filesync.services.CloudStorageAuthenticationError;
+import com.itp13113.filesync.services.CloudStorageDriver;
+import com.itp13113.filesync.services.CloudStorageNotEnoughSpace;
 import com.itp13113.filesync.services.StorageManager;
+import com.itp13113.filesync.util.StorageOperation;
 
 public class MainActivity extends ActionBarActivity {
     private StorageManager storageManager = null;
@@ -128,7 +133,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public void onBackPressed() {
-        onContextClose((ImageButton) this.findViewById(R.id.upButton));
+        onContextClose((ImageButton) this.findViewById(R.id.prevButton));
 
         if (storageManager == null) {
             super.onBackPressed();
@@ -138,7 +143,7 @@ public class MainActivity extends ActionBarActivity {
         if (storageManager.getHomeDirectory().equals(storageManager.getDirectory())) { //if already at <home> just leave the application
             super.onBackPressed();
         } else { //return to previous (1 level up) directory
-            onUpClick((ImageButton) this.findViewById(R.id.upButton));
+            onUpClick((ImageButton) this.findViewById(R.id.prevButton));
         }
     }
 
@@ -220,5 +225,36 @@ public class MainActivity extends ActionBarActivity {
         //show the dialog
         AlertDialog alert = builder.create();
         alert.show();
+    }
+
+    public void onUploadClick(View v) {
+
+    }
+
+    public void onNewDirectoryClick(View v) {
+        final EditText input = new EditText(this);
+        final MainActivity that = this;
+
+        new AlertDialog.Builder(this)
+                .setTitle("Create a directory")
+                .setMessage("Enter the name of the new directory")
+                .setView(input)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        final Editable value = input.getText();
+                        storageManager.storagePicker(new StorageOperation() {
+                            @Override
+                            public void onStorageSelect(CloudStorageDriver driver) { //pick a drive and create the directory
+                                driver.createDirectory(value.toString(), that);
+                            }
+                        });
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                // Do nothing.
+            }
+        }).show();
+
+
     }
 }

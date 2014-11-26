@@ -14,12 +14,20 @@
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="50dp">
+            <ImageButton
+                android:id="@+id/prevButton"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+
+                android:src="@drawable/prev"
+                android:onClick="onUpClick"
+                />
             <EditText
                 android:id="@+id/dirTextView"
                 android:focusable="false"
                 android:layout_width="220dp"
                 android:layout_height="wrap_content"
-
+                android:layout_toRightOf="@+id/prevButton"
                 android:enabled="false"
                 android:text="Home"
                 >
@@ -33,13 +41,22 @@
                 android:onClick="onRefreshClick"
                 />
             <ImageButton
-                android:id="@+id/upButton"
+                android:id="@+id/upload"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_toRightOf="@+id/refreshButton"
                 android:src="@drawable/up"
-                android:onClick="onUpClick"
+                android:onClick="onUploadClick"
                 />
+            <ImageButton
+                android:id="@+id/new_dir"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_toRightOf="@+id/upload"
+                android:src="@drawable/new_dir"
+                android:onClick="onNewDirectoryClick"
+                />
+
 
         </RelativeLayout>
 

@@ -386,7 +386,7 @@ public class GoogleDriveDriver extends CloudStorageStackedDriver {
         //to create a directory just create an empty file with the appropriate mime type
         File newFile = new File();
         newFile.setTitle(new_directory);
-        newFile.setMimeType("application/vnd.google-apps.document");
+        newFile.setMimeType("application/vnd.google-apps.folder");
         newFile.setParents(Arrays.asList(new ParentReference().setId(parentID)));
 
         try {
