@@ -7,6 +7,7 @@ import java.io.InputStream;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Environment;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
@@ -30,6 +31,8 @@ import com.itp13113.filesync.services.CloudStorageDriver;
 import com.itp13113.filesync.services.CloudStorageNotEnoughSpace;
 import com.itp13113.filesync.services.StorageManager;
 import com.itp13113.filesync.util.FileChooserDialog;
+import com.itp13113.filesync.util.NetworkJob;
+import com.itp13113.filesync.util.NetworkJobManager;
 import com.itp13113.filesync.util.StorageOperation;
 
 public class MainActivity extends ActionBarActivity {
@@ -38,6 +41,7 @@ public class MainActivity extends ActionBarActivity {
     private TextView fileInfo;
     private EditText dirTextView;
     private ProgressBar loading;
+    private NetworkJobManager networkJobManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +79,9 @@ public class MainActivity extends ActionBarActivity {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PlaceholderFragment()).commit();
         }
+
+        //create the network job manager
+        networkJobManager = new NetworkJobManager(this);
     }
 
     @Override
@@ -180,13 +187,25 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onContextDownload(View v) { //context menu download click
-        //storageManager.openFile( storageManager.contextFile );
+        storageManager.downloadFile( storageManager.contextFile );
 
         onContextClose(v);
     }
 
     public void onContextShare(View v) { //context menu share click
-        storageManager.downloadFile(storageManager.contextFile);
+        String link = storageManager.contextFile.shareUrl();
+        if (link == null || link == "") {  //file/folder may not be shared
+            Toast.makeText(getApplicationContext(), storageManager.contextFile.getTitle() + " can not be shared.", Toast.LENGTH_SHORT).show();
+        } else {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Copy share link for " + storageManager.contextFile.getTitle());
+
+            final EditText linkText = new EditText(getApplicationContext());
+            linkText.setText(link);
+            linkText.setTextColor(Color.BLUE);
+            builder.setView(linkText);
+            builder.show();
+        }
 
         onContextClose(v);
     }
@@ -230,6 +249,19 @@ public class MainActivity extends ActionBarActivity {
         alert.show();
     }
 
+    public static long getFolderSize(File dir) {
+        long size = 0;
+        for (File file : dir.listFiles()) {
+            if (file.isFile()) {
+                System.out.println(file.getName() + " " + file.length());
+                size += file.length();
+            }
+            else
+                size += getFolderSize(file);
+        }
+        return size;
+    }
+
     public void onUploadClick(View v) {
         final MainActivity that = this;
         CharSequence[] options = {"Upload a file", "Upload a directory"};
@@ -248,8 +280,10 @@ public class MainActivity extends ActionBarActivity {
                             storageManager.storagePicker(new StorageOperation() {
                                 @Override
                                 public void onStorageSelect(CloudStorageDriver driver) { //pick a drive and create the directory
-                                    driver.uploadFile(fileName, f.getName(), that);
+                                    NetworkJob job = networkJobManager.newNetworkJob(f.getName());
+                                    job.setTotalBytes(f.length());
 
+                                    driver.uploadFile(job, fileName, f.getName(), that);
                                 }
                             });
                         }
@@ -265,7 +299,12 @@ public class MainActivity extends ActionBarActivity {
                           storageManager.storagePicker(new StorageOperation() {
                               @Override
                               public void onStorageSelect(CloudStorageDriver driver) { //pick a drive and create the directory
-                                  driver.uploadDirectory(directoryName, d.getName(), that);
+                                  NetworkJob job = networkJobManager.newNetworkJob(d.getName());
+                                  long folderSize = getFolderSize(d);
+                                  System.out.println("Total size: " + folderSize);
+                                  job.setTotalBytes( folderSize );
+
+                                  driver.uploadDirectory(job, directoryName, d.getName(), that);
 
                               }
                           });
@@ -304,4 +343,7 @@ public class MainActivity extends ActionBarActivity {
         }).show();
     }
 
+    public void onNetworkManagerShow(View v) {
+        networkJobManager.show();
+    }
 }

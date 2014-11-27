@@ -1,5 +1,7 @@
 package com.itp13113.filesync.services;
 
+import com.itp13113.filesync.util.ReadableFileSize;
+
 /**
  * Created by dimitris on 27/7/2014.
  */
@@ -50,11 +52,7 @@ public abstract class CloudFile {
 
     public String getFileSizeReadable() {
         long bytes = this.size.longValue();
-        int unit = 1000;
-        if (bytes < unit) return bytes + " B";
-        int exp = (int) (Math.log(bytes) / Math.log(unit));
-        String pre = ("KMGTPE").charAt(exp-1) + "";
-        return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
+        return ReadableFileSize.getReadableFileSize(bytes);
     }
 
     /*File methods*/

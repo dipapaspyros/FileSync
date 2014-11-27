@@ -5,6 +5,7 @@ import android.widget.Toast;
 
 import com.itp13113.filesync.MainActivity;
 import com.itp13113.filesync.R;
+import com.itp13113.filesync.util.NetworkJob;
 
 import java.io.File;
 import java.util.List;
@@ -108,16 +109,15 @@ public abstract class CloudStorageDriver {
     abstract public long getFreeSpace();
 
     //uploading
-    abstract public String uploadFile(String local_file, String parentID, String new_file) throws CloudStorageNotEnoughSpace;
+    abstract public String uploadFile(NetworkJob job, String local_file, String parentID, String new_file) throws CloudStorageNotEnoughSpace;
 
-    public void uploadFile(final String local_file, final String new_file, final MainActivity mainActivity) {
+    public void uploadFile(final NetworkJob job, final String local_file, final String new_file, final MainActivity mainActivity) {
         final CloudStorageDriver that = this;
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    that.uploadFile(local_file, that.getDirectoryID(), new_file);
-                    mainActivity.onRefreshClick(mainActivity.findViewById(R.id.refreshButton));
+                    that.uploadFile(job, local_file, that.getDirectoryID(), new_file);
                     mainActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -163,30 +163,33 @@ public abstract class CloudStorageDriver {
     }
 
     /*Upload a directory by recursively creating directories and uploading files*/
-    public void uploadDirectory(final String local_directory, String parentID, String new_directory, final MainActivity mainActivity) throws CloudStorageNotEnoughSpace {
+    public void uploadDirectory(NetworkJob job, final String local_directory, String parentID, String new_directory, final MainActivity mainActivity) throws CloudStorageNotEnoughSpace {
         final String newFolderID = this.createDirectory(parentID, new_directory); //create the new directory
-        final CloudStorageDriver that = this;
+        if (newFolderID == "" || newFolderID == null) { //not valid id -- folder was not created
+            throw new CloudStorageNotEnoughSpace();
+        }
 
+        final CloudStorageDriver that = this;
 
         File[] files = new File(local_directory).listFiles();
         for (File file : files) {
             final String new_name = file.getName();
             if (file.isDirectory()) {
-                that.uploadDirectory(file.getAbsolutePath(), newFolderID, new_name, mainActivity);
+                that.uploadDirectory(job, file.getAbsolutePath(), newFolderID, new_name, mainActivity);
             } else {
-                that.uploadFile(file.getAbsolutePath(), newFolderID, new_name);
+                that.uploadFile(job, file.getAbsolutePath(), newFolderID, new_name);
             }
         }
     }
 
-    public void uploadDirectory(final String local_directory, final String new_directory, final MainActivity mainActivity) {
+    public void uploadDirectory(final NetworkJob job, final String local_directory, final String new_directory, final MainActivity mainActivity) {
         final CloudStorageDriver that = this;
 
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    that.uploadDirectory(local_directory, that.getDirectoryID(), new_directory, mainActivity);
+                    that.uploadDirectory(job, local_directory, that.getDirectoryID(), new_directory, mainActivity);
                 } catch (CloudStorageNotEnoughSpace cloudStorageNotEnoughSpace) {
                     mainActivity.runOnUiThread(new Runnable() {
                         @Override

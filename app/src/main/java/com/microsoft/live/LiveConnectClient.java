@@ -1591,7 +1591,7 @@ public class LiveConnectClient {
     public LiveOperation uploadAsync(String path,
                                      String filename,
                                      InputStream input,
-                                     LiveUploadOperationListener listener) {
+                                     OverwriteOption doNotOverwrite, LiveUploadOperationListener listener) {
         return this.uploadAsync(path, filename, input, listener, null);
     }
 

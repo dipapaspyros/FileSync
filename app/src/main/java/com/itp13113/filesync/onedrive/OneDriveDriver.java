@@ -21,6 +21,7 @@ import java.util.Vector;
 import com.itp13113.filesync.services.CloudStorageNotEnoughSpace;
 import com.itp13113.filesync.services.CloudStorageStackedDriver;
 import com.itp13113.filesync.services.StorageManager;
+import com.itp13113.filesync.util.NetworkJob;
 import com.microsoft.live.*;
 
 import org.json.JSONArray;
@@ -56,7 +57,45 @@ class OneDriveCloudFile extends CloudFile {
 
     @Override
     public String shareUrl() {
-        return null;
+        final String[] url = {"", ""}; // {"RESTful_call_path", "share_link"}
+        final String path;
+
+        //get the unique ID of the file and create a RESTful call to retrieve a read/write link for it
+        try {
+            url[0] = f.getString("id") + "/shared_edit_link";
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+        //start a new thread to perform the network operation
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    url[1] = client.get(url[0]).getResult().optString("link");
+                } catch (LiveOperationException e) {
+                    e.printStackTrace();
+                    url[1] = "";
+                }
+
+                synchronized(url) { //notify that the share link was retrieved
+                    url.notify();
+                }
+            }
+        });
+        thread.start();
+
+        synchronized(url) { //wait for share link to be retrieved
+            try {
+                url.wait();
+            } catch (InterruptedException e) {
+            }
+        }
+
+        //return the share link or null if it was not retrieved
+        return url[1];
     }
 
     @Override
@@ -124,6 +163,24 @@ class OneDriveDriverAuthListener implements LiveAuthListener {
             driver.client = new LiveConnectClient(session);
             driver.token = session.getAccessToken();
 
+            //get user name
+            driver.client.getAsync("me", new LiveOperationListener() {
+                public void onComplete(LiveOperation operation) {
+                    try {
+                        JSONObject result = operation.getResult();
+                        System.out.println(operation.getRawResult());
+                        driver.username = result.getString("name");
+                        // Display user's first name.
+                    } catch (JSONException e) {
+                        // Display error if first name is unavailable.
+                        return;
+                    }
+                }
+                public void onError(LiveOperationException exception, LiveOperation operation) {
+                    // Display error if operation is unsuccessful.
+                }
+            });
+
             if (driver.storageManager != null) {
                 driver.storageManager.resetCashe();
                 driver.storageManager.list();
@@ -131,22 +188,24 @@ class OneDriveDriverAuthListener implements LiveAuthListener {
         }
         else {
             driver.client = null;
-            System.out.println("OneDrive could not authenticate");
+            System.err.println("OneDrive could not authenticate");
         }
     }
 
     @Override
     public void onAuthError(LiveAuthException exception, Object userState) {
         driver.client = null;
-        System.out.println("Error signing in: " + exception.getMessage());
+        System.err.println("Error signing in: " + exception.getMessage());
     }
 }
 
 public class OneDriveDriver extends CloudStorageStackedDriver {
     private Activity activity;
     private LiveAuthClient auth;
+
     protected String token;
     protected LiveConnectClient client;
+    protected String username = "";
 
     protected StorageManager storageManager;
 
@@ -160,7 +219,12 @@ public class OneDriveDriver extends CloudStorageStackedDriver {
 
     @Override
     public String getStorageServiceTitle() {
-        return "Microsoft OneDrive";
+        String result = "Microsoft OneDrive";
+        if (username != "") {
+            result += " - " + username;
+        }
+
+        return result;
     }
 
     @Override
@@ -221,7 +285,6 @@ public class OneDriveDriver extends CloudStorageStackedDriver {
 
                     try {
                         JSONObject result = client.get(currentFolderID + "/files").getResult();
-                        System.out.println(result);
 
                         //get directory information
                         System.out.println("Folder ID = " + result.optString("id") +
@@ -313,7 +376,9 @@ public class OneDriveDriver extends CloudStorageStackedDriver {
         }
     }
 
-    public String uploadFile(String local_file, String parentID, String new_file) throws CloudStorageNotEnoughSpace {
+    public String uploadFile(NetworkJob job, String local_file, String parentID, String new_file) throws CloudStorageNotEnoughSpace {
+        final NetworkJob myJob = job;
+
         //get original file
         java.io.File lcFile = new java.io.File(local_file);
 
@@ -323,7 +388,7 @@ public class OneDriveDriver extends CloudStorageStackedDriver {
         }
 
         //crete the input stream
-        FileInputStream is = null;
+        FileInputStream is;
         try {
             is = new FileInputStream(lcFile);
         } catch (FileNotFoundException e) {
@@ -332,12 +397,33 @@ public class OneDriveDriver extends CloudStorageStackedDriver {
         }
 
         //upload the file
-        try {
-            client.upload(parentID, new_file, is);
-        } catch (LiveOperationException e) {
-            e.printStackTrace();
-            return "";
-        }
+        client.uploadAsync(parentID, new_file, is, OverwriteOption.DoNotOverwrite, new LiveUploadOperationListener() {
+                private long prevBytesRemaining = 0;
+
+                @Override
+                public void onUploadCompleted(LiveOperation operation) {
+
+                }
+
+                @Override
+                public void onUploadFailed(LiveOperationException exception, LiveOperation operation) {
+                    System.err.println("File upload failed");
+                }
+
+                @Override
+                public void onUploadProgress(int totalBytes, int bytesRemaining, LiveOperation operation) {
+                    synchronized (this) {
+                        long uploaded;
+                        if (prevBytesRemaining == 0) {
+                            uploaded = totalBytes - bytesRemaining;
+                        } else {
+                            uploaded = prevBytesRemaining - bytesRemaining;
+                        }
+                        myJob.appendCompletedBytes(uploaded);
+                        prevBytesRemaining = bytesRemaining;
+                    }
+                }
+            });
 
         return parentID + "/" + new_file;
     }
@@ -347,8 +433,11 @@ public class OneDriveDriver extends CloudStorageStackedDriver {
             //create the directory json object
             JSONObject body = new JSONObject();
             body.put("name", new_directory);
+
             //post the object to the parent directory
-            client.post(parentID, body);
+            LiveOperation result = client.post(parentID, body);
+            String id = result.getResult().getString("id");
+            return id;
         } catch (LiveOperationException e) {
             e.printStackTrace();
             return "";
@@ -356,8 +445,6 @@ public class OneDriveDriver extends CloudStorageStackedDriver {
             e.printStackTrace();
             return "";
         }
-
-        return parentID + "/" + new_directory;
     }
 
 }

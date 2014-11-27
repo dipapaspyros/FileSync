@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import com.itp13113.filesync.dropbox.DropboxDriver;
 import com.itp13113.filesync.gdrive.GoogleDriveDriver;
 import com.itp13113.filesync.onedrive.OneDriveDriver;
+import com.itp13113.filesync.util.NetworkJob;
 import com.itp13113.filesync.util.StorageOperation;
 
 import org.w3c.dom.Document;
@@ -264,43 +266,73 @@ public class StorageManager extends CloudStorageDriver {
                         }
                     });
 
+                    //check if multiple storages are shown
+                    int nOfdrives = 0;
+                    for (CloudStorageDriver storage : storages) {
+                        if (storage.directoryExists) {
+                            nOfdrives++;
+                        }
+                    }
+                    boolean showDriveInfo = false;
+                    if (nOfdrives > 1) {
+                        showDriveInfo = true;
+                    }
+
                     //get a list of all the files
                     fileList.removeAllElements();
                     for (CloudStorageDriver storage : storages) {
-                        fileList.addAll(storage.list());
-                    }
+                        Vector<CloudFile> list = storage.list();
+                        fileList.addAll(list);
 
-                    //show the files
-                    for (CloudFile file : fileList) {
-                        final Button b = new Button(context);
-                        String bTitle = file.getTitle();
-                        if (!file.isDirectory()) {
-                            bTitle = bTitle + " (" + file.getFileSizeReadable() + ")";
-                        }
-                        b.setText(bTitle);
+                        //show drive infro
+                        if (showDriveInfo) {
+                            final TextView textView = new TextView(context);
+                            textView.setPadding(10,10,10,10);
+                            textView.setTextColor(Color.rgb(68,108,179));
+                            textView.setTextSize(24);
+                            textView.setText(storage.getStorageServiceTitle() + "(" + list.size() + ")");
 
-                        //load the icon if it was specified
-                        if (!file.getIconLink().equals("")) {
-                            try {
-                                Drawable icon = Drawable.createFromResourceStream(context.getResources(), null, assetManager.open(file.getIconLink()), file.getIconLink(), new BitmapFactory.Options());
-                                b.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
-                            } catch (IOException e) { //invalid icon name - do nothing
-                                System.out.println("Icon could not be displayed - " + file.getIconLink());
-                            }
+                            //add the file/folder button
+                            activity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    fileListView.addView(textView);
+                                }
+                            });
                         }
 
-                        CloudFileClickListener cl = new CloudFileClickListener(that, file);
-                        CloudFileLongClickListener lcl = new CloudFileLongClickListener(that, file);
-                        b.setOnClickListener(cl);
-                        b.setOnLongClickListener(lcl);
-
-                        //add the file/folder button
-                        activity.runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                fileListView.addView(b);
+                        //show the files
+                        for (CloudFile file : list) {
+                            final Button b = new Button(context);
+                            String bTitle = file.getTitle();
+                            if (!file.isDirectory()) {
+                                bTitle = bTitle + " (" + file.getFileSizeReadable() + ")";
                             }
-                        });
+                            b.setText(bTitle);
+
+                            //load the icon if it was specified
+                            if (!file.getIconLink().equals("")) {
+                                try {
+                                    Drawable icon = Drawable.createFromResourceStream(context.getResources(), null, assetManager.open(file.getIconLink()), file.getIconLink(), new BitmapFactory.Options());
+                                    b.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
+                                } catch (IOException e) { //invalid icon name - do nothing
+                                    System.err.println("Icon could not be displayed - " + file.getIconLink());
+                                }
+                            }
+
+                            CloudFileClickListener cl = new CloudFileClickListener(that, file);
+                            CloudFileLongClickListener lcl = new CloudFileLongClickListener(that, file);
+                            b.setOnClickListener(cl);
+                            b.setOnLongClickListener(lcl);
+
+                            //add the file/folder button
+                            activity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    fileListView.addView(b);
+                                }
+                            });
+                        }
                     }
 
                     if (fileList.isEmpty()) { //show appropriate message on empty directories
@@ -408,12 +440,12 @@ public class StorageManager extends CloudStorageDriver {
         return true;
     }
 
-    public String uploadFile(final String local_file, final String parentID, final String new_file) {
+    public String uploadFile(final NetworkJob job, final String local_file, final String parentID, final String new_file) {
         storagePicker(new StorageOperation() {
             @Override
             public void onStorageSelect(CloudStorageDriver driver) {
                 try {
-                    driver.uploadFile(local_file, parentID, new_file);
+                    driver.uploadFile(job, local_file, parentID, new_file);
                 } catch (CloudStorageNotEnoughSpace cloudStorageNotEnoughSpace) {
                     System.err.println("Not enough storage in " + driver.getStorageServiceTitle());
                 }
@@ -438,12 +470,12 @@ public class StorageManager extends CloudStorageDriver {
         return "Creating directory...";
     }
 
-    public String uploadDirectory(final String local_directory, final String parentID, final String new_directory) throws CloudStorageNotEnoughSpace {
+    public String uploadDirectory(final NetworkJob job, final String local_directory, final String parentID, final String new_directory) throws CloudStorageNotEnoughSpace {
         storagePicker(new StorageOperation() {
             @Override
             public void onStorageSelect(CloudStorageDriver driver) {
                 try {
-                    uploadDirectory(local_directory, parentID, new_directory);
+                    uploadDirectory(job, local_directory, parentID, new_directory);
                 } catch (CloudStorageNotEnoughSpace cloudStorageNotEnoughSpace) {
                     System.err.println("Not enough storage in " + driver.getStorageServiceTitle());
                 }

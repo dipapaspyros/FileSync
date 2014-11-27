@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 import com.dropbox.client2.DropboxAPI;
+import com.dropbox.client2.ProgressListener;
 import com.dropbox.client2.android.AndroidAuthSession;
 import com.dropbox.client2.exception.DropboxException;
 import com.dropbox.client2.session.AccessTokenPair;
@@ -16,6 +17,7 @@ import com.itp13113.filesync.services.CloudStorageDriver;
 
 import com.dropbox.core.*;
 import com.itp13113.filesync.services.CloudStorageNotEnoughSpace;
+import com.itp13113.filesync.util.NetworkJob;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -78,7 +80,6 @@ class DropboxCloudFile extends CloudFile {
     public String shareUrl() {
         final Integer waitForUrl = new Integer(0);
         final String[] url = {""};
-
 
         if (!e.isDir) { //no share url for folder
             Thread thread = new Thread(new Runnable() {
@@ -183,7 +184,17 @@ public class DropboxDriver extends CloudStorageDriver {
 
     @Override
     public String getStorageServiceTitle() {
-        return "Dropbox";
+        String result = "Dropbox";
+
+        if (mDBApi != null) {
+            try {
+                result += " - " + mDBApi.accountInfo().displayName;
+            } catch (DropboxException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return result;
     }
 
     @Override
@@ -198,8 +209,6 @@ public class DropboxDriver extends CloudStorageDriver {
     }
 
     public void authorizeComplete() {
-        System.out.println("dbox auth ok!");
-
         this.waitAuthorization = false;
 
         if (mDBApi.getSession().authenticationSuccessful()) {
@@ -211,10 +220,10 @@ public class DropboxDriver extends CloudStorageDriver {
                 this.key = accessToken.key;
                 this.secret = accessToken.secret;
             } catch (IllegalStateException e) {
-                System.out.println("Error authenticating dropbox");
+                System.err.println("Error authenticating dropbox");
             }
         } else {
-            System.out.println("Could not loggin to dropbox");
+            System.err.println("Could not loggin to dropbox");
         }
     }
 
@@ -222,7 +231,6 @@ public class DropboxDriver extends CloudStorageDriver {
 
     @Override
     public void authenticate() throws CloudStorageAuthenticationError {
-        System.out.println("DKEY: " + key+ " " + secret);
         mDBApi.getSession().setAccessTokenPair(new AccessTokenPair(key, secret));
     }
 
@@ -255,7 +263,7 @@ public class DropboxDriver extends CloudStorageDriver {
                         }
                     }
                 } catch (DropboxException e) {
-                    System.out.println("Dropbox could not list " + currentDirectory + " directory");
+                    System.err.println("Dropbox could not list " + currentDirectory + " directory");
                     e.printStackTrace();
                 }
 
@@ -301,7 +309,9 @@ public class DropboxDriver extends CloudStorageDriver {
         return this.getTotalSpace() - this.getUsedSpace();
     }
 
-    public String uploadFile(String local_file, String parentID, String new_file) throws CloudStorageNotEnoughSpace {
+    public String uploadFile(NetworkJob job, String local_file, String parentID, String new_file) throws CloudStorageNotEnoughSpace {
+        final NetworkJob myJob = job;
+
         //get original file
         java.io.File lcFile = new java.io.File(local_file);
 
@@ -321,7 +331,23 @@ public class DropboxDriver extends CloudStorageDriver {
         DropboxAPI.Entry newEntry = null;
         try {
             newEntry = mDBApi.putFile(parentID +new_file, inputStream,
-                    lcFile.length(), null, null);
+                    lcFile.length(), null, new ProgressListener() {
+                        private long prevBytes = 0;
+
+                        @Override
+                        public void onProgress(long bytes, long total) {
+                            synchronized (this) {
+                                long new_bytes = bytes - prevBytes;
+                                prevBytes = bytes;
+                                myJob.appendCompletedBytes(new_bytes);
+                            }
+                        }
+
+                        @Override
+                        public long progressInterval() {
+                            return -1;//always report back
+                        }
+                    });
         } catch (DropboxException e) {
             System.err.println("Could not upload file " + local_file + " to " + getStorageServiceTitle());
             e.printStackTrace();
@@ -339,6 +365,6 @@ public class DropboxDriver extends CloudStorageDriver {
             e.printStackTrace();
         }
 
-        return newEntry.path;
+        return newEntry.path + "/";
     }
 }

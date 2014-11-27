@@ -9,6 +9,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.webkit.MimeTypeMap;
 
+import com.google.api.client.googleapis.media.MediaHttpUploader;
+import com.google.api.client.googleapis.media.MediaHttpUploaderProgressListener;
 import com.google.api.client.http.FileContent;
 import com.google.api.client.http.HttpResponseException;
 import com.google.api.client.http.HttpTransport;
@@ -27,6 +29,7 @@ import com.itp13113.filesync.services.CloudStorageAuthenticationError;
 import com.itp13113.filesync.services.CloudStorageAuthorizationError;
 import com.itp13113.filesync.services.CloudStorageNotEnoughSpace;
 import com.itp13113.filesync.services.CloudStorageStackedDriver;
+import com.itp13113.filesync.util.NetworkJob;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -83,7 +86,8 @@ class GoogleCloudFile extends CloudFile {
 
     @Override
     public String shareUrl() {
-        return null;
+        f.setShared(true);
+        return f.getWebContentLink();
     }
 
     @Override
@@ -96,7 +100,7 @@ class GoogleCloudFile extends CloudFile {
                 try {
                     drive.files().delete(f.getId()).execute();
                 } catch (IOException e) {
-                    System.out.println("An error occurred: " + e);
+                    System.err.println("An error occurred: " + e);
                 }
 
                 synchronized(waitForDelete) { //notify that the file was deleted
@@ -134,6 +138,9 @@ public class GoogleDriveDriver extends CloudStorageStackedDriver {
     protected Drive drive = null;
     private String accountName;
 
+    //API Application key
+    private String APP_KEY = "f2:76:87:34:e0:e9:ff:f2:02:0c:44:f3:53:2e:95:01:25:10:f3:ee";
+
     //locks
     Integer authenticationComplete = new Integer(0);
 
@@ -142,10 +149,9 @@ public class GoogleDriveDriver extends CloudStorageStackedDriver {
         this.currentFolderID = "root";
     }
 
-    public String getAccountNumber() {return this.accountName;}
     @Override
     public String getStorageServiceTitle() {
-        return "Google Drive";
+        return "Google Drive - " + accountName;
     }
 
     @Override
@@ -171,7 +177,7 @@ public class GoogleDriveDriver extends CloudStorageStackedDriver {
         final AccountManager am = AccountManager.get(context);
 
         if (am == null) {
-            System.out.println("Could not retrieve Google Drive Account manager");
+            System.err.println("Could not retrieve Google Drive Account manager");
             throw new CloudStorageAuthenticationError();
         }
 
@@ -186,7 +192,7 @@ public class GoogleDriveDriver extends CloudStorageStackedDriver {
         final Account account = acf;
 
         if (acf == null) {
-            System.out.println("No Google account " + accountName + " found");
+            System.err.println("No Google account " + accountName + " found");
             throw new CloudStorageAuthenticationError();
         } else {
             Thread thread = new Thread(new Runnable() {
@@ -204,7 +210,7 @@ public class GoogleDriveDriver extends CloudStorageStackedDriver {
                             public void initializeDriveRequest(DriveRequest request) throws IOException {
                                 DriveRequest driveRequest = request;
                                 driveRequest.setPrettyPrint(true);
-                                driveRequest.setKey("f2:76:87:34:e0:e9:ff:f2:02:0c:44:f3:53:2e:95:01:25:10:f3:ee");
+                                driveRequest.setKey(APP_KEY);
                                 driveRequest.setOauthToken(token);
                             }
                         });
@@ -212,13 +218,13 @@ public class GoogleDriveDriver extends CloudStorageStackedDriver {
                         drive = b.build();
                     } catch (OperationCanceledException e) {
                         drive = null;
-                        System.out.println("Could not complete operation");
+                        System.err.println("Could not complete operation");
                     } catch (IOException e) {
                         drive = null;
-                        System.out.println("I/O exception");
+                        System.err.println("I/O exception");
                     } catch (AuthenticatorException e) {
                         drive = null;
-                        System.out.println("Could not authenticate");
+                        System.err.println("Could not authenticate");
                     }
 
                     synchronized (authenticationComplete) {
@@ -256,7 +262,7 @@ public class GoogleDriveDriver extends CloudStorageStackedDriver {
         final Integer listingComplete = new Integer(0);
         fileList.removeAllElements();
 
-        System.out.println("ls");
+        System.out.println("GOOGLE DRIVE ls <" + currentDirectory + ">");
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -274,12 +280,11 @@ public class GoogleDriveDriver extends CloudStorageStackedDriver {
                         } catch (HttpResponseException e) {
 
                             if (e.getStatusCode() == 401) { // Credentials have been revoked.
-                                System.out.println("Google Drive API credentials have been revoked");
-                                // TODO: Redirect the user to the authorization URL.
+                                System.err.println("Google Drive API credentials have been revoked");
                                 authenticate();
                             }
                         } catch (IOException e) {
-                            System.out.println("An error occurred: " + e);
+                            System.err.println("An error occurred: " + e);
                             request.setPageToken(null);
 
                         }
@@ -287,6 +292,11 @@ public class GoogleDriveDriver extends CloudStorageStackedDriver {
                     } while (request.getPageToken() != null &&
                             request.getPageToken().length() > 0);
 
+                    //add shared with me directory when listing home
+                    if (currentDirectory.equals( getHomeDirectory() )) {
+                        FileList files = request.setQ("sharedWithMe").execute();
+                        res.addAll(files.getItems());
+                    }
 
                     for (com.google.api.services.drive.model.File f : res) {
                         fileList.add(new GoogleCloudFile(drive, f));
@@ -348,7 +358,7 @@ public class GoogleDriveDriver extends CloudStorageStackedDriver {
         return this.getTotalSpace() - this.getUsedSpace();
     }
 
-    public String uploadFile(String local_file, String parentID, String new_file) throws CloudStorageNotEnoughSpace {
+    public String uploadFile(final NetworkJob job, String local_file, String parentID, String new_file) throws CloudStorageNotEnoughSpace {
         //get original file
         java.io.File lcFile = new java.io.File(local_file);
 
@@ -372,14 +382,48 @@ public class GoogleDriveDriver extends CloudStorageStackedDriver {
         newFile.setParents(Arrays.asList(new ParentReference().setId(parentID)));
 
         //insert the file and upload contents
-        FileContent gContent = new FileContent(mimeType, lcFile);
+        final FileContent gContent = new FileContent(mimeType, lcFile);
+        final long totalSize = gContent.getLength();
+
         try {
-            File insertedFile = drive.files().insert(newFile, gContent).execute();
+            Drive.Files.Insert insert = drive.files().insert(newFile, gContent);
+
+            MediaHttpUploader uploader = insert.getMediaHttpUploader();
+            uploader.setDirectUploadEnabled(false);
+            uploader.setProgressListener(new MediaHttpUploaderProgressListener() {
+                long prevBytes = 0;
+
+                @Override
+                public void progressChanged(MediaHttpUploader uploader) throws IOException {
+                    long bytes;
+
+                    switch (uploader.getUploadState()) {
+                        case INITIATION_STARTED:
+                            break;
+                        case INITIATION_COMPLETE:
+                            break;
+                        case MEDIA_IN_PROGRESS:
+                            bytes = uploader.getNumBytesUploaded() - prevBytes;
+                            prevBytes += bytes;
+                            job.appendCompletedBytes(bytes);
+                            break;
+                        case MEDIA_COMPLETE:
+                            bytes = gContent.getLength() - prevBytes;
+                            job.appendCompletedBytes(bytes);
+                            break;
+                        case NOT_STARTED :
+                            break;
+                    }
+                }
+            });
+            File insertedFile = insert.execute();
+
+            return insertedFile.getId();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return newFile.getId();
+        return null;
     }
 
     public String createDirectory(String parentID, String new_directory) throws CloudStorageNotEnoughSpace {

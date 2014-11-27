@@ -20,13 +20,15 @@
                 android:layout_height="32dp"
 
                 android:src="@drawable/prev"
+                android:background="@android:color/darker_gray"
+                android:layout_margin="2dp"
                 android:onClick="onUpClick"
                 />
             <EditText
                 android:id="@+id/dirTextView"
                 android:focusable="false"
-                android:layout_width="220dp"
-                android:layout_height="wrap_content"
+                android:layout_width="130dp"
+                android:layout_height="42dp"
                 android:layout_toRightOf="@+id/prevButton"
                 android:enabled="false"
                 android:text="Home"
@@ -38,6 +40,8 @@
                 android:layout_height="32dp"
                 android:layout_toRightOf="@+id/dirTextView"
                 android:src="@drawable/refresh"
+                android:background="@android:color/darker_gray"
+                android:layout_margin="2dp"
                 android:onClick="onRefreshClick"
                 />
             <ImageButton
@@ -46,6 +50,8 @@
                 android:layout_height="32dp"
                 android:layout_toRightOf="@+id/refreshButton"
                 android:src="@drawable/up"
+                android:background="@android:color/darker_gray"
+                android:layout_margin="2dp"
                 android:onClick="onUploadClick"
                 />
             <ImageButton
@@ -54,9 +60,21 @@
                 android:layout_height="32dp"
                 android:layout_toRightOf="@+id/upload"
                 android:src="@drawable/new_dir"
+                android:background="@android:color/darker_gray"
+                android:layout_margin="2dp"
                 android:onClick="onNewDirectoryClick"
                 />
-
+            <ImageButton
+                android:id="@+id/network_toggle"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_marginRight="5dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/progress"
+                android:background="@android:color/darker_gray"
+                android:layout_margin="2dp"
+                android:onClick="onNetworkManagerShow"
+                />
 
         </RelativeLayout>
 

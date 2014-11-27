@@ -150,6 +150,12 @@
             <file
                 name="icons/gdrive/icon_10_audio_list.png"
                 path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive\icon_10_audio_list.png" />
+            <file
+                name="icons/gdrive/icon_10_pdf_list.png"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive\icon_10_pdf_list.png" />
+            <file
+                name="icons/gdrive/icon_11_presentation_list.png"
+                path="C:\Users\dimitris\AndroidstudioProjects\FileSync\app\src\main\assets\icons\gdrive\icon_11_presentation_list.png" />
         </source>
     </dataSet>
     <dataSet config="debug" >
