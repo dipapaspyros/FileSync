@@ -187,7 +187,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void onContextDownload(View v) { //context menu download click
-        storageManager.downloadFile( storageManager.contextFile );
+        storageManager.downloadFile(storageManager.contextFile);
 
         onContextClose(v);
     }
@@ -255,8 +255,7 @@ public class MainActivity extends ActionBarActivity {
             if (file.isFile()) {
                 System.out.println(file.getName() + " " + file.length());
                 size += file.length();
-            }
-            else
+            } else
                 size += getFolderSize(file);
         }
         return size;
@@ -293,22 +292,22 @@ public class MainActivity extends ActionBarActivity {
                 } else { //upload a directory
                     FileChooserDialog fileChooserDialog = new FileChooserDialog(that, Environment.getExternalStorageDirectory());
                     fileChooserDialog.addDirectoryListener(new FileChooserDialog.DirectorySelectedListener() {
-                      public void directorySelected(File directory) {
-                          final File d = directory;
-                          final String directoryName = directory.toString();
-                          storageManager.storagePicker(new StorageOperation() {
-                              @Override
-                              public void onStorageSelect(CloudStorageDriver driver) { //pick a drive and create the directory
-                                  NetworkJob job = networkJobManager.newNetworkJob(d.getName());
-                                  long folderSize = getFolderSize(d);
-                                  System.out.println("Total size: " + folderSize);
-                                  job.setTotalBytes( folderSize );
+                        public void directorySelected(File directory) {
+                            final File d = directory;
+                            final String directoryName = directory.toString();
+                            storageManager.storagePicker(new StorageOperation() {
+                                @Override
+                                public void onStorageSelect(CloudStorageDriver driver) { //pick a drive and create the directory
+                                    NetworkJob job = networkJobManager.newNetworkJob(d.getName());
+                                    long folderSize = getFolderSize(d);
+                                    System.out.println("Total size: " + folderSize);
+                                    job.setTotalBytes(folderSize);
 
-                                  driver.uploadDirectory(job, directoryName, d.getName(), that);
+                                    driver.uploadDirectory(job, directoryName, d.getName(), that);
 
-                              }
-                          });
-                      }
+                                }
+                            });
+                        }
                     });
                     fileChooserDialog.setSelectDirectoryOption(true);
                     fileChooserDialog.showDialog();
@@ -337,10 +336,11 @@ public class MainActivity extends ActionBarActivity {
                         });
                     }
                 }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                // Do nothing.
-            }
-        }).show();
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        // Do nothing.
+                    }
+                }
+        ).show();
     }
 
     public void onNetworkManagerShow(View v) {

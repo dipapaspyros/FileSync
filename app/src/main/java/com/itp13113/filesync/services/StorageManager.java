@@ -281,6 +281,10 @@ public class StorageManager extends CloudStorageDriver {
                     //get a list of all the files
                     fileList.removeAllElements();
                     for (CloudStorageDriver storage : storages) {
+                        if (!storage.directoryExists) { //skip empty drives
+                            continue;
+                        }
+
                         Vector<CloudFile> list = storage.list();
                         fileList.addAll(list);
 

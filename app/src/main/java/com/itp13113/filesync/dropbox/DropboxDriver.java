@@ -171,6 +171,7 @@ public class DropboxDriver extends CloudStorageDriver {
     public String secret = "";
 
     public DropboxAPI<AndroidAuthSession> mDBApi;
+    private String displayName;
 
     public DropboxDriver(String key, String secret) {
         this.key = key;
@@ -186,12 +187,8 @@ public class DropboxDriver extends CloudStorageDriver {
     public String getStorageServiceTitle() {
         String result = "Dropbox";
 
-        if (mDBApi != null) {
-            try {
-                result += " - " + mDBApi.accountInfo().displayName;
-            } catch (DropboxException e) {
-                e.printStackTrace();
-            }
+        if (displayName != null) {
+            result += " - " + this.displayName;
         }
 
         return result;
@@ -220,10 +217,10 @@ public class DropboxDriver extends CloudStorageDriver {
                 this.key = accessToken.key;
                 this.secret = accessToken.secret;
             } catch (IllegalStateException e) {
-                System.err.println("Error authenticating dropbox");
+                System.err.println("Error authenticating dropbox account");
             }
         } else {
-            System.err.println("Could not loggin to dropbox");
+            System.err.println("Could not log in to dropbox");
         }
     }
 
@@ -232,6 +229,22 @@ public class DropboxDriver extends CloudStorageDriver {
     @Override
     public void authenticate() throws CloudStorageAuthenticationError {
         mDBApi.getSession().setAccessTokenPair(new AccessTokenPair(key, secret));
+
+        //store account display name
+        //network operation so it needs a thread
+        final DropboxDriver that = this;
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    that.displayName = " - " + mDBApi.accountInfo().displayName;
+                } catch (DropboxException e) {
+                    that.displayName = "";
+                    e.printStackTrace();
+                }
+            }
+        });
+        thread.start();
     }
 
     private String getIconFile(String ic) {
