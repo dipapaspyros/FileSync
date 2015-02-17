@@ -32,6 +32,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -104,10 +106,9 @@ public class StorageManager extends CloudStorageDriver {
     public CloudFile contextFile = null;
     public Button contextFileButton = null;
 
-    public Integer onResume = new Integer(0);
-    private Drawable icon;
+    public boolean initialized = false;
 
-    public StorageManager(Activity activity, AssetManager assetManager, LinearLayout fileListView, TextView fileInfo, LinearLayout contextMenu, ProgressBar loading, EditText dirEditText) {
+    public void initialize(Activity activity, AssetManager assetManager, LinearLayout fileListView, TextView fileInfo, LinearLayout contextMenu, ProgressBar loading, EditText dirEditText) {
         this.activity = activity;
         this.context = activity.getApplicationContext();
         this.assetManager = assetManager;
@@ -120,9 +121,6 @@ public class StorageManager extends CloudStorageDriver {
         storages = new ArrayList<CloudStorageDriver>();
 
         try {
-            String[] xmlText = new String[5];
-            int ptr = -1;
-
             //create the dom factory
             DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 
@@ -162,6 +160,15 @@ public class StorageManager extends CloudStorageDriver {
             e.printStackTrace();
         }
 
+        this.initialized = true;
+    }
+
+    public Activity getActivity() {
+        return this.activity;
+    }
+
+    public ArrayList<CloudStorageDriver> getStorages() {
+        return this.storages;
     }
 
     public void openFile(CloudFile file) {

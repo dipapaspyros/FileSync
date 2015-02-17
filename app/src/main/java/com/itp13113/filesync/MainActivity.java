@@ -36,7 +36,7 @@ import com.itp13113.filesync.util.NetworkJobManager;
 import com.itp13113.filesync.util.StorageOperation;
 
 public class MainActivity extends ActionBarActivity {
-    private StorageManager storageManager = null;
+    public static StorageManager storageManager = new StorageManager();
     private LinearLayout fileList, contextMenu;
     private TextView fileInfo;
     private EditText dirTextView;
@@ -63,7 +63,7 @@ public class MainActivity extends ActionBarActivity {
         //check if configuration with stored services exists
         try {
             InputStream inputStream = openFileInput("storages.xml");
-            storageManager = new StorageManager(this, getAssets(), fileList, fileInfo, contextMenu, loading, dirTextView);
+            storageManager.initialize(this, getAssets(), fileList, fileInfo, contextMenu, loading, dirTextView);
             storageManager.setContext(getApplicationContext());
             storageManager.authenticate();
             storageManager.list();
@@ -99,6 +99,14 @@ public class MainActivity extends ActionBarActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            Intent welcomeIntent = new Intent(getApplicationContext(), WelcomeActivity.class);
+            startActivity(welcomeIntent);
+
+            return true;
+        }
+        else if (id == R.id.uploads) {
+            networkJobManager.show();
+
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -125,10 +133,10 @@ public class MainActivity extends ActionBarActivity {
     public void onResume() {
         super.onResume();
 
-        if ((storageManager == null)) { //first run
+        if ((!storageManager.initialized)) { //first run
             try {
                 InputStream inputStream = openFileInput("storages.xml");
-                storageManager = new StorageManager(this, getAssets(), fileList, fileInfo, contextMenu, loading, dirTextView);
+                storageManager.initialize(this, getAssets(), fileList, fileInfo, contextMenu, loading, dirTextView);
                 storageManager.setContext(getApplicationContext());
                 storageManager.authenticate();
                 storageManager.list();
@@ -138,6 +146,9 @@ public class MainActivity extends ActionBarActivity {
             } catch (FileNotFoundException e) {
 
             }
+        } else {
+            //list again contents -- drivers might have changed
+            storageManager.list();
         }
     }
 
@@ -341,9 +352,5 @@ public class MainActivity extends ActionBarActivity {
                     }
                 }
         ).show();
-    }
-
-    public void onNetworkManagerShow(View v) {
-        networkJobManager.show();
     }
 }

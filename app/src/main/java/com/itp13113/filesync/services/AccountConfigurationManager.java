@@ -23,6 +23,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -30,23 +31,25 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.api.services.drive.DriveScopes;
+import com.itp13113.filesync.MainActivity;
 import com.itp13113.filesync.dropbox.DropboxDriver;
 import com.itp13113.filesync.gdrive.GoogleDriveDriver;
 import com.itp13113.filesync.onedrive.OneDriveDriver;
 
 
 /*Listener class to handle connection and callbacks*/
-class NewServiceClickListener implements OnClickListener {
-    private ServiceTypeManager serviceTypeManager;
+class AddServiceClickListener implements OnClickListener {
+    private AccountConfigurationManager serviceTypeManager;
     private Context context;
     private Activity activity;
     private ServiceType serviceType;
     private String accountName;
 
-    public NewServiceClickListener(ServiceTypeManager serviceTypeManager, Activity activity, ServiceType serviceType, String accountName) {
+    public AddServiceClickListener(AccountConfigurationManager serviceTypeManager, Activity activity, ServiceType serviceType, String accountName) {
         this.serviceTypeManager = serviceTypeManager;
         this.context = activity.getApplicationContext();
         this.activity = activity;
@@ -57,7 +60,6 @@ class NewServiceClickListener implements OnClickListener {
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     public void onClick(View v) {
-        System.out.println(serviceType);
         CloudStorageDriver driver = null;
 
         if (serviceType.id.equals("gdrive")) {
@@ -92,15 +94,39 @@ class NewServiceClickListener implements OnClickListener {
                 e.printStackTrace();
             }
 
-
-
+            //if the application is running add the new driver
+            if (MainActivity.storageManager.initialized) {
+                MainActivity.storageManager.getStorages().add(driver);
+            }
         }
-
     }
 
 }
 
-public class ServiceTypeManager {
+/*Listener class to handle removing accounts*/
+class RemoveServiceClickListener implements View.OnClickListener {
+    private AccountConfigurationManager configurationManager;
+    private StorageManager storageManager;
+    private CloudStorageDriver driver;
+
+    public RemoveServiceClickListener(AccountConfigurationManager configurationManager, StorageManager storageManager, CloudStorageDriver driver) {
+        this.configurationManager = configurationManager;
+        this.storageManager = storageManager;
+        this.driver = driver;
+    }
+
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
+    @Override
+    public void onClick(View v) {
+        if (this.driver != null) { //remove the driver from the storage manager & update the configuration
+            configurationManager.removeStorage(this.driver);
+            storageManager.getStorages().remove(this.driver);
+            v.setVisibility(View.GONE);
+        }
+    }
+}
+
+public class AccountConfigurationManager {
     private ArrayList<ServiceType> service_types;
     private AssetManager assetManager;
     private Context context;
@@ -124,7 +150,7 @@ public class ServiceTypeManager {
         return dDriver;
     }
 
-    public ServiceTypeManager(Context context, AssetManager assetManager) {
+    public AccountConfigurationManager(Context context, AssetManager assetManager) {
         this.context = context;
         this.assetManager = assetManager;
 
@@ -187,9 +213,29 @@ public class ServiceTypeManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        try { //read all existing storages
+            InputStreamReader inputStreamReader = new InputStreamReader(this.context.openFileInput("storages.xml"));
+            storages = "";
+            char[] buffer = new char[8192];
+            while (inputStreamReader.read(buffer, 0, buffer.length) > 0) {
+                storages += buffer;
+            }
+            inputStreamReader.close();
+        } catch (IOException e) {
+            System.err.println("File read failed: " + e.toString());
+        }
     }
 
     public void showServiceTypes(Activity activity, LinearLayout l) {
+        //subtitle
+        TextView textView = new TextView(context);
+        textView.setPadding(10,10,10,10);
+        textView.setTextColor(Color.rgb(68, 108, 179));
+        textView.setTextSize(24);
+        textView.setText("Add accounts");
+        l.addView(textView);
+
         for (ServiceType service_type : service_types) {
             if (service_type.id.equals("gdrive")) {
                 final AccountManager am = AccountManager.get(context);
@@ -213,7 +259,7 @@ public class ServiceTypeManager {
                         }
                     }
 
-                    NewServiceClickListener cl = new NewServiceClickListener(this, activity, service_type, am.getAccounts()[i].name);
+                    AddServiceClickListener cl = new AddServiceClickListener(this, activity, service_type, am.getAccounts()[i].name);
                     b.setOnClickListener(cl);
 
                     l.addView(b);
@@ -233,7 +279,7 @@ public class ServiceTypeManager {
                     }
                 }
 
-                NewServiceClickListener cl = new NewServiceClickListener(this, activity, service_type, "");
+                AddServiceClickListener cl = new AddServiceClickListener(this, activity, service_type, "");
                 b.setOnClickListener(cl);
 
                 l.addView(b);
@@ -241,11 +287,69 @@ public class ServiceTypeManager {
         }
     }
 
+    public void showExistingStorages(StorageManager manager, LinearLayout l) {
+        //get storage manager accounts
+        ArrayList<CloudStorageDriver> accounts = manager.getStorages();
+
+        //subtitle
+        TextView textView = new TextView(context);
+        textView.setPadding(10,10,10,10);
+        textView.setTextColor(Color.rgb(68, 108, 179));
+        textView.setTextSize(24);
+        textView.setText("Remove existing accounts");
+        l.addView(textView);
+
+        for (CloudStorageDriver storage : accounts) { //foreach account show a button to remove
+            Button b = new Button(manager.getActivity());
+
+            b.setText(storage.getStorageServiceTitle());
+
+            RemoveServiceClickListener cl = new RemoveServiceClickListener(this, manager, storage);
+            b.setOnClickListener(cl);
+
+            l.addView(b);
+        }
+    }
+
+    public void removeStorage(CloudStorageDriver driver) {
+        int start_pos = 0, end_pos = 0, name_pos = 0;
+
+        if (driver instanceof GoogleDriveDriver) {
+            name_pos = storages.indexOf("name=\"" + ((GoogleDriveDriver) driver).getAccountName() + "\"");
+        }
+        else if (driver instanceof DropboxDriver) {
+            name_pos = storages.indexOf("key=\"" + ((DropboxDriver) driver).key + "\"");
+        }
+        else if (driver instanceof OneDriveDriver) { //TODO: Detect multiple OneDrive accounts
+            name_pos = storages.indexOf("type=\"onedrive\"");
+        }
+
+        // find where the service tag starts
+        for (int i=name_pos - 1; i>=0; i--) {
+            if (storages.charAt(i) == '<') {
+                start_pos = i;
+                break;
+            }
+        }
+
+        // find where the service tag ends
+        for (int i=name_pos + 1; i<storages.length(); i++) {
+            if (storages.charAt(i) == '>') {
+                end_pos = i;
+                break;
+            }
+        }
+
+        //update the xml
+        storages = storages.substring(0, start_pos) + storages.substring(end_pos + 1);
+        System.out.println("After remove: " + storages);
+    }
+
     public void finalize() {
         if (!hasFinalized) {
             hasFinalized = true;
             storages += "</storages>";
-
+            System.out.println(storages);
             try {
                 OutputStreamWriter outputStreamWriter = new OutputStreamWriter(this.context.openFileOutput("storages.xml", Context.MODE_PRIVATE));
                 outputStreamWriter.write(storages);

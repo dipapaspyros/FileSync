@@ -237,7 +237,7 @@ public class DropboxDriver extends CloudStorageDriver {
             @Override
             public void run() {
                 try {
-                    that.displayName = " - " + mDBApi.accountInfo().displayName;
+                    that.displayName = mDBApi.accountInfo().displayName;
                 } catch (DropboxException e) {
                     that.displayName = "";
                     e.printStackTrace();

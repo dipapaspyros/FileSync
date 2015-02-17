@@ -30,7 +30,7 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:paddingTop="20dp"
-            android:text="Through FileSynch, you can connect to various data storage services, and synchronize all your data between them.\nSelect a service to connect:"
+            android:text="Through FileSynch, you can connect to various data storage services, and synchronize all your data between them."
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
     </LinearLayout>

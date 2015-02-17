@@ -64,17 +64,6 @@
                 android:layout_margin="2dp"
                 android:onClick="onNewDirectoryClick"
                 />
-            <ImageButton
-                android:id="@+id/network_toggle"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:layout_marginRight="5dp"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/progress"
-                android:background="@android:color/darker_gray"
-                android:layout_margin="2dp"
-                android:onClick="onNetworkManagerShow"
-                />
 
         </RelativeLayout>
 

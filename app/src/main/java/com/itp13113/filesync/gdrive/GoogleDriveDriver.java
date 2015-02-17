@@ -149,6 +149,10 @@ public class GoogleDriveDriver extends CloudStorageStackedDriver {
         this.currentFolderID = "root";
     }
 
+    public String getAccountName() {
+        return this.accountName;
+    }
+
     @Override
     public String getStorageServiceTitle() {
         return "Google Drive - " + accountName;
