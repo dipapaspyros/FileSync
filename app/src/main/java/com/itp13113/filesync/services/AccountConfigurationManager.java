@@ -228,6 +228,9 @@ public class AccountConfigurationManager {
     }
 
     public void showServiceTypes(Activity activity, LinearLayout l) {
+        //save accounts to make sure no account is shown twice
+        ArrayList<String> google_mails = new ArrayList<String>();
+
         //subtitle
         TextView textView = new TextView(context);
         textView.setPadding(10,10,10,10);
@@ -245,10 +248,24 @@ public class AccountConfigurationManager {
                     continue;
                 }
 
-                for (int i = 0; i < am.getAccounts().length; i++) {
+                for (Account google_account : am.getAccounts()) {
                     Button b = new Button(activity);
 
-                    b.setText(service_type.title + " - " + am.getAccounts()[i].name);
+                    //check tat the account is not already added
+                    boolean added = false;
+                    for (String google_mail : google_mails) {
+                        if (google_mail.equals(google_account.name)) {
+                            added = true;
+                            break;
+                        }
+                    }
+                    if (added) {
+                        continue;
+                    } else {
+                        google_mails.add(google_account.name);
+                    }
+
+                    b.setText(service_type.title + " - " + google_account.name);
                     //load the icon if it was specified
                     if (!service_type.icon.equals("")) {
                         try {
@@ -259,7 +276,7 @@ public class AccountConfigurationManager {
                         }
                     }
 
-                    AddServiceClickListener cl = new AddServiceClickListener(this, activity, service_type, am.getAccounts()[i].name);
+                    AddServiceClickListener cl = new AddServiceClickListener(this, activity, service_type, google_account.name);
                     b.setOnClickListener(cl);
 
                     l.addView(b);
