@@ -106,6 +106,7 @@ public class StorageManager extends CloudStorageDriver {
     public CloudFile contextFile = null;
     public Button contextFileButton = null;
 
+    public boolean is_changed = false;
     public boolean initialized = false;
 
     public void initialize(Activity activity, AssetManager assetManager, LinearLayout fileListView, TextView fileInfo, LinearLayout contextMenu, ProgressBar loading, EditText dirEditText) {

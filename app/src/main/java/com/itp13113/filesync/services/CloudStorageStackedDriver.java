@@ -13,7 +13,7 @@ public abstract class CloudStorageStackedDriver extends CloudStorageDriver {
 
     @Override
     public void setDirectory(String directory) throws CloudStorageDirectoryNotExists {
-        if (directory.equals("..") && currentDirectory.equals(getHomeDirectory())) { //parent directory unavaildable on <home>
+        if (directory.equals("..") && currentDirectory.equals(getHomeDirectory())) { //parent directory not available on <home>
             directoryHasChanged = false;
             return;
         }
@@ -25,19 +25,21 @@ public abstract class CloudStorageStackedDriver extends CloudStorageDriver {
             return;
         }
 
-        if (directory.equals("..") && !currentDirectory.equals(getHomeDirectory())) { //parent directory - unavaildable on <home>
+        if (directory.equals("..")) { //parent directory
             directoryHasChanged = true;
             currentDirectory = currentDirectory.substring(0, currentDirectory.lastIndexOf("/"));
             currentFolderID = prevFolderIDs.pop();
+            if (currentFolderID.equals("NULL")) {
+                directoryExists = false;
+            }
             return;
-        } else {
-            currentDirectory += "/" + directory;
-            prevFolderIDs.push(new String(currentFolderID));
         }
+
+        currentDirectory += "/" + directory;
+        prevFolderIDs.push(new String(currentFolderID));
 
         for (CloudFile file : fileList) { //find a subdirectory
             if (file.isDirectory() && file.getTitle().equals(directory)) {
-                System.out.println("Folder ID = " + currentFolderID);
                 directoryHasChanged = true;
                 currentFolderID = file.getId();
                 return;
@@ -47,7 +49,7 @@ public abstract class CloudStorageStackedDriver extends CloudStorageDriver {
         //directory not found in the drive
         directoryExists = false;
         directoryHasChanged = false;
-        currentFolderID = "-1";
+        currentFolderID = "NULL";
 
         throw new CloudStorageDirectoryNotExists();
     }

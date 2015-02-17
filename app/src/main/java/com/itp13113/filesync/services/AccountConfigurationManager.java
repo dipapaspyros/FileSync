@@ -320,6 +320,12 @@ public class AccountConfigurationManager {
             Button b = new Button(manager.getActivity());
 
             b.setText(storage.getStorageServiceTitle());
+            try { //add delete icon
+                Drawable icon = Drawable.createFromResourceStream(manager.context.getResources(), null, assetManager.open("icons/delete.png"), "icons/delete.png", new BitmapFactory.Options());
+                b.setCompoundDrawablesWithIntrinsicBounds(icon, null, null, null);
+            } catch (IOException e) {
+                //invalid icon name - do nothing
+            }
 
             RemoveServiceClickListener cl = new RemoveServiceClickListener(this, manager, storage);
             b.setOnClickListener(cl);
@@ -366,7 +372,8 @@ public class AccountConfigurationManager {
         if (!hasFinalized) {
             hasFinalized = true;
             storages += "</storages>";
-            System.out.println(storages);
+
+            MainActivity.storageManager.is_changed = true;
             try {
                 OutputStreamWriter outputStreamWriter = new OutputStreamWriter(this.context.openFileOutput("storages.xml", Context.MODE_PRIVATE));
                 outputStreamWriter.write(storages);

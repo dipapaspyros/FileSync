@@ -146,8 +146,9 @@ public class MainActivity extends ActionBarActivity {
             } catch (FileNotFoundException e) {
 
             }
-        } else {
+        } else if (MainActivity.storageManager.is_changed) {
             //list again contents -- drivers might have changed
+            MainActivity.storageManager.is_changed = false;
             storageManager.list();
         }
     }
