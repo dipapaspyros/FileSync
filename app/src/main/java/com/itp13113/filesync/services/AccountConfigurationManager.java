@@ -97,6 +97,10 @@ class AddServiceClickListener implements OnClickListener {
             //if the application is running add the new driver
             if (MainActivity.storageManager.initialized) {
                 MainActivity.storageManager.getStorages().add(driver);
+                try { //set the current directory
+                    driver.setDirectory(MainActivity.storageManager.getDirectory());
+                } catch (CloudStorageDirectoryNotExists cloudStorageDirectoryNotExists) {
+                }
             }
         }
     }

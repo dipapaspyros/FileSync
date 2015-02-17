@@ -343,7 +343,14 @@ public class DropboxDriver extends CloudStorageDriver {
 
         DropboxAPI.Entry newEntry = null;
         try {
-            newEntry = mDBApi.putFile(parentID +new_file, inputStream,
+            String path;
+            if (parentID.equals("/")) {
+                path = new_file;
+            } else {
+                path = parentID + "/" + new_file;
+            }
+            
+            newEntry = mDBApi.putFile(path, inputStream,
                     lcFile.length(), null, new ProgressListener() {
                         private long prevBytes = 0;
 
@@ -361,12 +368,15 @@ public class DropboxDriver extends CloudStorageDriver {
                             return -1;//always report back
                         }
                     });
+            return newEntry.path;
         } catch (DropboxException e) {
             System.err.println("Could not upload file " + local_file + " to " + getStorageServiceTitle());
             e.printStackTrace();
+
+            return "";
         }
 
-        return newEntry.path;
+
     }
 
     public String createDirectory(String parentID, String new_directory) throws CloudStorageNotEnoughSpace {
