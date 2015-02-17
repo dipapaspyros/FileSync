@@ -349,7 +349,7 @@ public class DropboxDriver extends CloudStorageDriver {
             } else {
                 path = parentID + "/" + new_file;
             }
-            
+
             newEntry = mDBApi.putFile(path, inputStream,
                     lcFile.length(), null, new ProgressListener() {
                         private long prevBytes = 0;
